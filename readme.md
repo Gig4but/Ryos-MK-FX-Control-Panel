@@ -11,6 +11,8 @@
   All files from archive must be in one folder with .exe file for success run.
   
   For program turn off, just press "Home" button and keyboard will return to previous state.
+  
+  It's not a real program work, just capture from Roccat SWARM.
   ![](https://github.com/Gig4but/RyosMKFXVisualizer/blob/master/Equailizer.gif)
 
 ### About code:
