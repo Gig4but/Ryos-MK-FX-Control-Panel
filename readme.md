@@ -23,7 +23,7 @@
   Functionality and GUI should growth.
 
 ### Thanks:
-  Very big thanks for people who create repositories for Ryos MK FX, Ryos ant Roccat-Talk controll.
+  Very big thanks for people who create repositories for Ryos MK FX, Ryos ant Roccat-Talk control.
   
   https://github.com/mwasilak/roccat-talk-csharp/tree/feature-ryos-mk-fx
   
