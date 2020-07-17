@@ -6,7 +6,7 @@
   You can't use any piece of repository for commercial purposes.
 
 ### About Equalizer:
-  In Visualizer_v2.zip archive is compiled "Equalizer" effect. Just exec and have fun!
+  In Visualizer_v22.zip archive is compiled "Equalizer" effect. Just exec and have fun!
   
   All files from archive must be in one folder with .exe file for success run.
   
