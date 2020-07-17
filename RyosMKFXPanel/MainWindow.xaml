@@ -52,13 +52,35 @@
                 </ComboBox>
                 <ComboBox x:Name="ComboBoxAnimations" Grid.Row="0" Grid.Column="1" Width="120" Margin="4" SelectionChanged="ComboBoxAnimations_SelectionChanged" SelectedIndex="0" Visibility="Hidden">
                     <ComboBoxItem IsSelected="True">Timer</ComboBoxItem>
+                    <ComboBoxItem>Smiles</ComboBoxItem>
                 </ComboBox>
                 <Button x:Name="ButtonLever" Grid.Row="1" Grid.Column="1" Content="Start" Margin="4" Click="ButtonLever_Click"/>
                 <Label Grid.Row="2" Grid.Column="0" Content="Status:"/>
                 <Label x:Name="LabelStatus" Grid.Row="2" Grid.Column="1" Content="OFF" FontWeight="Bold" Foreground="Red"/>
-                <Label x:Name="LabelDelay" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="2" Content="Delay: 10ms"/>
-                <Slider x:Name="SliderDelay" Width="120" Grid.Row="1" Grid.Column="2"  SmallChange="1" Minimum="5" Maximum="20" Margin="4" Value="10"  ValueChanged="SliderDelay_ValueChanged"  IsSnapToTickEnabled="True" TickPlacement="BottomRight"/>
-                <Separator Grid.Row="2" Grid.Column="2" VerticalAlignment="Top" Margin="2"/>
+                <GroupBox x:Name="GroupBoxDelaySetting" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" BorderBrush="{x:Null}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label x:Name="LabelDelay" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="2" Content="Delay: 10ms"/>
+                        <Slider x:Name="SliderDelay" Width="120" Grid.Row="1" Grid.Column="2"  SmallChange="1" Minimum="5" Maximum="20" Margin="4" Value="10"  ValueChanged="SliderDelay_ValueChanged"  IsSnapToTickEnabled="True" TickPlacement="BottomRight"/>
+                        <Separator Grid.Row="2" Grid.Column="2" VerticalAlignment="Top" Margin="2"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox x:Name="GroupBoxSpeedSetting" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" BorderBrush="{x:Null}" Visibility="Hidden">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label x:Name="LabelSpeed" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="2" Content="Speed: 1x"/>
+                        <Slider x:Name="SliderSpeed" Width="120" Grid.Row="1" Grid.Column="2"  SmallChange="0.5" Minimum="0.5" Maximum="5" Margin="4" Value="1"  ValueChanged="SliderSpeed_ValueChanged"  IsSnapToTickEnabled="True" TickPlacement="BottomRight" LargeChange="0.5" TickFrequency="0.5"/>
+                        <Separator Grid.Row="2" Grid.Column="2" VerticalAlignment="Top" Margin="2"/>
+                    </Grid>
+                </GroupBox>
                 <Label x:Name="LabelBright" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="2" Content="Bright: 75%"/>
                 <Slider x:Name="SliderBright" Width="120" Grid.Row="3" Grid.Column="2"  SmallChange="1" Minimum="0" Maximum="100" Margin="4" Value="75"  ValueChanged="SliderBright_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="5" TickPlacement="BottomRight"/>
                 <Label HorizontalAlignment="Center" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Content="Color"/>

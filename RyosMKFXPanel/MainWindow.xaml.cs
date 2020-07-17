@@ -18,7 +18,9 @@ namespace RyosMKFXPanel {
             if (!(this.LabelMode.Content.ToString() == "Effect:")) {
                 this.LabelMode.Content = "Effect:";
                 this.ComboBoxEffects.Visibility = Visibility.Visible;
+                this.GroupBoxDelaySetting.Visibility = Visibility.Visible;
                 this.ComboBoxAnimations.Visibility = Visibility.Hidden;
+                this.GroupBoxSpeedSetting.Visibility = Visibility.Hidden;
                 if (Lightning.getStatus()) {
                     offLightAlgs();
                     effects = true;
@@ -43,7 +45,9 @@ namespace RyosMKFXPanel {
             if (!(this.LabelMode.Content.ToString() == "Animation:")) {
                 this.LabelMode.Content = "Animation:";
                 this.ComboBoxAnimations.Visibility = Visibility.Visible;
+                this.GroupBoxSpeedSetting.Visibility = Visibility.Visible;
                 this.ComboBoxEffects.Visibility = Visibility.Hidden;
+                this.GroupBoxDelaySetting.Visibility = Visibility.Hidden;
                 if (Lightning.getStatus()) {
                     offLightAlgs();
                     effects = false;
@@ -93,6 +97,10 @@ namespace RyosMKFXPanel {
         private void SliderDelay_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             this.LabelDelay.Content = "Delay: " + this.SliderDelay.Value.ToString() + "ms";
             Lightning.delay = Convert.ToInt32(this.SliderDelay.Value);
+        }
+        private void SliderSpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+            this.LabelSpeed.Content = "Speed: " + this.SliderSpeed.Value.ToString() + "x";
+            Lightning.speed = (float)this.SliderSpeed.Value;
         }
         private void SliderBright_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             this.LabelBright.Content = "Bright: " + this.SliderBright.Value.ToString() + "%";
@@ -183,6 +191,13 @@ namespace RyosMKFXPanel {
                         offLightAlgs();
                         onLightAlgs();
                     }
+                } else if (ComboBoxAnimations.SelectedIndex == 1) {
+                    //Smiles
+                    hideAlgsSettings();
+                    if (Lightning.getStatus()) {
+                        offLightAlgs();
+                        onLightAlgs();
+                    }
                 }
             }
         }
@@ -210,6 +225,8 @@ namespace RyosMKFXPanel {
             else if (animations) {
                 if (Timer.getState()) {
                     Timer.stop();
+                } else if (Smiles.getState()) {
+                    Smiles.stop();
                 }
             }
         }
@@ -225,6 +242,8 @@ namespace RyosMKFXPanel {
             } else if (animations) {
                 if (ComboBoxAnimations.SelectedIndex == 0) {
                     Timer.start();
+                } else if (ComboBoxAnimations.SelectedIndex == 1) {
+                    Smiles.start();
                 }
             }
         }

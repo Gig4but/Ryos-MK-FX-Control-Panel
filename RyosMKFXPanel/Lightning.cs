@@ -20,6 +20,7 @@ namespace RyosMKFXPanel {
         public static readonly int kbh = 6;
 
         public static int delay = 10;
+        public static float speed = 1f;
 
         public static RyosTalkFXConnection connection = new RyosTalkFXConnection();
 

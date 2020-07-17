@@ -59,6 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Animations\Smiles.cs" />
     <Compile Include="Animations\Timer.cs" />
     <Compile Include="Effects\Random.cs" />
     <Compile Include="Effects\Volume.cs" />

@@ -13,16 +13,12 @@ namespace RyosMKFXPanel.Animations {
         }
 
         private static Thread thread;
-        private static Stopwatch seconds = new Stopwatch();
-        private static Stopwatch seconds2 = new Stopwatch();
         public static void start() {
             thread = new Thread(animationTimerColor);
             thread.Start();
             changeState();
         }
         public static void stop() {
-            seconds.Stop();
-            seconds2.Stop();
             thread.Abort();
             changeState();
         }
@@ -43,8 +39,6 @@ namespace RyosMKFXPanel.Animations {
             byte[] keysB = new byte[110];
             int s = 0;
             int ss = 0;
-            seconds.Restart();
-            seconds2.Restart();
             for (int i = 0; i < 110; i++) {
                 if ((i > 17 && i < 27)
                     || i == 34 || i == 35 || i == 36
@@ -57,246 +51,244 @@ namespace RyosMKFXPanel.Animations {
             }
             while (true) {
                 byte[] pattern = new byte[23];
-                if ((seconds.ElapsedMilliseconds / 1000) >= s) {
-                    s++;
-                    if (invert) {
-                        for (int i = 0; i < pattern.Length; i++) {
-                            pattern[i] = 2;
-                        }
-                        if (simple) {
-                            pattern[9] = 0;
-                            pattern[10] = 0;
-                            pattern[11] = 0;
-                            pattern[21] = 0;
-                            pattern[22] = 0;
-                        }
+                s++;
+                if (invert) {
+                    for (int i = 0; i < pattern.Length; i++) {
+                        pattern[i] = 2;
                     }
-                    if (s == 0) {
-                        if (simple) {
-                            pattern[21] = 1;
-                        } else {
-                            pattern[9] = 1;
-                            pattern[10] = 1;
-                            pattern[11] = 1;
-
-                            pattern[12] = 1;
-                            pattern[14] = 1;
-
-                            pattern[15] = 1;
-                            pattern[17] = 1;
-
-                            pattern[18] = 1;
-                            pattern[20] = 1;
-
-                            pattern[21] = 1;
-                            pattern[22] = 1;
-                        }
-                    } 
-                    else if (s == 1) {
-                        if (simple) {
-                            pattern[18] = 1;
-                        } else {
-                            pattern[11] = 1;
-
-                            pattern[13] = 1;
-                            pattern[14] = 1;
-
-                            pattern[15] = 1;
-                            pattern[17] = 1;
-
-                            pattern[20] = 1;
-
-                            pattern[22] = 1;
-                        }
-                    } 
-                    else if (s == 2) {
-                        if (simple) {
-                            pattern[19] = 1;
-                        } else {
-                            pattern[9] = 1;
-                            pattern[10] = 1;
-                            pattern[11] = 1;
-
-                            pattern[14] = 1;
-
-                            pattern[15] = 1;
-                            pattern[16] = 1;
-                            pattern[17] = 1;
-
-                            pattern[18] = 1;
-
-                            pattern[21] = 1;
-                            pattern[22] = 1;
-                        }
-                    } 
-                    else if (s == 3) {
-                        if (simple) {
-                            pattern[20] = 1;
-                        } else {
-                            pattern[9] = 1;
-                            pattern[10] = 1;
-                            pattern[11] = 1;
-
-                            pattern[14] = 1;
-
-                            pattern[15] = 1;
-                            pattern[16] = 1;
-                            pattern[17] = 1;
-
-                            pattern[20] = 1;
-
-                            pattern[21] = 1;
-                            pattern[22] = 1;
-                        }
-                    } 
-                    else if (s == 4) {
-                        if (simple) {
-                            pattern[15] = 1;
-                        } else {
-                            pattern[9] = 1;
-                            pattern[11] = 1;
-
-                            pattern[12] = 1;
-                            pattern[14] = 1;
-
-                            pattern[15] = 1;
-                            pattern[16] = 1;
-                            pattern[17] = 1;
-
-                            pattern[20] = 1;
-
-                            pattern[22] = 1;
-                        }
-                    } 
-                    else if (s == 5) {
-                        if (simple) {
-                            pattern[16] = 1;
-                        } else {
-                            pattern[9] = 1;
-                            pattern[10] = 1;
-                            pattern[11] = 1;
-
-                            pattern[12] = 1;
-
-                            pattern[15] = 1;
-                            pattern[16] = 1;
-                            pattern[17] = 1;
-
-                            pattern[20] = 1;
-
-                            pattern[21] = 1;
-                            pattern[22] = 1;
-                        }
-                    } 
-                    else if (s == 6) {
-                        if (simple) {
-                            pattern[17] = 1;
-                        } else {
-                            pattern[9] = 1;
-                            pattern[10] = 1;
-                            pattern[11] = 1;
-
-                            pattern[12] = 1;
-
-                            pattern[15] = 1;
-                            pattern[16] = 1;
-                            pattern[17] = 1;
-
-                            pattern[18] = 1;
-                            pattern[20] = 1;
-
-                            pattern[21] = 1;
-                            pattern[22] = 1;
-                        }
-                    } 
-                    else if (s == 7) {
-                        if (simple) {
-                            pattern[12] = 1;
-                        } else {
-                            pattern[9] = 1;
-                            pattern[10] = 1;
-                            pattern[11] = 1;
-
-                            pattern[14] = 1;
-
-                            pattern[17] = 1;
-
-                            pattern[20] = 1;
-
-                            pattern[22] = 1;
-                        }
-                    } 
-                    else if (s == 8) {
-                        if (simple) {
-                            pattern[13] = 1;
-                        } else {
-                            pattern[9] = 1;
-                            pattern[10] = 1;
-                            pattern[11] = 1;
-
-                            pattern[12] = 1;
-                            pattern[14] = 1;
-
-                            pattern[15] = 1;
-                            pattern[16] = 1;
-                            pattern[17] = 1;
-
-                            pattern[18] = 1;
-                            pattern[20] = 1;
-
-                            pattern[21] = 1;
-                            pattern[22] = 1;
-                        }
-                    } 
-                    else if (s == 9) {
-                        if (simple) {
-                            pattern[14] = 1;
-                        } else {
-                            pattern[9] = 1;
-                            pattern[10] = 1;
-                            pattern[11] = 1;
-
-                            pattern[12] = 1;
-                            pattern[14] = 1;
-
-                            pattern[15] = 1;
-                            pattern[16] = 1;
-                            pattern[17] = 1;
-
-                            pattern[20] = 1;
-
-                            pattern[21] = 1;
-                            pattern[22] = 1;
-                        }
-                    } 
-                    else if (s == 10) {
-                        if (simple) {
-                            pattern[18] = 1;
-                        } else {
-                            pattern[11] = 1;
-
-                            pattern[13] = 1;
-                            pattern[14] = 1;
-
-                            pattern[15] = 1;
-                            pattern[17] = 1;
-
-                            pattern[20] = 1;
-
-                            pattern[22] = 1;
-                        }
-                        s = 0;
-                        ss++;
-                        seconds.Restart();
+                    if (simple) {
+                        pattern[9] = 0;
+                        pattern[10] = 0;
+                        pattern[11] = 0;
+                        pattern[21] = 0;
+                        pattern[22] = 0;
                     }
-                    if (ss > 9) { 
-                        seconds2.Restart();
-                    }
-                    for (int i = 0; i < ss; i++) {
-                        pattern[i] = 1;
-                    }
-                    connection.SetMkFxKeyboardState(keys, colorer(pattern), 1);
                 }
+                if (s == 0) {
+                    if (simple) {
+                        pattern[21] = 1;
+                    } else {
+                        pattern[9] = 1;
+                        pattern[10] = 1;
+                        pattern[11] = 1;
+
+                        pattern[12] = 1;
+                        pattern[14] = 1;
+
+                        pattern[15] = 1;
+                        pattern[17] = 1;
+
+                        pattern[18] = 1;
+                        pattern[20] = 1;
+
+                        pattern[21] = 1;
+                        pattern[22] = 1;
+                    }
+                } 
+                else if (s == 1) {
+                    if (simple) {
+                        pattern[18] = 1;
+                    } else {
+                        pattern[11] = 1;
+
+                        pattern[13] = 1;
+                        pattern[14] = 1;
+
+                        pattern[15] = 1;
+                        pattern[17] = 1;
+
+                        pattern[20] = 1;
+
+                        pattern[22] = 1;
+                    }
+                } 
+                else if (s == 2) {
+                    if (simple) {
+                        pattern[19] = 1;
+                    } else {
+                        pattern[9] = 1;
+                        pattern[10] = 1;
+                        pattern[11] = 1;
+
+                        pattern[14] = 1;
+
+                        pattern[15] = 1;
+                        pattern[16] = 1;
+                        pattern[17] = 1;
+
+                        pattern[18] = 1;
+
+                        pattern[21] = 1;
+                        pattern[22] = 1;
+                    }
+                } 
+                else if (s == 3) {
+                    if (simple) {
+                        pattern[20] = 1;
+                    } else {
+                        pattern[9] = 1;
+                        pattern[10] = 1;
+                        pattern[11] = 1;
+
+                        pattern[14] = 1;
+
+                        pattern[15] = 1;
+                        pattern[16] = 1;
+                        pattern[17] = 1;
+
+                        pattern[20] = 1;
+
+                        pattern[21] = 1;
+                        pattern[22] = 1;
+                    }
+                } 
+                else if (s == 4) {
+                    if (simple) {
+                        pattern[15] = 1;
+                    } else {
+                        pattern[9] = 1;
+                        pattern[11] = 1;
+
+                        pattern[12] = 1;
+                        pattern[14] = 1;
+
+                        pattern[15] = 1;
+                        pattern[16] = 1;
+                        pattern[17] = 1;
+
+                        pattern[20] = 1;
+
+                        pattern[22] = 1;
+                    }
+                } 
+                else if (s == 5) {
+                    if (simple) {
+                        pattern[16] = 1;
+                    } else {
+                        pattern[9] = 1;
+                        pattern[10] = 1;
+                        pattern[11] = 1;
+
+                        pattern[12] = 1;
+
+                        pattern[15] = 1;
+                        pattern[16] = 1;
+                        pattern[17] = 1;
+
+                        pattern[20] = 1;
+
+                        pattern[21] = 1;
+                        pattern[22] = 1;
+                    }
+                } 
+                else if (s == 6) {
+                    if (simple) {
+                        pattern[17] = 1;
+                    } else {
+                        pattern[9] = 1;
+                        pattern[10] = 1;
+                        pattern[11] = 1;
+
+                        pattern[12] = 1;
+
+                        pattern[15] = 1;
+                        pattern[16] = 1;
+                        pattern[17] = 1;
+
+                        pattern[18] = 1;
+                        pattern[20] = 1;
+
+                        pattern[21] = 1;
+                        pattern[22] = 1;
+                    }
+                } 
+                else if (s == 7) {
+                    if (simple) {
+                        pattern[12] = 1;
+                    } else {
+                        pattern[9] = 1;
+                        pattern[10] = 1;
+                        pattern[11] = 1;
+
+                        pattern[14] = 1;
+
+                        pattern[17] = 1;
+
+                        pattern[20] = 1;
+
+                        pattern[22] = 1;
+                    }
+                } 
+                else if (s == 8) {
+                    if (simple) {
+                        pattern[13] = 1;
+                    } else {
+                        pattern[9] = 1;
+                        pattern[10] = 1;
+                        pattern[11] = 1;
+
+                        pattern[12] = 1;
+                        pattern[14] = 1;
+
+                        pattern[15] = 1;
+                        pattern[16] = 1;
+                        pattern[17] = 1;
+
+                        pattern[18] = 1;
+                        pattern[20] = 1;
+
+                        pattern[21] = 1;
+                        pattern[22] = 1;
+                    }
+                } 
+                else if (s == 9) {
+                    if (simple) {
+                        pattern[14] = 1;
+                    } else {
+                        pattern[9] = 1;
+                        pattern[10] = 1;
+                        pattern[11] = 1;
+
+                        pattern[12] = 1;
+                        pattern[14] = 1;
+
+                        pattern[15] = 1;
+                        pattern[16] = 1;
+                        pattern[17] = 1;
+
+                        pattern[20] = 1;
+
+                        pattern[21] = 1;
+                        pattern[22] = 1;
+                    }
+                } 
+                else if (s == 10) {
+                    if (simple) {
+                        pattern[18] = 1;
+                    } else {
+                        pattern[11] = 1;
+
+                        pattern[13] = 1;
+                        pattern[14] = 1;
+
+                        pattern[15] = 1;
+                        pattern[17] = 1;
+
+                        pattern[20] = 1;
+
+                        pattern[22] = 1;
+                    }
+                    s = 1;
+                    ss++;
+                }
+                if (ss > 9) {
+                    ss = 0;
+                }
+                for (int i = 0; i < ss; i++) {
+                    pattern[i] = 1;
+                }
+                Thread.Sleep((int)(1000 / speed));
+                connection.SetMkFxKeyboardState(keys, colorer(pattern), 1);
             }
         }
 
