@@ -33,4 +33,4 @@
   
 ### If not working:
   
-  Just send me email with screenshot of error (in console) on petrun02@gmail.com
+  Just send me email with screenshot of error on petrun02@gmail.com
