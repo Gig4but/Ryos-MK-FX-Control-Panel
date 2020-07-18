@@ -31,6 +31,8 @@
   
   https://github.com/eaceaser/talkfx-c-wrapper
   
+  And for man what write SampleAgregator.cs (sorry, i forgot where i found that)
+  
 ### If not working:
   
   Just send me email with screenshot of error on petrun02@gmail.com
