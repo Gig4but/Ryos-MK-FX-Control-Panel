@@ -9,7 +9,7 @@ namespace RyosMKFXPanel.Effects {
             return run;
         }
         private static bool changeState() {
-            run = ((run == false) ? true : false);
+            run = ((run) ? false : true);
             return true;
         }
 
@@ -24,6 +24,11 @@ namespace RyosMKFXPanel.Effects {
             changeState();
         }
 
+        private static bool simple = false;
+        public static void simpleVolume() {
+            simple = ((simple) ? false : true);
+        }
+
         private static void effectVolume() {
             MMDeviceEnumerator enumerator = new MMDeviceEnumerator();
             var devices = enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
@@ -36,7 +41,6 @@ namespace RyosMKFXPanel.Effects {
             byte[] keysB = new byte[110];
 
             while (true) {
-                v = Convert.ToInt32(device.AudioMeterInformation.MasterPeakValue * 110);
                 for (int i = 0; i < 110; i++) {
                     keysR[i] = red;
                 }
@@ -46,12 +50,19 @@ namespace RyosMKFXPanel.Effects {
                 for (int i = 0; i < 110; i++) {
                     keysB[i] = blue;
                 }
-
-                for (int i = ((v != 0) ? v - 1 : 0); i < 110; i++) {
+                for (int i = 0; i < 110; i++) {
                     keys[i] = 0;
                 }
-                for (int i = 0; i < v; i++) {
-                    keys[i] = 1;
+                v = Convert.ToInt32(device.AudioMeterInformation.MasterPeakValue * 110);
+                if (simple) {
+                    v /= 11;
+                    for (int i = 18; i < v+18; i++) {
+                        keys[i] = 1;
+                    }
+                } else {
+                    for (int i = 0; i < v; i++) {
+                        keys[i] = 1;
+                    }
                 }
                 Thread.Sleep(delay);
                 connection.SetMkFxKeyboardState(keys, keysR, keysG, keysB, 1);

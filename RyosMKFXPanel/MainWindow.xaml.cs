@@ -35,7 +35,13 @@ namespace RyosMKFXPanel {
                     games = false;
                 }
                 hideAlgsSettings();
-                if (ComboBoxEffects.SelectedIndex == 2) {
+                if (this.ComboBoxEffects.SelectedIndex == 0) {
+                    //Random
+                    this.GroupBoxEffectEqualizerSettings.Visibility = Visibility.Visible;
+                } else if (this.ComboBoxEffects.SelectedIndex == 1) {
+                    //Random
+                    this.GroupBoxEffectVolumeSettings.Visibility = Visibility.Visible;
+                } else if (this.ComboBoxEffects.SelectedIndex == 2) {
                     //Random
                     this.GroupBoxEffectRandomSettings.Visibility = Visibility.Visible;
                 }
@@ -62,7 +68,7 @@ namespace RyosMKFXPanel {
                     games = false;
                 }
                 hideAlgsSettings();
-                if (ComboBoxAnimations.SelectedIndex == 0) {
+                if (this.ComboBoxAnimations.SelectedIndex == 0) {
                     //Timer
                     this.GroupBoxAnimationTimerSettings.Visibility = Visibility.Visible;
                 }
@@ -141,29 +147,29 @@ namespace RyosMKFXPanel {
         private void ComboBoxEffects_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
             if (SliderBugFixer) {
                 if (effects) {
-                    if (ComboBoxEffects.SelectedIndex == 0) {
+                    if (this.ComboBoxEffects.SelectedIndex == 0) {
                         //Equalizer
                         this.SliderDelay.Value = 10;
                         this.SliderDelay.Minimum = 5;
                         this.SliderDelay.Maximum = 20;
                         hideAlgsSettings();
-
+                        this.GroupBoxEffectEqualizerSettings.Visibility = Visibility.Visible;
                         if (Lightning.getStatus()) {
                             offLightAlgs();
                             onLightAlgs();
                         }
-                    } else if (ComboBoxEffects.SelectedIndex == 1) {
+                    } else if (this.ComboBoxEffects.SelectedIndex == 1) {
                         //Volume
                         this.SliderDelay.Value = 20;
                         this.SliderDelay.Minimum = 15;
                         this.SliderDelay.Maximum = 30;
                         hideAlgsSettings();
-
+                        this.GroupBoxEffectVolumeSettings.Visibility = Visibility.Visible;
                         if (Lightning.getStatus()) {
                             offLightAlgs();
                             onLightAlgs();
                         }
-                    } else if (ComboBoxEffects.SelectedIndex == 2) {
+                    } else if (this.ComboBoxEffects.SelectedIndex == 2) {
                         //Random
                         this.SliderDelay.Value = 20;
                         this.SliderDelay.Minimum = 15;
@@ -183,7 +189,7 @@ namespace RyosMKFXPanel {
 
         private void ComboBoxAnimations_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
             if (animations) {
-                if (ComboBoxAnimations.SelectedIndex == 0) {
+                if (this.ComboBoxAnimations.SelectedIndex == 0) {
                     //Timer
                     hideAlgsSettings();
                     this.GroupBoxAnimationTimerSettings.Visibility = Visibility.Visible;
@@ -191,7 +197,7 @@ namespace RyosMKFXPanel {
                         offLightAlgs();
                         onLightAlgs();
                     }
-                } else if (ComboBoxAnimations.SelectedIndex == 1) {
+                } else if (this.ComboBoxAnimations.SelectedIndex == 1) {
                     //Smiles
                     hideAlgsSettings();
                     if (Lightning.getStatus()) {
@@ -201,10 +207,73 @@ namespace RyosMKFXPanel {
                 }
             }
         }
+        private void ChekBoxStaticVolumeTurn_Checked(object sender, RoutedEventArgs e) {
+            Equalizer.turnVolume();
+        }
+        private void TextBoxVolumeBorderSize_TextChanged(object sender, RoutedEventArgs e) {
+            Equalizer.staticVolumeSize = Convert.ToInt32(this.TextBoxVolumeBorderSize.Text);
+        }
+        private void TextBoxStartColumn_TextChanged(object sender, RoutedEventArgs e) {
+            int x = 1;
+            if (int.TryParse(this.TextBoxStartColumn.Text, out x)) {
+                if (x < 1) {
+                    Equalizer.startColumn = 1;
+                } else if (x > 23) {
+                    Equalizer.startColumn = 23;
+                } else {
+                    Equalizer.startColumn = x;
+                }
+            }
+        }
+        private void TextBoxEndColumn_TextChanged(object sender, RoutedEventArgs e) {
+            int x = 2;
+            if (int.TryParse(this.TextBoxEndColumn.Text, out x)) {
+                if (x < 2) {
+                    Equalizer.endColumn = 2;
+                } else if (x > 24) {
+                    Equalizer.endColumn = 24;
+                } else {
+                    Equalizer.endColumn = x;
+                }
+            }
+        }
+        private void TextBoxMaxFreq_TextChanged(object sender, RoutedEventArgs e) {
+            int x = 0;
+            if (int.TryParse(this.TextBoxMaxFreq.Text, out x)) {
+                if (x < 0) {
+                    Equalizer.minHz = 0;
+                } else if (x > 23) {
+                    Equalizer.minHz = 23;
+                } else if (x > Equalizer.maxHz) {
+                    x = Equalizer.maxHz - 1;
+                } else {
+                    Equalizer.minHz = x;
+                }
+            }
+        }
+        private void TextBoxMinFreq_TextChanged(object sender, RoutedEventArgs e) {
+            int x = 0;
+            if (int.TryParse(this.TextBoxMinFreq.Text, out x)) {
+                if (x < 0) {
+                    Equalizer.minHz = 0;
+                } else if (x > 23) {
+                    Equalizer.minHz = 23;
+                } else if (x < Equalizer.minHz) {
+                    x = Equalizer.minHz + 1;
+                } else {
+                    Equalizer.minHz = x;
+                }
+            }
+        }
+
+        private void ChekBoxVolumeSimple_Checked(object sender, RoutedEventArgs e) {
+            Volume.simpleVolume();
+        }
 
         private void ChekBoxRandomTurn_Checked(object sender, RoutedEventArgs e) {
             Effects.Random.LEDturn();
         }
+
         private void ChekBoxTimerSimple_Checked(object sender, RoutedEventArgs e) {
             Timer.simpleNumbers();
         }
@@ -232,24 +301,27 @@ namespace RyosMKFXPanel {
         }
         private void onLightAlgs() {
             if (effects) {
-                if (ComboBoxEffects.SelectedIndex == 0) {
+                if (this.ComboBoxEffects.SelectedIndex == 0) {
                     Equalizer.start();
-                } else if (ComboBoxEffects.SelectedIndex == 1) {
+                } else if (this.ComboBoxEffects.SelectedIndex == 1) {
                     Volume.start();
-                } else if (ComboBoxEffects.SelectedIndex == 2) {
+                } else if (this.ComboBoxEffects.SelectedIndex == 2) {
                     Effects.Random.start();
                 }
             } else if (animations) {
-                if (ComboBoxAnimations.SelectedIndex == 0) {
+                if (this.ComboBoxAnimations.SelectedIndex == 0) {
                     Timer.start();
-                } else if (ComboBoxAnimations.SelectedIndex == 1) {
+                } else if (this.ComboBoxAnimations.SelectedIndex == 1) {
                     Smiles.start();
                 }
             }
         }
         private void hideAlgsSettings() {
+            this.GroupBoxEffectEqualizerSettings.Visibility = Visibility.Hidden;
+            this.GroupBoxEffectVolumeSettings.Visibility = Visibility.Hidden;
             this.GroupBoxEffectRandomSettings.Visibility = Visibility.Hidden;
             this.GroupBoxAnimationTimerSettings.Visibility = Visibility.Hidden;
+            
         }
 
     }

@@ -8,7 +8,7 @@ namespace RyosMKFXPanel.Animations {
             return run;
         }
         private static bool changeState() {
-            run = ((run == false) ? true : false);
+            run = ((run) ? false : true);
             return true;
         }
 
@@ -26,10 +26,10 @@ namespace RyosMKFXPanel.Animations {
         private static bool invert = false;
         private static bool simple = false;
         public static void invertColor() {
-            invert = ((invert == false) ? true : false);
+            invert = ((invert) ? false : true);
         }
         public static void simpleNumbers() {
-            simple = ((simple == false) ? true : false);
+            simple = ((simple) ? false : true);
         }
 
         private static void animationTimerColor() {

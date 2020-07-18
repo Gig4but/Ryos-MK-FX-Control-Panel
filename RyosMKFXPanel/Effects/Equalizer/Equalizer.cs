@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Windows.Forms;
 using NAudio.Wave;
 
 
@@ -10,12 +11,20 @@ namespace RyosMKFXPanel {
             return run;
         }
         private static bool changeState() {
-            run = ((run == false) ? true : false);
+            run = ((run) ? false : true);
             return true;
         }
 
-        public static float minHz = 20f;
-        public static float maxHz = 2000f;
+        public static int minHz = 20;
+        public static int maxHz = 2000;
+        public static int startColumn = 2;
+        public static int endColumn = 23;
+        private static bool staticVolume = false;
+        public static int staticVolumeSize = 10;
+
+        public static void turnVolume() {
+            staticVolume = ((staticVolume) ? false : true);
+        }
 
         private static IWaveIn waveIn;
         private static int fftLength = 8192;
@@ -92,10 +101,14 @@ namespace RyosMKFXPanel {
                 Matrix[i] = new float[kbw];
             }
             float x = 0;
-            for (int i = 1; i < iA.Length; i++) {
-                x += iA[i];
-                if (i == iA.Length - 1) {
-                    x /= i;
+            if (staticVolume) {
+                x = staticVolumeSize;
+            } else {
+                for (int i = startColumn - 1; i < endColumn; i++) {
+                    x += iA[i];
+                    if (i == iA.Length - 1) {
+                        x /= i;
+                    }
                 }
             }
             float point = x / 2;

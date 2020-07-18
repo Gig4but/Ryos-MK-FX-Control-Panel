@@ -8,7 +8,7 @@ namespace RyosMKFXPanel.Effects {
             return run;
         }
         private static bool changeState() {
-            run = ((run == false) ? true : false);
+            run = ((run) ? false : true);
             return true;
         }
 
@@ -24,7 +24,7 @@ namespace RyosMKFXPanel.Effects {
         }
         private static bool turn = false;
         public static void LEDturn() {
-            turn = ((turn == false) ? true : false);
+            turn = ((turn) ? false : true);
         }
 
         private static void effectRandom() {

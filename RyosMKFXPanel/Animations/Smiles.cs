@@ -7,7 +7,7 @@ namespace RyosMKFXPanel.Animations {
             return run;
         }
         private static bool changeState() {
-            run = ((run == false) ? true : false);
+            run = ((run) ? false : true);
             return true;
         }
 
