@@ -71,6 +71,9 @@ namespace RyosMKFXPanel {
                 if (this.ComboBoxAnimations.SelectedIndex == 0) {
                     //Timer
                     this.GroupBoxAnimationTimerSettings.Visibility = Visibility.Visible;
+                } else if (this.ComboBoxAnimations.SelectedIndex == 2) {
+                    //Waterfall
+                    this.GroupBoxAnimationWaterfallSettings.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -191,6 +194,9 @@ namespace RyosMKFXPanel {
             if (animations) {
                 if (this.ComboBoxAnimations.SelectedIndex == 0) {
                     //Timer
+                    this.SliderSpeed.Value = 1;
+                    this.SliderSpeed.Minimum = 0.5;
+                    this.SliderSpeed.Maximum = 5;
                     hideAlgsSettings();
                     this.GroupBoxAnimationTimerSettings.Visibility = Visibility.Visible;
                     if (Lightning.getStatus()) {
@@ -199,7 +205,21 @@ namespace RyosMKFXPanel {
                     }
                 } else if (this.ComboBoxAnimations.SelectedIndex == 1) {
                     //Smiles
+                    this.SliderSpeed.Value = 1;
+                    this.SliderSpeed.Minimum = 0.5;
+                    this.SliderSpeed.Maximum = 5;
                     hideAlgsSettings();
+                    if (Lightning.getStatus()) {
+                        offLightAlgs();
+                        onLightAlgs();
+                    }
+                } else if (this.ComboBoxAnimations.SelectedIndex == 2) {
+                    //Waterfall
+                    this.SliderSpeed.Value = 10;
+                    this.SliderSpeed.Minimum = 10;
+                    this.SliderSpeed.Maximum = 20;
+                    hideAlgsSettings();
+                    this.GroupBoxAnimationWaterfallSettings.Visibility = Visibility.Visible;
                     if (Lightning.getStatus()) {
                         offLightAlgs();
                         onLightAlgs();
@@ -281,6 +301,29 @@ namespace RyosMKFXPanel {
             Timer.invertColor();
         }
 
+        private void ChekBoxWaterfallTail_Checked(object sender, RoutedEventArgs e) {
+            Waterfall.turnTail();
+        }
+        private void TextBoxWaterfallTailLength_TextChanged(object sender, RoutedEventArgs e) {
+            int x = 0;
+            if (int.TryParse(this.TextBoxWaterfallTailLength.Text, out x)) {
+                if (x < 1) {
+                    Waterfall.tailLength = 1;
+                } else {
+                    Waterfall.tailLength = x;
+                }
+            }
+        }
+        private void ChekBoxWaterfallInvert_Checked(object sender, RoutedEventArgs e) {
+            Waterfall.turnInvert();
+        }
+        private void ChekBoxWaterfallHorizontal_Checked(object sender, RoutedEventArgs e) {
+            Waterfall.turnHorizontal();
+        }
+        private void ChekBoxWaterfallDiagonal_Checked(object sender, RoutedEventArgs e) {
+            Waterfall.turnDiagonal();
+        }
+
         private void offLightAlgs() {
             if (effects) {
                 if (Equalizer.getState()) {
@@ -296,6 +339,10 @@ namespace RyosMKFXPanel {
                     Timer.stop();
                 } else if (Smiles.getState()) {
                     Smiles.stop();
+                } else if (Waterfall.getState()) {
+                    Waterfall.stop();
+                } else if (NyanCat.getState()) {
+                    NyanCat.stop();
                 }
             }
         }
@@ -313,6 +360,10 @@ namespace RyosMKFXPanel {
                     Timer.start();
                 } else if (this.ComboBoxAnimations.SelectedIndex == 1) {
                     Smiles.start();
+                } else if (this.ComboBoxAnimations.SelectedIndex == 2) {
+                    Waterfall.start();
+                } else if (this.ComboBoxAnimations.SelectedIndex == 3) {
+                    NyanCat.start();
                 }
             }
         }
@@ -321,7 +372,7 @@ namespace RyosMKFXPanel {
             this.GroupBoxEffectVolumeSettings.Visibility = Visibility.Hidden;
             this.GroupBoxEffectRandomSettings.Visibility = Visibility.Hidden;
             this.GroupBoxAnimationTimerSettings.Visibility = Visibility.Hidden;
-            
+            this.GroupBoxAnimationWaterfallSettings.Visibility = Visibility.Hidden;
         }
 
     }

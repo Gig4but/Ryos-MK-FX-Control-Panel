@@ -6,11 +6,10 @@
   You can't use any piece of repository for commercial purposes.
 
 ### About Equalizer:
-  In Visualizer_v23.zip archive is compiled "Equalizer" effect. Just exec and have fun!
+  In Visualizer_vXX.zip archive is compiled "Equalizer" effect. Just exec and have fun!
   
   All files from archive must be in one folder with .exe file for success run.
   
-  For first version(Visualizer_v1.zip) program turn off, just press "Home" button and keyboard will return to previous state.
   
   It's not a real program work, just capture from Roccat SWARM.
   ![](https://github.com/Gig4but/RyosMKFXVisualizer/blob/master/Equailizer.gif)

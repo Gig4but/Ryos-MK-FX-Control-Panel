@@ -60,6 +60,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Animations\Smiles.cs" />
+    <Compile Include="Animations\NyanCat.cs" />
+    <Compile Include="Animations\Waterfall.cs" />
     <Compile Include="Animations\Timer.cs" />
     <Compile Include="Effects\Random.cs" />
     <Compile Include="Effects\Volume.cs" />

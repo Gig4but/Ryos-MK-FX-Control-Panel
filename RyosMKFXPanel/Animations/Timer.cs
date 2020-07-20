@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Threading;
+﻿using System.Threading;
 
 namespace RyosMKFXPanel.Animations {
     class Timer :Lightning {

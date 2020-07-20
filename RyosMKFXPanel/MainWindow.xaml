@@ -53,6 +53,8 @@
                 <ComboBox x:Name="ComboBoxAnimations" Grid.Row="0" Grid.Column="1" Width="120" Margin="4" SelectionChanged="ComboBoxAnimations_SelectionChanged" SelectedIndex="0" Visibility="Hidden">
                     <ComboBoxItem IsSelected="True">Timer</ComboBoxItem>
                     <ComboBoxItem>Smiles</ComboBoxItem>
+                    <ComboBoxItem>Waterfall</ComboBoxItem>
+                    <ComboBoxItem>NyanCat</ComboBoxItem>
                 </ComboBox>
                 <Button x:Name="ButtonLever" Grid.Row="1" Grid.Column="1" Content="Start" Margin="4" Click="ButtonLever_Click"/>
                 <Label Grid.Row="2" Grid.Column="0" Content="Status:"/>
@@ -135,6 +137,29 @@
                         <CheckBox x:Name="ChekBoxTimerSimple" Content="simple numbers" Margin="4" Checked="ChekBoxTimerSimple_Checked" Unchecked="ChekBoxTimerSimple_Checked"/>
                         <CheckBox x:Name="ChekBoxTimerInvert" Content="with invert colors" Margin="4" Checked="ChekBoxTimerInvert_Checked" Unchecked="ChekBoxTimerInvert_Checked"/>
                     </WrapPanel>
+                </GroupBox>
+                <GroupBox x:Name="GroupBoxAnimationWaterfallSettings" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Visibility="Hidden">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <CheckBox x:Name="ChekBoxWaterfallTail" Grid.Row="0" Grid.Column="0" Content="tail"  Margin="4" Checked="ChekBoxWaterfallTail_Checked" Unchecked="ChekBoxWaterfallTail_Checked" IsChecked="True"/>
+                        <GroupBox Grid.Row="0" Grid.Column="1" x:Name="GroupBoxWaterfallTailLengthSettings" BorderBrush="{x:Null}" Margin="4" Visibility="Hidden">
+                            <WrapPanel>
+                                <Label Content="Tail length:"/>
+                                <TextBox x:Name="TextBoxWaterfallTailLength" Width="30" Height="20" Text="5" TextChanged="TextBoxWaterfallTailLength_TextChanged" VerticalAlignment="Center"/>
+                            </WrapPanel>
+                        </GroupBox>
+                        <CheckBox x:Name="ChekBoxWaterfallInvert" Grid.Row="1" Grid.Column="0" Content="reverse" Margin="4" Checked="ChekBoxWaterfallInvert_Checked" Unchecked="ChekBoxWaterfallInvert_Checked"/>
+                        <CheckBox x:Name="ChekBoxWaterfallHorizontal" Grid.Row="1" Grid.Column="1" Content="horizontal" Margin="4" Checked="ChekBoxWaterfallHorizontal_Checked" Unchecked="ChekBoxWaterfallHorizontal_Checked" Visibility="Hidden"/>
+                        <CheckBox x:Name="ChekBoxWaterfallDiagonal" Grid.Row="2" Grid.Column="0" Content="diagonal" Margin="4" Checked="ChekBoxWaterfallDiagonal_Checked" Unchecked="ChekBoxWaterfallDiagonal_Checked" Visibility="Hidden"/>
+                    </Grid>
                 </GroupBox>
             </Grid>
         </Canvas>
