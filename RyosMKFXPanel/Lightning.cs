@@ -18,11 +18,15 @@ namespace RyosMKFXPanel {
 
         public static readonly int kbw = 23;
         public static readonly int kbh = 6;
+        public static readonly int kbc = 110;
 
         public static int delay = 10;
         public static float speed = 1f;
 
-        public static RyosTalkFXConnection connection = new RyosTalkFXConnection();
+        public static byte[] keysLight = new byte[kbc];
+        public static byte[] keysColor = new byte[kbc*3];
+
+        private static RyosTalkFXConnection connection = new RyosTalkFXConnection();
 
         public static bool connect() {
             connection.Initialize();
@@ -30,6 +34,35 @@ namespace RyosMKFXPanel {
         }
         public static bool disconnect() {
             return connection.ExitSdkMode();
+        }
+
+        public static void keysLightReset() {
+            for (int i = 0; i < kbc; i++) {
+                keysLight[i] = 0;
+            }
+        }
+        public static void keysLightAllOn() {
+            for (int i = 0; i < kbc; i++) {
+                keysLight[i] = 1;
+            }
+        }
+        public static void keysColorReset() {
+            for (int i = 0; i < kbc * 3; i += 3) {
+                keysColor[i] = 0;
+                keysColor[i + 1] = 0;
+                keysColor[i + 2] = 0;
+            }
+        }
+        public static void keysColorUpdate() {
+            for (int i = 0; i < kbc * 3; i+=3) {
+                keysColor[i] = red;
+                keysColor[i+1] = green;
+                keysColor[i+2] = blue;
+            }
+        }
+
+        public static void sendPacket() {
+            connection.SetMkFxKeyboardState(keysLight, keysColor, 1);
         }
     }
 }

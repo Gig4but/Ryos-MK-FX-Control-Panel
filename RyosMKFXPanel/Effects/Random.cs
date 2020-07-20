@@ -28,26 +28,22 @@ namespace RyosMKFXPanel.Effects {
         }
 
         private static void effectRandom() {
-            byte[] keys = new byte[110];
-
-            byte[] keysR = new byte[110];
-            byte[] keysG = new byte[110];
-            byte[] keysB = new byte[110];
-
             System.Random rnd = new System.Random();
             while (true) {
-                for (int i = 0; i < 110; i++) {
+                for (int i = 0; i < kbc; i++) {
                     if (turn) {
-                        keys[i] = Convert.ToByte(rnd.Next(2));
+                        keysLight[i] = Convert.ToByte(rnd.Next(2));
                     } else {
-                        keys[i] = 1;
+                        keysLight[i] = 1;
                     }
-                    keysR[i] = Convert.ToByte(rnd.Next((int)(red * maxBright)));
-                    keysG[i] = Convert.ToByte(rnd.Next((int)(green * maxBright)));
-                    keysB[i] = Convert.ToByte(rnd.Next((int)(blue * maxBright)));
+                }
+                for (int i = 0; i < kbc * 3; i+=3) {
+                    keysColor[i] = Convert.ToByte(rnd.Next((int)(red * maxBright)));
+                    keysColor[i+1] = Convert.ToByte(rnd.Next((int)(green * maxBright)));
+                    keysColor[i+2] = Convert.ToByte(rnd.Next((int)(blue * maxBright)));
                 }
                 Thread.Sleep(delay);
-                connection.SetMkFxKeyboardState(keys, keysR, keysG, keysB, 1);
+                sendPacket();
             }
         }
     }

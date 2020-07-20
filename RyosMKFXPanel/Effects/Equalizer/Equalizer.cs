@@ -123,12 +123,7 @@ namespace RyosMKFXPanel {
             toKeyboardColor(Matrix);
         }
         static void toKeyboardColor(float[][] Matrix) {
-            byte[] keys = new byte[110];
-            for (int i = 0; i < 110; i++) {
-                keys[i] = 1;
-            }
-            byte[] keysColor = new byte[110 * 3];
-
+            keysLightAllOn();
             int kbi = 0;
             for (int row = kbh - 1; row >= 0; row--) {
                 for (int i = 0; i < kbw; i++) {
@@ -289,7 +284,7 @@ namespace RyosMKFXPanel {
                 }
             }
             Thread.Sleep(delay);
-            connection.SetMkFxKeyboardState(keys, keysColor, 1);
+            sendPacket();
         }
     }
 }

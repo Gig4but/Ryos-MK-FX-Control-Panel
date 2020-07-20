@@ -33,20 +33,17 @@ namespace RyosMKFXPanel.Animations {
         }
 
         private static void animationTimerColor() {
-            byte[] keys = new byte[110];
-            byte[] keysR = new byte[110];
-            byte[] keysG = new byte[110];
-            byte[] keysB = new byte[110];
             int s = 0;
             int ss = 0;
-            for (int i = 0; i < 110; i++) {
+            keysLightReset();
+            for (int i = 18; i < kbc; i++) {
                 if ((i > 17 && i < 27)
                     || i == 34 || i == 35 || i == 36
                     || i == 56 || i == 57 || i == 58
                     || i == 74 || i == 75 || i == 76
                     || i == 92 || i == 93 || i == 94
                     || i == 108 || i == 109) {
-                    keys[i] = 1;
+                    keysLight[i] = 1;
                 }
             }
             while (true) {
@@ -286,27 +283,28 @@ namespace RyosMKFXPanel.Animations {
                 }
                 for (int i = 0; i < ss; i++) {
                     pattern[i] = 1;
+                
                 }
+                colorer(pattern);
+                sendPacket();
                 Thread.Sleep((int)(1000 / speed));
-                connection.SetMkFxKeyboardState(keys, colorer(pattern), 1);
             }
         }
 
-        private static byte[] colorer(byte[] pattern) {
-            byte[] keysRGB = new byte[330];
+        private static void colorer(byte[] pattern) {
+            keysColorReset();
             byte[] keyCodes = { 18, 19, 20, 21, 22, 23, 24, 25, 26, 34, 35, 36, 56, 57, 58, 74, 75, 76, 92, 93, 94, 108, 109 };
             for (int i = 0; i < pattern.Length; i++) {
                 if (pattern[i] == 1) {
-                    keysRGB[(keyCodes[i] * 3)] = (byte)(red * maxBright);
-                    keysRGB[(keyCodes[i] * 3) + 1] = (byte)(green * maxBright);
-                    keysRGB[(keyCodes[i] * 3) + 2] = (byte)(blue * maxBright);
+                    keysColor[(keyCodes[i] * 3)] = (byte)(red * maxBright);
+                    keysColor[(keyCodes[i] * 3) + 1] = (byte)(green * maxBright);
+                    keysColor[(keyCodes[i] * 3) + 2] = (byte)(blue * maxBright);
                 } else if (pattern[i] == 2) {
-                    keysRGB[(keyCodes[i] * 3)] = (byte)((255 - red) * maxBright);
-                    keysRGB[(keyCodes[i] * 3) + 1] = (byte)((255 - green) * maxBright);
-                    keysRGB[(keyCodes[i] * 3) + 2] = (byte)((255 - blue) * maxBright);
+                    keysColor[(keyCodes[i] * 3)] = (byte)((255 - red) * maxBright);
+                    keysColor[(keyCodes[i] * 3) + 1] = (byte)((255 - green) * maxBright);
+                    keysColor[(keyCodes[i] * 3) + 2] = (byte)((255 - blue) * maxBright);
                 }
             }
-            return keysRGB;
         }
     }
 }

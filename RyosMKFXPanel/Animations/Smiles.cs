@@ -23,126 +23,99 @@ namespace RyosMKFXPanel.Animations {
         }
 
         private static void animationTimerColor() {
-            byte[] keys = new byte[110];
-            byte[] keysR = new byte[110];
-            byte[] keysG = new byte[110];
-            byte[] keysB = new byte[110];
-
             while (true) {
-                for (int i = 0; i < 110; i++) {
-                    keysR[i] = red;
-                }
-                for (int i = 0; i < 110; i++) {
-                    keysG[i] = green;
-                }
-                for (int i = 0; i < 110; i++) {
-                    keysB[i] = blue;
-                }
-                for (int i = 0; i < 110; i++) {
-                    keys[i] = 0;
-                }
+                keysLightReset();
+                keysColorUpdate();
 
                 //Fun
-                keys[42] = 1;
-                keys[43] = 1;
-                keys[47] = 1;
-                keys[48] = 1;
-                keys[80] = 1;
-                keys[100] = 1;
-                keys[88] = 1;
-                connection.SetMkFxKeyboardState(keys, keysR, keysG, keysB, 1);
+                keysLight[42] = 1;
+                keysLight[43] = 1;
+                keysLight[47] = 1;
+                keysLight[48] = 1;
+                keysLight[80] = 1;
+                keysLight[100] = 1;
+                keysLight[88] = 1;
+                sendPacket();
                 Thread.Sleep((int)(1000 / speed));
-                for (int i = 0; i < 110; i++) {
-                    keys[i] = 0;
-                }
+                keysLightReset();
 
                 //Calm
-                keys[42] = 1;
-                keys[43] = 1;
-                keys[47] = 1;
-                keys[48] = 1;
-                keys[99] = 1;
-                keys[100] = 1;
-                keys[101] = 1;
-                connection.SetMkFxKeyboardState(keys, keysR, keysG, keysB, 1);
+                keysLight[42] = 1;
+                keysLight[43] = 1;
+                keysLight[47] = 1;
+                keysLight[48] = 1;
+                keysLight[99] = 1;
+                keysLight[100] = 1;
+                keysLight[101] = 1;
+                sendPacket();
                 Thread.Sleep((int)(1000 / speed));
-                for (int i = 0; i < 110; i++) {
-                    keys[i] = 0;
-                }
+                keysLightReset();
 
                 //Sad
-                keys[42] = 1;
-                keys[43] = 1;
-                keys[47] = 1;
-                keys[48] = 1;
-                keys[99] = 1;
-                keys[81] = 1;
-                keys[82] = 1;
-                keys[83] = 1;
-                keys[84] = 1;
-                keys[85] = 1;
-                keys[86] = 1;
-                keys[87] = 1;
-                keys[101] = 1;
-                connection.SetMkFxKeyboardState(keys, keysR, keysG, keysB, 1);
+                keysLight[42] = 1;
+                keysLight[43] = 1;
+                keysLight[47] = 1;
+                keysLight[48] = 1;
+                keysLight[99] = 1;
+                keysLight[81] = 1;
+                keysLight[82] = 1;
+                keysLight[83] = 1;
+                keysLight[84] = 1;
+                keysLight[85] = 1;
+                keysLight[86] = 1;
+                keysLight[87] = 1;
+                keysLight[101] = 1;
+                sendPacket();
                 Thread.Sleep((int)(1000 / speed));
-                for (int i = 0; i < 110; i++) {
-                    keys[i] = 0;
-                }
+                keysLightReset();
 
                 //Angry
-                keys[21] = 1;
-                keys[43] = 1;
-                keys[47] = 1;
-                keys[26] = 1;
-                keys[99] = 1;
-                keys[100] = 1;
-                keys[101] = 1;
-                connection.SetMkFxKeyboardState(keys, keysR, keysG, keysB, 1);
+                keysLight[21] = 1;
+                keysLight[43] = 1;
+                keysLight[47] = 1;
+                keysLight[26] = 1;
+                keysLight[99] = 1;
+                keysLight[100] = 1;
+                keysLight[101] = 1;
+                sendPacket();
                 Thread.Sleep((int)(1000 / speed));
-                for (int i = 0; i < 110; i++) {
-                    keys[i] = 0;
-                }
+                keysLightReset();
 
                 //Kind
-                keys[42] = 1;
-                keys[21] = 1;
-                keys[43] = 1;
-                keys[47] = 1;
-                keys[26] = 1;
-                keys[48] = 1;
-                keys[99] = 1;
-                keys[100] = 1;
-                keys[101] = 1;
-                connection.SetMkFxKeyboardState(keys, keysR, keysG, keysB, 1);
+                keysLight[42] = 1;
+                keysLight[21] = 1;
+                keysLight[43] = 1;
+                keysLight[47] = 1;
+                keysLight[26] = 1;
+                keysLight[48] = 1;
+                keysLight[99] = 1;
+                keysLight[100] = 1;
+                keysLight[101] = 1;
+                sendPacket();
                 Thread.Sleep((int)(1000 / speed));
-                for (int i = 0; i < 110; i++) {
-                    keys[i] = 0;
-                }
+                keysLightReset();
 
                 //Wow
-                keys[21] = 1;
-                keys[20] = 1;
-                keys[42] = 1;
-                keys[43] = 1;
-                keys[64] = 1;
-                keys[65] = 1;
-                keys[82] = 1;
-                keys[81] = 1;
-                keys[25] = 1;
-                keys[26] = 1;
-                keys[47] = 1;
-                keys[48] = 1;
-                keys[69] = 1;
-                keys[70] = 1;
-                keys[87] = 1;
-                keys[88] = 1;
-                keys[100] = 1;
-                connection.SetMkFxKeyboardState(keys, keysR, keysG, keysB, 1);
+                keysLight[21] = 1;
+                keysLight[20] = 1;
+                keysLight[42] = 1;
+                keysLight[43] = 1;
+                keysLight[64] = 1;
+                keysLight[65] = 1;
+                keysLight[82] = 1;
+                keysLight[81] = 1;
+                keysLight[25] = 1;
+                keysLight[26] = 1;
+                keysLight[47] = 1;
+                keysLight[48] = 1;
+                keysLight[69] = 1;
+                keysLight[70] = 1;
+                keysLight[87] = 1;
+                keysLight[88] = 1;
+                keysLight[100] = 1;
+                sendPacket();
                 Thread.Sleep((int)(1000 / speed));
-                for (int i = 0; i < 110; i++) {
-                    keys[i] = 0;
-                }
+                keysLightReset();
             }
         }
     }

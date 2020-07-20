@@ -35,37 +35,22 @@ namespace RyosMKFXPanel.Effects {
             var device = devices[0];
             int v = 0;
 
-            byte[] keys = new byte[110];
-            byte[] keysR = new byte[110];
-            byte[] keysG = new byte[110];
-            byte[] keysB = new byte[110];
-
             while (true) {
-                for (int i = 0; i < 110; i++) {
-                    keysR[i] = red;
-                }
-                for (int i = 0; i < 110; i++) {
-                    keysG[i] = green;
-                }
-                for (int i = 0; i < 110; i++) {
-                    keysB[i] = blue;
-                }
-                for (int i = 0; i < 110; i++) {
-                    keys[i] = 0;
-                }
-                v = Convert.ToInt32(device.AudioMeterInformation.MasterPeakValue * 110);
+                keysLightReset();
+                keysColorUpdate();
+                v = Convert.ToInt32(device.AudioMeterInformation.MasterPeakValue * kbc);
                 if (simple) {
                     v /= 11;
                     for (int i = 18; i < v+18; i++) {
-                        keys[i] = 1;
+                        keysLight[i] = 1;
                     }
                 } else {
                     for (int i = 0; i < v; i++) {
-                        keys[i] = 1;
+                        keysLight[i] = 1;
                     }
                 }
                 Thread.Sleep(delay);
-                connection.SetMkFxKeyboardState(keys, keysR, keysG, keysB, 1);
+                sendPacket();
             }
         }
     }
