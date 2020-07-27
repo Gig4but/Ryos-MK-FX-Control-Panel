@@ -36,10 +36,10 @@ namespace RyosMKFXPanel {
                 }
                 hideAlgsSettings();
                 if (this.ComboBoxEffects.SelectedIndex == 0) {
-                    //Random
+                    //Equalizer
                     this.GroupBoxEffectEqualizerSettings.Visibility = Visibility.Visible;
                 } else if (this.ComboBoxEffects.SelectedIndex == 1) {
-                    //Random
+                    //Volume
                     this.GroupBoxEffectVolumeSettings.Visibility = Visibility.Visible;
                 } else if (this.ComboBoxEffects.SelectedIndex == 2) {
                     //Random
@@ -104,8 +104,27 @@ namespace RyosMKFXPanel {
         }
 
         private void SliderDelay_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
-            this.LabelDelay.Content = "Delay: " + this.SliderDelay.Value.ToString() + "ms";
-            Lightning.delay = Convert.ToInt32(this.SliderDelay.Value);
+            if (this.ComboBoxEffects.SelectedIndex == 0) {
+                this.LabelDelay.Content = "Speed: " + this.SliderDelay.Value.ToString() + "x";
+                if (this.SliderDelay.Value == 1) {
+                    Lightning.delay = 15;
+                    if (Equalizer.getState())
+                        Equalizer.restart(2048);
+                } else if (this.SliderDelay.Value == 2) {
+                    Lightning.delay = 0;
+                    if (Equalizer.getState())
+                        Equalizer.restart(4096);
+                } else if (this.SliderDelay.Value == 3) {
+                    Lightning.delay = 0;
+                    if (Equalizer.getState())
+                        Equalizer.restart(8192);
+                }
+
+            } 
+            else {
+                this.LabelDelay.Content = "Delay: " + this.SliderDelay.Value.ToString() + "ms";
+                Lightning.delay = Convert.ToInt32(this.SliderDelay.Value);
+            }
         }
         private void SliderSpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             this.LabelSpeed.Content = "Speed: " + this.SliderSpeed.Value.ToString() + "x";
@@ -152,9 +171,9 @@ namespace RyosMKFXPanel {
                 if (effects) {
                     if (this.ComboBoxEffects.SelectedIndex == 0) {
                         //Equalizer
-                        this.SliderDelay.Value = 10;
-                        this.SliderDelay.Minimum = 5;
-                        this.SliderDelay.Maximum = 20;
+                        this.SliderDelay.Value = 1;
+                        this.SliderDelay.Minimum = 1;
+                        this.SliderDelay.Maximum = 3;
                         hideAlgsSettings();
                         this.GroupBoxEffectEqualizerSettings.Visibility = Visibility.Visible;
                         if (Lightning.getStatus()) {
@@ -224,14 +243,34 @@ namespace RyosMKFXPanel {
                         offLightAlgs();
                         onLightAlgs();
                     }
+                } else if (this.ComboBoxAnimations.SelectedIndex == 3) {
+                    //NyanCat
+                    this.SliderSpeed.Value = 1;
+                    this.SliderSpeed.Minimum = 0.5;
+                    this.SliderSpeed.Maximum = 5;
+                    hideAlgsSettings();
+                    if (Lightning.getStatus()) {
+                        offLightAlgs();
+                        onLightAlgs();
+                    }
                 }
             }
         }
         private void ChekBoxStaticVolumeTurn_Checked(object sender, RoutedEventArgs e) {
             Equalizer.turnVolume();
+            this.GroupBoxEffectsEqualizerColumnsSettings.Visibility = Visibility.Hidden;
+            this.GroupBoxEffectsEqualizerStaticVolumeSettings.Visibility = Visibility.Visible;
+        }
+        private void ChekBoxStaticVolumeTurn_UnChecked(object sender, RoutedEventArgs e) {
+            Equalizer.turnVolume();
+            this.GroupBoxEffectsEqualizerColumnsSettings.Visibility = Visibility.Visible;
+            this.GroupBoxEffectsEqualizerStaticVolumeSettings.Visibility = Visibility.Hidden;
         }
         private void TextBoxVolumeBorderSize_TextChanged(object sender, RoutedEventArgs e) {
-            Equalizer.staticVolumeSize = Convert.ToInt32(this.TextBoxVolumeBorderSize.Text);
+            int x = 1;
+            if (int.TryParse(this.TextBoxVolumeBorderSize.Text, out x)) {
+                Equalizer.staticVolumeSize = x;
+            }
         }
         private void TextBoxStartColumn_TextChanged(object sender, RoutedEventArgs e) {
             int x = 1;

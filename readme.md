@@ -10,9 +10,10 @@
   
   All files from archive must be in one folder with .exe file for success run.
   
+  ![](https://github.com/Gig4but/RyosMKFXVisualizer/blob/master/Visualizer.png)
   
-  It's not a real program work, just capture from Roccat SWARM.
   ![](https://github.com/Gig4but/RyosMKFXVisualizer/blob/master/Equailizer.gif)
+  It's not a real program work, just capture from Roccat SWARM.
 
 ### About code:
   Some bad C# staff of visual effects for keyboard Ryos MK FX.

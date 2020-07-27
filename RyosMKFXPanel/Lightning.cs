@@ -64,6 +64,14 @@ namespace RyosMKFXPanel {
         public static void sendPacket() {
             connection.SetMkFxKeyboardState(keysLight, keysColor, 1);
         }
+
+        public static void optimizePacket() {
+            for (int i = 0; i < keysLight.Length; i++) {
+                if (keysColor[i*3] < 5 && keysColor[i*3+1] < 5 && keysColor[i*3+2] < 5) {
+                    keysLight[i] = 0;
+                }
+            }
+        }
     }
 }
 

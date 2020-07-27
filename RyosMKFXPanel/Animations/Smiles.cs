@@ -32,7 +32,7 @@ namespace RyosMKFXPanel.Animations {
                 keysLight[43] = 1;
                 keysLight[47] = 1;
                 keysLight[48] = 1;
-                keysLight[80] = 1;
+                keysLight[81] = 1;
                 keysLight[100] = 1;
                 keysLight[88] = 1;
                 sendPacket();

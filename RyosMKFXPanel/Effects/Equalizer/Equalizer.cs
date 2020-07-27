@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Reflection;
 using System.Threading;
 using NAudio.Wave;
-
+using RyosMKFXPanel.Effects;
 
 namespace RyosMKFXPanel {
     class Equalizer : Lightning {
@@ -26,8 +27,8 @@ namespace RyosMKFXPanel {
         }
 
         private static IWaveIn waveIn;
-        private static int fftLength = 8192;
-        private static SampleAggregator sampleAggregator = new SampleAggregator(fftLength);
+        private static int fftLength = 2048;//8192;
+        private static SampleAggregator sampleAggregator;
 
         public static void start() {
             recordStart();
@@ -37,29 +38,47 @@ namespace RyosMKFXPanel {
             recordStop();
             changeState();
         }
+        public static void restart() {
+            recordStop();
+            recordStart();
+        }
+        public static void restart(int x) {
+            recordStop();
+            fftLength = x;
+            sampleAggregator = null; 
+            sampleAggregator = new SampleAggregator(fftLength);
+            recordStart();
+        }
 
         private static void recordStart() {
+            sampleAggregator = new SampleAggregator(fftLength);
             sampleAggregator.FftCalculated += new EventHandler<FftEventArgs>(fft);
             sampleAggregator.PerformFFT = true;
-            waveIn = new WasapiLoopbackCapture();
+            waveIn = new WasapiLoopbackCapture(Volume.devicePlayCheck());
             waveIn.DataAvailable += OnDataAvailable;
             waveIn.StartRecording();
         }
         private static void recordStop() {
             waveIn.StopRecording();
+            waveIn = null;
+            sampleAggregator.FftCalculated -= fft;
         }
         private static void OnDataAvailable(object sender, WaveInEventArgs e) {
             byte[] buffer = e.Buffer;
             int bytesRecorded = e.BytesRecorded;
             int bufferIncrement = waveIn.WaveFormat.BlockAlign;
 
-            for (int index = 0; index < bytesRecorded; index += bufferIncrement) {
-                float sample32 = BitConverter.ToSingle(buffer, index);
-                sampleAggregator.Add(sample32);
+            if (bytesRecorded > 0) {
+                for (int index = 0; index < bytesRecorded; index += bufferIncrement) {
+                    float sample32 = BitConverter.ToSingle(buffer, index);
+                    sampleAggregator.Add(sample32);
+                }
+            } else {
+                restart();
             }
         }
         private static void fft(object sender, FftEventArgs e) {
-            float binSize = 44100 / 8192;
+            float binSize = 44100 / fftLength;
             int minBin = (int)(minHz / binSize);
             int maxBin = (int)(maxHz / binSize);
             float[] intensity = new float[1 + maxBin - minBin];
@@ -90,6 +109,7 @@ namespace RyosMKFXPanel {
                     sumI = 0;
                 }
             }
+
             toMatrixColor(intensityAverage);
             //toMatrixLight(intensityAverage);
         }
@@ -122,6 +142,7 @@ namespace RyosMKFXPanel {
             toKeyboardColor(Matrix);
         }
         static void toKeyboardColor(float[][] Matrix) {
+            Thread.Sleep(delay);
             keysLightAllOn();
             int kbi = 0;
             for (int row = kbh - 1; row >= 0; row--) {
@@ -282,7 +303,7 @@ namespace RyosMKFXPanel {
 
                 }
             }
-            Thread.Sleep(delay);
+            optimizePacket();
             sendPacket();
         }
     }
