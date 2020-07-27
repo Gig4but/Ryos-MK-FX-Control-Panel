@@ -66,8 +66,8 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Label x:Name="LabelDelay" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="2" Content="Speed: 1x"/>
-                        <Slider x:Name="SliderDelay" Width="120" Grid.Row="1" Grid.Column="2"  SmallChange="1" Minimum="1" Maximum="3" Margin="4" Value="1"  ValueChanged="SliderDelay_ValueChanged"  IsSnapToTickEnabled="True" TickPlacement="BottomRight"/>
+                        <Label x:Name="LabelDelay" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="2" Content="Speed: 3x"/>
+                        <Slider x:Name="SliderDelay" Width="120" Grid.Row="1" Grid.Column="2"  SmallChange="1" Minimum="1" Maximum="3" Margin="4" Value="3"  ValueChanged="SliderDelay_ValueChanged"  IsSnapToTickEnabled="True" TickPlacement="BottomRight"/>
                         <Separator Grid.Row="2" Grid.Column="2" VerticalAlignment="Top" Margin="2"/>
                     </Grid>
                 </GroupBox>

@@ -34,3 +34,4 @@ E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\Ryos
 E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\RyosMKFXPanel.csproj.CopyComplete
 E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\RyosMKFXPanel.exe
 E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\RyosMKFXPanel.pdb
+E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\RyosMKFXPanel.csprojAssemblyReference.cache

@@ -1,6 +1,7 @@
 ﻿using RyosMKFXPanel.Animations;
 using RyosMKFXPanel.Effects;
 using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 
@@ -99,6 +100,7 @@ namespace RyosMKFXPanel {
                     this.ButtonLever.Content = "Start";
                     offLightAlgs();
                 }
+                Thread.Sleep(10);
                 Lightning.disconnect();
             }
         }
@@ -107,19 +109,18 @@ namespace RyosMKFXPanel {
             if (this.ComboBoxEffects.SelectedIndex == 0) {
                 this.LabelDelay.Content = "Speed: " + this.SliderDelay.Value.ToString() + "x";
                 if (this.SliderDelay.Value == 1) {
-                    Lightning.delay = 15;
+                    Lightning.delay = 0;
                     if (Equalizer.getState())
-                        Equalizer.restart(2048);
+                        Equalizer.restart(8192);
                 } else if (this.SliderDelay.Value == 2) {
                     Lightning.delay = 0;
                     if (Equalizer.getState())
                         Equalizer.restart(4096);
                 } else if (this.SliderDelay.Value == 3) {
-                    Lightning.delay = 0;
+                    Lightning.delay = 15;
                     if (Equalizer.getState())
-                        Equalizer.restart(8192);
+                        Equalizer.restart(2048);
                 }
-
             } 
             else {
                 this.LabelDelay.Content = "Delay: " + this.SliderDelay.Value.ToString() + "ms";
@@ -334,10 +335,10 @@ namespace RyosMKFXPanel {
         }
 
         private void ChekBoxTimerSimple_Checked(object sender, RoutedEventArgs e) {
-            Timer.simpleNumbers();
+            Animations.Timer.simpleNumbers();
         }
         private void ChekBoxTimerInvert_Checked(object sender, RoutedEventArgs e) {
-            Timer.invertColor();
+            Animations.Timer.invertColor();
         }
 
         private void ChekBoxWaterfallTail_Checked(object sender, RoutedEventArgs e) {
@@ -374,8 +375,8 @@ namespace RyosMKFXPanel {
                 }
             } 
             else if (animations) {
-                if (Timer.getState()) {
-                    Timer.stop();
+                if (Animations.Timer.getState()) {
+                    Animations.Timer.stop();
                 } else if (Smiles.getState()) {
                     Smiles.stop();
                 } else if (Waterfall.getState()) {
@@ -396,7 +397,7 @@ namespace RyosMKFXPanel {
                 }
             } else if (animations) {
                 if (this.ComboBoxAnimations.SelectedIndex == 0) {
-                    Timer.start();
+                    Animations.Timer.start();
                 } else if (this.ComboBoxAnimations.SelectedIndex == 1) {
                     Smiles.start();
                 } else if (this.ComboBoxAnimations.SelectedIndex == 2) {
