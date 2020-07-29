@@ -100,7 +100,7 @@ namespace RyosMKFXPanel {
                     this.ButtonLever.Content = "Start";
                     offLightAlgs();
                 }
-                Thread.Sleep(10);
+                Thread.Sleep(50);
                 Lightning.disconnect();
             }
         }
@@ -166,12 +166,12 @@ namespace RyosMKFXPanel {
             Lightning.disconnect();
         }
 
-        bool SliderBugFixer = false;
+        bool wasFirstRun = false;
         private void ComboBoxEffects_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
-            if (SliderBugFixer) {
-                if (effects) {
-                    if (this.ComboBoxEffects.SelectedIndex == 0) {
-                        //Equalizer
+            if (effects) {
+                if (this.ComboBoxEffects.SelectedIndex == 0) {
+                    //Equalizer
+                    if (wasFirstRun) {
                         this.SliderDelay.Value = 1;
                         this.SliderDelay.Minimum = 1;
                         this.SliderDelay.Maximum = 3;
@@ -181,32 +181,32 @@ namespace RyosMKFXPanel {
                             offLightAlgs();
                             onLightAlgs();
                         }
-                    } else if (this.ComboBoxEffects.SelectedIndex == 1) {
-                        //Volume
-                        this.SliderDelay.Value = 20;
-                        this.SliderDelay.Minimum = 15;
-                        this.SliderDelay.Maximum = 30;
-                        hideAlgsSettings();
-                        this.GroupBoxEffectVolumeSettings.Visibility = Visibility.Visible;
-                        if (Lightning.getStatus()) {
-                            offLightAlgs();
-                            onLightAlgs();
-                        }
-                    } else if (this.ComboBoxEffects.SelectedIndex == 2) {
-                        //Random
-                        this.SliderDelay.Value = 20;
-                        this.SliderDelay.Minimum = 15;
-                        this.SliderDelay.Maximum = 30;
-                        hideAlgsSettings();
-                        this.GroupBoxEffectRandomSettings.Visibility = Visibility.Visible;
-                        if (Lightning.getStatus()) {
-                            offLightAlgs();
-                            onLightAlgs();
-                        }
+                    } else {
+                        wasFirstRun = true;
+                    }
+                } else if (this.ComboBoxEffects.SelectedIndex == 1) {
+                    //Volume
+                    this.SliderDelay.Value = 20;
+                    this.SliderDelay.Minimum = 15;
+                    this.SliderDelay.Maximum = 30;
+                    hideAlgsSettings();
+                    this.GroupBoxEffectVolumeSettings.Visibility = Visibility.Visible;
+                    if (Lightning.getStatus()) {
+                        offLightAlgs();
+                        onLightAlgs();
+                    }
+                } else if (this.ComboBoxEffects.SelectedIndex == 2) {
+                    //Random
+                    this.SliderDelay.Value = 20;
+                    this.SliderDelay.Minimum = 15;
+                    this.SliderDelay.Maximum = 30;
+                    hideAlgsSettings();
+                    this.GroupBoxEffectRandomSettings.Visibility = Visibility.Visible;
+                    if (Lightning.getStatus()) {
+                        offLightAlgs();
+                        onLightAlgs();
                     }
                 }
-            } else {
-                SliderBugFixer = true;
             }
         }
 
@@ -257,25 +257,28 @@ namespace RyosMKFXPanel {
                 }
             }
         }
-        private void ChekBoxStaticVolumeTurn_Checked(object sender, RoutedEventArgs e) {
+        private void ChekBoxEffectsEqualizerStaticVolumeTurn_Checked(object sender, RoutedEventArgs e) {
             Equalizer.turnVolume();
             this.GroupBoxEffectsEqualizerColumnsSettings.Visibility = Visibility.Hidden;
             this.GroupBoxEffectsEqualizerStaticVolumeSettings.Visibility = Visibility.Visible;
         }
-        private void ChekBoxStaticVolumeTurn_UnChecked(object sender, RoutedEventArgs e) {
+        private void ChekBoxEffectsEqualizerStaticVolumeTurn_UnChecked(object sender, RoutedEventArgs e) {
             Equalizer.turnVolume();
             this.GroupBoxEffectsEqualizerColumnsSettings.Visibility = Visibility.Visible;
             this.GroupBoxEffectsEqualizerStaticVolumeSettings.Visibility = Visibility.Hidden;
         }
-        private void TextBoxVolumeBorderSize_TextChanged(object sender, RoutedEventArgs e) {
+        private void ChekBoxEffectsEqualizerAntialiasingTurn_Checked(object sender, RoutedEventArgs e) {
+            Equalizer.turnAntialiasing();
+        }
+        private void TextBoxEffectsEqualizerVolumeBorderSize_TextChanged(object sender, RoutedEventArgs e) {
             int x = 1;
-            if (int.TryParse(this.TextBoxVolumeBorderSize.Text, out x)) {
+            if (int.TryParse(this.TextBoxEffectsEqualizerVolumeBorderSize.Text, out x)) {
                 Equalizer.staticVolumeSize = x;
             }
         }
-        private void TextBoxStartColumn_TextChanged(object sender, RoutedEventArgs e) {
+        private void TextBoxEffectsEqualizerStartColumn_TextChanged(object sender, RoutedEventArgs e) {
             int x = 1;
-            if (int.TryParse(this.TextBoxStartColumn.Text, out x)) {
+            if (int.TryParse(this.TextBoxEffectsEqualizerStartColumn.Text, out x)) {
                 if (x < 1) {
                     Equalizer.startColumn = 1;
                 } else if (x > 23) {
@@ -285,9 +288,9 @@ namespace RyosMKFXPanel {
                 }
             }
         }
-        private void TextBoxEndColumn_TextChanged(object sender, RoutedEventArgs e) {
+        private void TextBoxEffectsEqualizerEndColumn_TextChanged(object sender, RoutedEventArgs e) {
             int x = 2;
-            if (int.TryParse(this.TextBoxEndColumn.Text, out x)) {
+            if (int.TryParse(this.TextBoxEffectsEqualizerEndColumn.Text, out x)) {
                 if (x < 2) {
                     Equalizer.endColumn = 2;
                 } else if (x > 24) {
@@ -300,14 +303,21 @@ namespace RyosMKFXPanel {
         private void TextBoxMaxFreq_TextChanged(object sender, RoutedEventArgs e) {
             int x = 0;
             if (int.TryParse(this.TextBoxMaxFreq.Text, out x)) {
-                if (x < 0) {
-                    Equalizer.minHz = 0;
-                } else if (x > 23) {
-                    Equalizer.minHz = 23;
-                } else if (x > Equalizer.maxHz) {
-                    x = Equalizer.maxHz - 1;
+                if (x < Equalizer.minHz + Lightning.kbw) {
+                    Equalizer.maxHz = Equalizer.minHz + Lightning.kbw;
                 } else {
-                    Equalizer.minHz = x;
+                    Equalizer.maxHz = x;
+                }
+            }
+            TextBoxMinFreq_TextChanged();
+        }
+        private void TextBoxMaxFreq_TextChanged() {
+            int x = 0;
+            if (int.TryParse(this.TextBoxMaxFreq?.Text, out x)) {
+                if (x < Equalizer.minHz + Lightning.kbw) {
+                    Equalizer.maxHz = Equalizer.minHz + Lightning.kbw;
+                } else {
+                    Equalizer.maxHz = x;
                 }
             }
         }
@@ -316,10 +326,21 @@ namespace RyosMKFXPanel {
             if (int.TryParse(this.TextBoxMinFreq.Text, out x)) {
                 if (x < 0) {
                     Equalizer.minHz = 0;
-                } else if (x > 23) {
-                    Equalizer.minHz = 23;
-                } else if (x < Equalizer.minHz) {
-                    x = Equalizer.minHz + 1;
+                } else if (x > Equalizer.maxHz - Lightning.kbw) {
+                    x = Equalizer.maxHz - Lightning.kbw;
+                } else {
+                    Equalizer.minHz = x;
+                }
+            }
+            TextBoxMaxFreq_TextChanged();
+        }
+        private void TextBoxMinFreq_TextChanged() {
+            int x = 0;
+            if (int.TryParse(this.TextBoxMinFreq?.Text, out x)) {
+                if (x < 0) {
+                    Equalizer.minHz = 0;
+                } else if (x > Equalizer.maxHz - Lightning.kbw) {
+                    x = Equalizer.maxHz - Lightning.kbw;
                 } else {
                     Equalizer.minHz = x;
                 }

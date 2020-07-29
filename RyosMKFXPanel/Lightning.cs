@@ -47,7 +47,7 @@ namespace RyosMKFXPanel {
             }
         }
         public static void keysColorReset() {
-            for (int i = 0; i < kbc * 3; i += 3) {
+            for (int i = 0; i < kbc * 3; i+=3) {
                 keysColor[i] = 0;
                 keysColor[i + 1] = 0;
                 keysColor[i + 2] = 0;
@@ -55,9 +55,9 @@ namespace RyosMKFXPanel {
         }
         public static void keysColorUpdate() {
             for (int i = 0; i < kbc * 3; i+=3) {
-                keysColor[i] = red;
-                keysColor[i+1] = green;
-                keysColor[i+2] = blue;
+                keysColor[i] = (byte)(red * maxBright);
+                keysColor[i+1] = (byte)(green * maxBright);
+                keysColor[i+2] = (byte)(blue * maxBright);
             }
         }
 

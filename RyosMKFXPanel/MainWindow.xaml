@@ -92,9 +92,10 @@
                 <TextBox x:Name="TextBoxGreen" Grid.Row="2" Grid.Column="4" Width="30" Height="20" Text="255" TextChanged="TextBoxGreen_TextChanged" />
                 <Label HorizontalAlignment="Center" Grid.Row="3" Grid.Column="3"  Content="blue:"/>
                 <TextBox x:Name="TextBoxBlue"  Grid.Row="3" Grid.Column="4" Width="30" Height="20" Text="255" TextChanged="TextBoxBlue_TextChanged" />
-                <GroupBox x:Name="GroupBoxEffectEqualizerSettings" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Visibility="Visible">
+                <GroupBox x:Name="GroupBoxEffectEqualizerSettings" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" Visibility="Visible">
                     <Grid>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -109,19 +110,20 @@
                         <TextBox x:Name="TextBoxMinFreq" Grid.Row="0" Grid.Column="1" Width="40" Height="20" Text="20" TextChanged="TextBoxMinFreq_TextChanged" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                         <Label Content=" - " Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center"/>
                         <TextBox x:Name="TextBoxMaxFreq" Grid.Row="0" Grid.Column="3" Width="40" Height="20" Text="2000" TextChanged="TextBoxMaxFreq_TextChanged" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ChekBoxStaticVolumeTurn" Content="static volume border" Margin="4,10,4,4" Checked="ChekBoxStaticVolumeTurn_Checked" Unchecked="ChekBoxStaticVolumeTurn_UnChecked"/>
+                        <CheckBox Grid.Row="0" Grid.Column="4" x:Name="ChekBoxEffectsEqualizerAntialiasingTurn" Content="antialiasing" Margin="4,10,4,4" Checked="ChekBoxEffectsEqualizerAntialiasingTurn_Checked" Unchecked="ChekBoxEffectsEqualizerAntialiasingTurn_Checked" IsChecked="True"/>
+                        <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ChekBoxEffectsEqualizerStaticVolumeTurn" Content="static volume border" Margin="4,10,4,4" Checked="ChekBoxEffectsEqualizerStaticVolumeTurn_Checked" Unchecked="ChekBoxEffectsEqualizerStaticVolumeTurn_UnChecked"/>
                         <GroupBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" x:Name="GroupBoxEffectsEqualizerStaticVolumeSettings" Visibility="Hidden" BorderBrush="{x:Null}" Margin="4" >
                             <WrapPanel>
                                 <Label Content="Max. volume:"/>
-                                <TextBox x:Name="TextBoxVolumeBorderSize" Width="30" Height="20" Text="20" TextChanged="TextBoxVolumeBorderSize_TextChanged" VerticalAlignment="Center"/>
+                                <TextBox x:Name="TextBoxEffectsEqualizerVolumeBorderSize" Width="30" Height="20" Text="20" TextChanged="TextBoxEffectsEqualizerVolumeBorderSize_TextChanged" VerticalAlignment="Center"/>
                             </WrapPanel>
                         </GroupBox>
                         <GroupBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" x:Name="GroupBoxEffectsEqualizerColumnsSettings" BorderBrush="{x:Null}">
                             <WrapPanel>
                                 <Label Content="Columns no-skip (23=max):" Grid.Row="1" Grid.Column="0"/>
-                                <TextBox x:Name="TextBoxStartColumn" Grid.Row="1" Grid.Column="1" Width="30" Height="20" Text="2" TextChanged="TextBoxStartColumn_TextChanged" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                <TextBox x:Name="TextBoxEffectsEqualizerStartColumn" Grid.Row="1" Grid.Column="1" Width="30" Height="20" Text="2" TextChanged="TextBoxEffectsEqualizerStartColumn_TextChanged" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                                 <Label Content=" - " Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center"/>
-                                <TextBox x:Name="TextBoxEndColumn" Grid.Row="1" Grid.Column="3" Width="30" Height="20" Text="23" TextChanged="TextBoxEndColumn_TextChanged" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                <TextBox x:Name="TextBoxEffectsEqualizerEndColumn" Grid.Row="1" Grid.Column="3" Width="30" Height="20" Text="23" TextChanged="TextBoxEffectsEqualizerEndColumn_TextChanged" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                             </WrapPanel>
                         </GroupBox>
                     </Grid>
