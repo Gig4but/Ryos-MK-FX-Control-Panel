@@ -1,12 +1,18 @@
 ﻿using Roccat_Talk.RyosTalkFX;
+using RyosMKFXPanel.Animations;
+using RyosMKFXPanel.Effects;
+using System.Threading;
+using System.Windows;
+using System.Windows.Media;
+
 namespace RyosMKFXPanel {
     class Lightning {
-        private static bool active = false;
+        private static bool connected = false;
         public static bool getStatus() {
-            return active;
+            return connected;
         }
         public static bool changeStatus() {
-            active = ((active == false) ? true : false);
+            connected = ((connected == false) ? true : false);
             return true;
         }
 
@@ -21,31 +27,55 @@ namespace RyosMKFXPanel {
         public static readonly int kbc = 110;
 
         public static int delay = 10;
-        public static float speed = 1f;
+        public static float speed = 3f;
 
         public static byte[] keysLight = new byte[kbc];
         public static byte[] keysColor = new byte[kbc*3];
 
         private static RyosTalkFXConnection connection = new RyosTalkFXConnection();
 
+
+
+        /// <summary>
+        /// Initiate connection to device
+        /// </summary>
         public static bool connect() {
-            connection.Initialize();
-            return connection.EnterSdkMode();
+            if (connection.Initialize()) {
+                return connection.EnterSdkMode();
+            }
+            return false;
         }
+
+        /// <summary>
+        /// Release connection to device
+        /// </summary>
         public static bool disconnect() {
             return connection.ExitSdkMode();
         }
 
+
+
+        /// <summary>
+        /// Turn off all device keys 
+        /// </summary>
         public static void keysLightReset() {
             for (int i = 0; i < kbc; i++) {
                 keysLight[i] = 0;
             }
         }
+
+        /// <summary>
+        /// Turn on all device keys
+        /// </summary>
         public static void keysLightAllOn() {
             for (int i = 0; i < kbc; i++) {
                 keysLight[i] = 1;
             }
         }
+
+        /// <summary>
+        /// Set color of all device keys to 0
+        /// </summary>
         public static void keysColorReset() {
             for (int i = 0; i < kbc * 3; i+=3) {
                 keysColor[i] = 0;
@@ -53,6 +83,10 @@ namespace RyosMKFXPanel {
                 keysColor[i + 2] = 0;
             }
         }
+
+        /// <summary>
+        /// Update color array of device keys from variables
+        /// </summary>
         public static void keysColorUpdate() {
             for (int i = 0; i < kbc * 3; i+=3) {
                 keysColor[i] = (byte)(red * maxBright);
@@ -61,16 +95,267 @@ namespace RyosMKFXPanel {
             }
         }
 
+
+
+        /// <summary>
+        /// Send keys packet to device
+        /// </summary>
         public static void sendPacket() {
-            connection.SetMkFxKeyboardState(keysLight, keysColor, 1);
+            if (connected) {
+                connection.SetMkFxKeyboardState(keysLight, keysColor, 1);
+            }
         }
 
+        /// <summary>
+        /// Optimize packets for device (off unused keys)
+        /// </summary>
         public static void optimizePacket() {
             for (int i = 0; i < keysLight.Length; i++) {
                 if (keysColor[i*3] < 5 && keysColor[i*3+1] < 5 && keysColor[i*3+2] < 5) {
                     keysLight[i] = 0;
                 }
             }
+        }
+
+
+
+        public static int prei = 0;
+
+        public static bool effects = true;
+        public static bool animations = false;
+        public static bool custom = false;
+        public static bool games = false;
+
+        /// index of effect
+        /// 0 - Equalizer, 1 - Volume, 2 - Random
+        public static int ei = 0;
+        /// 0 - Timer, 1 - Smiles, 2 - Waterfall, 3 - NyanCat
+        public static int ai = 0;
+        public static int ci = 0;
+        public static int gi = 0;
+
+        /// <summary>
+        /// Turn off all effects from selected mode
+        /// </summary>
+        public static void offLightAlgs() {
+            if (effects) {
+                if (Equalizer.getState())
+                    Equalizer.stop();
+                else if (Volume.getState())
+                    Volume.stop();
+                else if (Effects.Random.getState())
+                    Effects.Random.stop();
+
+            } else if (animations) {
+                if (Animations.Timer.getState())
+                    Animations.Timer.stop();
+                else if (Smiles.getState())
+                    Smiles.stop();
+                else if (Waterfall.getState())
+                    Waterfall.stop();
+                else if (NyanCat.getState())
+                    NyanCat.stop();
+
+            }
+            Thread.Sleep(100);
+        }
+
+        /// <summary>
+        /// Turn on specified effect from selected mode
+        /// </summary>
+        public static void onLightAlg() {
+            if (effects) {
+                if (ei == 0)
+                    Equalizer.start();
+                else if (ei == 1)
+                    Volume.start();
+                else if (ei == 2)
+                    Effects.Random.start();
+
+            } else if (animations) {
+                if (ai == 0)
+                    Animations.Timer.start();
+                else if (ai == 1)
+                    Smiles.start();
+                else if (ai == 2)
+                    Waterfall.start();
+                else if (ai == 3)
+                    NyanCat.start();
+
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// Change status of only one mode to true
+        /// </summary>
+        /// <param name="mi">index of mode (0 - Effects, 1 - Animations, 2 - Custom, 3 - Games)</param>
+        public static void changeMode(int mi) {
+            offLightAlgs();
+            effects = false;
+            animations = false;
+            custom = false;
+            games = false;
+            if (mi == 0)
+                effects = true;
+            else if (mi == 1)
+                animations = true;
+            else if (mi == 2)
+                custom = true;
+            else if (mi == 3)
+                games = true;
+            onLightAlg();
+        }
+
+        /// <summary>
+        /// Turn off actual effects and turn on new one with actual mode
+        /// </summary>
+        /// <param name="algi">index of effect (0 - Equalizer/Timer, 1 - Volume/Smiles, 2 - Random/Waterfall, 3 - null/NyanCat)</param>
+        public static void runNewAlg(int x) {
+            offLightAlgs();
+            if (effects) {
+                ei = x;
+            } else if (animations) {
+                ai = x;
+            } else if (custom) {
+                ci = x;
+            } else if (games) {
+                gi = x;
+            }
+            onLightAlg();
+        }
+
+        /// <summary>
+        /// Restart actual effect
+        /// </summary>
+        public static void restartAlg() {
+            offLightAlgs();
+            onLightAlg();
+        }
+
+
+
+
+        /// <summary>
+        /// Prepare to work with device
+        /// </summary>
+        /// <returns>False if was started or can not connect too device, true if connected</returns>
+        public static bool startWork() {
+            if (!getStatus()) {
+                if (connect()) {
+                    if (changeStatus()) {
+                        return true;
+                    }
+                } else {
+                    MessageBox.Show("Can't start a work\n with the device.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// End work with device
+        /// </summary>
+        /// <returns>False if wasn't started or can not release device, true if disconnected</returns>
+        public static bool stopWork() {
+            if (getStatus()) {
+                if (disconnect()) {
+                    if (changeStatus()) {
+                        return true;
+                    }
+                } else {
+                    MessageBox.Show("Can't stop a work\n with the device.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Switch combination of startWork() & stopWork()
+        /// </summary>
+        /// <returns>False if wasn't started or can not release device, true if disconnected</returns>
+        public static bool switchWork() {
+            if (!getStatus()) {
+                if (connect()) {
+                    if (changeStatus()) {
+                        return true;
+                    }
+                } else {
+                    MessageBox.Show("Can't start a work\n with the device.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            } else {
+                if (disconnect()) {
+                    if (changeStatus()) {
+                        return false;
+                    }
+                } else {
+                    MessageBox.Show("Can't stop a work\n with the device.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            return false;
+        }
+
+
+
+        /// <summary>
+        /// Change delay (delay applies before send new packet to keyboard)
+        /// </summary>
+        /// <param name="delay">Delay in miliseconds</param>
+        public static void changeDelay(int delay) {
+            Lightning.delay = delay;
+        }
+
+        /// <summary>
+        /// Change speed (division of 1 second)
+        /// </summary>
+        /// <param name="speed">Speed multiplier</param>
+        public static void changeSpeed(float speed) {
+            Lightning.speed = speed;
+        }
+
+        /// <summary>
+        /// Change brightness of keys
+        /// </summary>
+        /// <param name="brightness">Brightness multiplier to color</param>
+        public static void changeBrightness(float brightness) {
+            Lightning.maxBright = brightness;
+        }
+
+        /// <summary>
+        /// Change red color intensity
+        /// </summary>
+        /// <param name="red">1 byte number</param>
+        public static void changeColorRed(byte red) {
+            Lightning.red = red;
+        }
+
+        /// <summary>
+        /// Change green color intensity
+        /// </summary>
+        /// <param name="green">1 byte number</param>
+        public static void changeColorGreen(byte green) {
+            Lightning.green = green;
+        }
+
+        /// <summary>
+        /// Change blue color intensity
+        /// </summary>
+        /// <param name="blue">1 byte number</param>
+        public static void changeColorBlue(byte blue) {
+            Lightning.blue = blue;
+        }
+
+        /// <summary>
+        /// Applies RGB code
+        /// </summary>
+        /// <param name="rgb">string of rgb code (0, 0, 255)/(#0000FF)</param>
+        public static void changeColorRGB(string rgb) {
+            Color color = (Color)ColorConverter.ConvertFromString(rgb);
+            Lightning.red = color.R;
+            Lightning.green = color.G;
+            Lightning.blue = color.B;
         }
     }
 }

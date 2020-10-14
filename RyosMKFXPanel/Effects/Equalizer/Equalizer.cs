@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Reflection;
 using System.Threading;
-using System.Windows;
 using NAudio.Wave;
 using RyosMKFXPanel.Effects;
 
@@ -17,7 +15,7 @@ namespace RyosMKFXPanel {
         }
 
         public static int minHz = 20;
-        public static int maxHz = 2000;
+        public static int maxHz = 2800;
         public static int startColumn = 2;
         public static int endColumn = 23;
         private static bool staticVolume = false;
@@ -32,7 +30,7 @@ namespace RyosMKFXPanel {
         }
 
         private static IWaveIn waveIn;
-        private static int fftLength = 2048;//8192;
+        private static int fftLengthDefault = 8192;
         private static SampleAggregator sampleAggregator;
 
         public static void start() {
@@ -47,16 +45,9 @@ namespace RyosMKFXPanel {
             recordStop();
             recordStart();
         }
-        public static void restart(int x) {
-            recordStop();
-            fftLength = x;
-            sampleAggregator = null; 
-            sampleAggregator = new SampleAggregator(fftLength);
-            recordStart();
-        }
 
         private static void recordStart() {
-            sampleAggregator = new SampleAggregator(fftLength);
+            sampleAggregator = new SampleAggregator(Convert.ToInt32(fftLengthDefault / Math.Pow(2, Lightning.delay)));
             sampleAggregator.FftCalculated += new EventHandler<FftEventArgs>(fft);
             sampleAggregator.PerformFFT = true;
             waveIn = new WasapiLoopbackCapture(Volume.devicePlayCheck());
@@ -65,7 +56,6 @@ namespace RyosMKFXPanel {
         }
         private static void recordStop() {
             waveIn.StopRecording();
-            waveIn = null;
             sampleAggregator.FftCalculated -= fft;
         }
         private static void OnDataAvailable(object sender, WaveInEventArgs e) {
@@ -83,16 +73,18 @@ namespace RyosMKFXPanel {
             }
         }
         private static void fft(object sender, FftEventArgs e) {
-            float binSize = 44100 / fftLength;
-            int minBin = (int)(minHz / binSize);
-            int maxBin = (int)(maxHz / binSize);
+            float binSize = 44100 / fftLengthDefault;
+            int minBin = ( (int)(minHz / (binSize * Lightning.delay * 4)) );
+            if (minBin < 1)
+                minBin = 1;
+            int maxBin = (int)(maxHz / (binSize * Lightning.delay * 4));
             float[] intensity = new float[1 + maxBin - minBin];
             float[] frequency = new float[1 + maxBin - minBin];
-            for (int bin = minBin; bin <= maxBin;
-                bin++) {
+            float v = (float)Volume.volumeIs();
+            for (int bin = minBin; bin <= maxBin; bin++) {
                 float real = e.Result[bin * 2].X;
                 float imaginary = e.Result[bin * 2 + 1].Y;
-                intensity[bin - minBin] = (real * real + imaginary * imaginary) * 1000_000_000f;
+                intensity[bin - minBin] = (real * real + imaginary * imaginary) * 100_000_000f;
                 frequency[bin - minBin] = binSize * bin;
             }
             //binSize * bin - frequency; intensity - power
@@ -108,7 +100,7 @@ namespace RyosMKFXPanel {
                 sumI += intensity[i];
                 if ((i + 1) % groupSize == 0 && (i + 1) / groupSize <= kbw) {
                     frequencyAverage[averageIndex] = sumF / groupSize;
-                    intensityAverage[averageIndex] = sumI / groupSize;
+                    intensityAverage[averageIndex] = sumI / groupSize * frequencyAverage[averageIndex];
                     averageIndex++;
                     sumF = 0;
                     sumI = 0;
@@ -124,18 +116,17 @@ namespace RyosMKFXPanel {
             for (int i = 0; i < kbh; i++) {
                 Matrix[i] = new float[kbw];
             }
-            float x = 0;
+            float point = 0;
             if (staticVolume) {
-                x = staticVolumeSize;
+                point = staticVolumeSize * (float)Volume.volumeIs() * 1000;
             } else {
                 for (int i = startColumn - 1; i < endColumn; i++) {
-                    x += iA[i];
+                    point += iA[i];
                     if (i == iA.Length - 1) {
-                        x /= i;
+                        point /= i;
                     }
                 }
             }
-            float point = x / 2;
             for (int index = 0; index < kbw; index++) {
                 float power = iA[index];
                 int row = 0;
@@ -317,6 +308,7 @@ namespace RyosMKFXPanel {
             sendPacket();
         }
         static void toKeyboardLight(float[][] Matrix) {
+            //(sampleAggregator.fftLength < 1024) ? delay * delay : delay
             Thread.Sleep(delay);
             keysLightReset();
             keysColorUpdate();

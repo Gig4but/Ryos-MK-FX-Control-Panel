@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 
 namespace RyosMKFXPanel.Effects {
-    class Volume : Lightning {
+    class Volume :Lightning {
         private static bool run = false;
         public static bool getState() {
             return run;
@@ -29,19 +29,19 @@ namespace RyosMKFXPanel.Effects {
         public static void simpleVolume() {
             simple = ((simple) ? false : true);
         }
-        private static int v = 0;
-        
+        private static double v = 0;
+
         private static void effectVolume() {
             while (true) {
                 Thread.Sleep(delay);
                 keysLightReset();
                 keysColorUpdate();
                 devicePlayCheck();
-                
 
+                v = Math.Round(volumeIs() * kbc);
                 if (simple) {
                     v /= 11;
-                    for (int i = 18; i < v+18; i++) {
+                    for (int i = 18; i < v + 18; i++) {
                         keysLight[i] = 1;
                     }
                 } else {
@@ -55,12 +55,12 @@ namespace RyosMKFXPanel.Effects {
 
         private static int check = 0;
         private static int deviceID = 0;
+        private static MMDevice device = null;
         public static MMDevice devicePlayCheck() {
             MMDeviceEnumerator enumerator = new MMDeviceEnumerator();
             MMDeviceCollection devices = enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
-            MMDevice device = devices[deviceID];
-            v = Convert.ToInt32(device.AudioMeterInformation.MasterPeakValue * kbc);
-            if (v == 0) {
+            device = devices[deviceID];
+            if (device.AudioMeterInformation.MasterPeakValue == 0) {
                 check++;
             } else {
                 check = 0;
@@ -75,6 +75,9 @@ namespace RyosMKFXPanel.Effects {
                 }
             }
             return device;
+        }
+        public static double volumeIs() {
+            return device.AudioMeterInformation.MasterPeakValue;
         }
     }
 }

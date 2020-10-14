@@ -4,6 +4,17 @@
              xmlns:local="clr-namespace:RyosMKFXPanel"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Color x:Key="ActualColorFF" A="#FF" R="#00" G="#FF" B="#FF"/>
+        <Color x:Key="ActualColorAA" A="#AA" R="#00" G="#FF" B="#FF"/>
+        <SolidColorBrush x:Key="ActualColorBrushFF" Color="{DynamicResource ActualColorFF}"/>
+        <SolidColorBrush x:Key="ActualColorBrushAA" Color="{DynamicResource ActualColorAA}"/>
+
+        <Color x:Key="DefaultColorFF" A="#FF" R="#FF" G="#FF" B="#FF"/>
+        <Color x:Key="DefaultColorAA" A="#AA" R="#FF" G="#FF" B="#FF"/>
+        <SolidColorBrush x:Key="DefaultColorBrushFF" Color="{DynamicResource DefaultColorFF}"/>
+        <SolidColorBrush x:Key="DefaultColorBrushAA" Color="{DynamicResource DefaultColorAA}"/>
+
+        <Color x:Key="BlackColorAA" A="#AA" R="#00" G="#00" B="#00"/>
+        <SolidColorBrush x:Key="BlackColorBrushAA" Color="{DynamicResource BlackColorAA}"/>
     </Application.Resources>
 </Application>

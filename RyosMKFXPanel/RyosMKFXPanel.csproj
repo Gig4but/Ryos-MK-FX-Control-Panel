@@ -63,6 +63,36 @@
     <Compile Include="Animations\NyanCat.cs" />
     <Compile Include="Animations\Waterfall.cs" />
     <Compile Include="Animations\Timer.cs" />
+    <Compile Include="Corsair\LightningC.cs" />
+    <Compile Include="Corsair\SDK\CorsairAccessMode.cs" />
+    <Compile Include="Corsair\SDK\CorsairChannelDeviceInfo.cs" />
+    <Compile Include="Corsair\SDK\CorsairChannelDeviceInfoNative.cs" />
+    <Compile Include="Corsair\SDK\CorsairChannelDeviceType.cs" />
+    <Compile Include="Corsair\SDK\CorsairChannelInfo.cs" />
+    <Compile Include="Corsair\SDK\CorsairChannelInfoNative.cs" />
+    <Compile Include="Corsair\SDK\CorsairChannelsInfo.cs" />
+    <Compile Include="Corsair\SDK\CorsairChannelsInfoNative.cs" />
+    <Compile Include="Corsair\SDK\CorsairDeviceCaps.cs" />
+    <Compile Include="Corsair\SDK\CorsairDeviceInfo.cs" />
+    <Compile Include="Corsair\SDK\CorsairDeviceInfoNative.cs" />
+    <Compile Include="Corsair\SDK\CorsairDevicePropertyId.cs" />
+    <Compile Include="Corsair\SDK\CorsairDevicePropertyType.cs" />
+    <Compile Include="Corsair\SDK\CorsairDeviceType.cs" />
+    <Compile Include="Corsair\SDK\CorsairError.cs" />
+    <Compile Include="Corsair\SDK\CorsairKeyId.cs" />
+    <Compile Include="Corsair\SDK\CorsairLedColor.cs" />
+    <Compile Include="Corsair\SDK\CorsairLedColorNative.cs" />
+    <Compile Include="Corsair\SDK\CorsairLedId.cs" />
+    <Compile Include="Corsair\SDK\CorsairLedPosition.cs" />
+    <Compile Include="Corsair\SDK\CorsairLedPositionNative.cs" />
+    <Compile Include="Corsair\SDK\CorsairLedPositions.cs" />
+    <Compile Include="Corsair\SDK\CorsairLedPositionsNative.cs" />
+    <Compile Include="Corsair\SDK\CorsairLogicalLayout.cs" />
+    <Compile Include="Corsair\SDK\CorsairPhysicalLayout.cs" />
+    <Compile Include="Corsair\SDK\CorsairProtocolDetails.cs" />
+    <Compile Include="Corsair\SDK\CorsairProtocolDetailsNative.cs" />
+    <Compile Include="Corsair\SDK\CUESDK.cs" />
+    <Compile Include="Corsair\SDK\CUESDKNative.cs" />
     <Compile Include="Effects\Random.cs" />
     <Compile Include="Effects\Volume.cs" />
     <Compile Include="RyosTalkFX\BasicTalkFxConnection.cs" />
@@ -76,6 +106,12 @@
     <Compile Include="RyosTalkFX\TalkFX\TalkFxConnection.cs" />
     <Compile Include="RyosTalkFX\TalkFX\Zone.cs" />
     <Compile Include="Effects\Equalizer\SampleAggregator.cs" />
+    <Compile Include="windowStyles\styleLegacy.xaml.cs">
+      <DependentUpon>styleLegacy.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="windowStyles\styleNew.xaml.cs">
+      <DependentUpon>styleNew.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -90,6 +126,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="windowStyles\styleLegacy.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="windowStyles\styleNew.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -119,9 +163,45 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="32x32.png" />
+    <Resource Include="icons\animations32.png" />
+    <Resource Include="icons\animations48.png" />
+    <Resource Include="icons\animations64.png" />
+    <Resource Include="icons\custom32.png" />
+    <Resource Include="icons\custom48.png" />
+    <Resource Include="icons\custom64.png" />
+    <Resource Include="icons\effects32.png" />
+    <Resource Include="icons\effects48.png" />
+    <Resource Include="icons\effects64.png" />
+    <Resource Include="icons\equalizer32.png" />
+    <Resource Include="icons\equalizer48.png" />
+    <Resource Include="icons\equalizer64.png" />
+    <Resource Include="icons\games32.png" />
+    <Resource Include="icons\games48.png" />
+    <Resource Include="icons\games64.png" />
+    <Resource Include="icons\random32.png" />
+    <Resource Include="icons\random48.png" />
+    <Resource Include="icons\random64.png" />
+    <Resource Include="icons\settings32.png" />
+    <Resource Include="icons\settings48.png" />
+    <Resource Include="icons\settings64.png" />
+    <Resource Include="icons\timer32.png" />
+    <Resource Include="icons\timer48.png" />
+    <Resource Include="icons\timer64.png" />
+    <Resource Include="icons\volume32.png" />
+    <Resource Include="icons\volume48.png" />
+    <Resource Include="icons\volume64.png" />
+    <Resource Include="icons\nyancat32.png" />
+    <Resource Include="icons\nyancat48.png" />
+    <Resource Include="icons\nyancat64.png" />
+    <Resource Include="icons\smile32.png" />
+    <Resource Include="icons\smile48.png" />
+    <Resource Include="icons\smile64.png" />
+    <Resource Include="icons\waterfall32.png" />
+    <Resource Include="icons\waterfall48.png" />
+    <Resource Include="icons\waterfall64.png" />
     <Content Include="RyosTalkFX\CroccatTalkWrapper\win32-x86-64\talkfx-c.dll" />
     <Content Include="RyosTalkFX\CroccatTalkWrapper\win32-x86\talkfx-c.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

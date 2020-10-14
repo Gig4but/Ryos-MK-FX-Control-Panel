@@ -12,7 +12,7 @@ public class SampleAggregator
     private Complex[] fftBuffer;
     private FftEventArgs fftArgs;
     private int fftPos;
-    private int fftLength;
+    public int fftLength;
     private int m;
 
     public SampleAggregator(int fftLength)
