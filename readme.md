@@ -35,6 +35,7 @@
 
 ### WARNINGS:
   Should doesn't work if Nahimic software is running -> because programmed really bad, like Roccat Swarm. Nahimic injure applications, especially windows and their styles.
+    *Solution: just shutdown the process and all be alright.
 
 ### If not working:
   
