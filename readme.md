@@ -32,7 +32,11 @@
   https://github.com/eaceaser/talkfx-c-wrapper
   
   And for man what write SampleAggregator.cs (sorry, i forgot where i found that)
-  
+
+### WARNINGS:
+  Should doesn't work if Nahimic software is running -> because programmed really bad, like Roccat Swarm. Nahimic injure applications, especially windows and their styles.
+    *Solution: just shutdown the process and all be alright.
+
 ### If not working:
   
   Just send me email with screenshot of error on petrun02@gmail.com
