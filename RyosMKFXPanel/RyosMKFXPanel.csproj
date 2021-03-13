@@ -106,11 +106,15 @@
     <Compile Include="RyosTalkFX\TalkFX\TalkFxConnection.cs" />
     <Compile Include="RyosTalkFX\TalkFX\Zone.cs" />
     <Compile Include="Effects\Equalizer\SampleAggregator.cs" />
-    <Compile Include="windowStyles\styleLegacy.xaml.cs">
-      <DependentUpon>styleLegacy.xaml</DependentUpon>
+    <Compile Include="Settings.cs" />
+    <Compile Include="Windows\LegacyMain.xaml.cs">
+      <DependentUpon>LegacyMain.xaml</DependentUpon>
     </Compile>
-    <Compile Include="windowStyles\styleNew.xaml.cs">
-      <DependentUpon>styleNew.xaml</DependentUpon>
+    <Compile Include="Windows\ModernMain.xaml.cs">
+      <DependentUpon>ModernMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ModernSettings.xaml.cs">
+      <DependentUpon>ModernSettings.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -126,11 +130,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="windowStyles\styleLegacy.xaml">
+    <Page Include="Windows\LegacyMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="windowStyles\styleNew.xaml">
+    <Page Include="Windows\ModernMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ModernSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

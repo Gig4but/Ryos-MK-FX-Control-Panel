@@ -1,6 +1,7 @@
 ﻿
 FE:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\App.xaml;;
 FE:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\MainWindow.xaml;;
-FE:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\windowStyles\styleLegacy.xaml;;
-FE:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\windowStyles\styleNew.xaml;;
+FE:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\Windows\LegacyMain.xaml;;
+FE:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\Windows\ModernMain.xaml;;
+FE:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\Windows\ModernSettings.xaml;;
 

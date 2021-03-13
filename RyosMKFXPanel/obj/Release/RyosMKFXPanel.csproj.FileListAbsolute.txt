@@ -35,8 +35,10 @@ E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\Ryos
 E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\RyosMKFXPanel.exe
 E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\RyosMKFXPanel.pdb
 E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\RyosMKFXPanel.csprojAssemblyReference.cache
-E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\windowStyles\styleLegacy.g.cs
-E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\windowStyles\styleNew.g.cs
 E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\App.baml
-E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\windowStyles\styleLegacy.baml
-E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\windowStyles\styleNew.baml
+E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\Windows\LegacyMain.g.cs
+E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\Windows\ModernMain.g.cs
+E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\Windows\ModernSettings.g.cs
+E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\Windows\LegacyMain.baml
+E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\Windows\ModernMain.baml
+E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Release\Windows\ModernSettings.baml

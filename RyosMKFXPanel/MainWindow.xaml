@@ -10,5 +10,4 @@
     <Window.Resources>
         <DataTemplate x:Name="styleLegacy" DataType=""/>
     </Window.Resources>
-    
 </Window>

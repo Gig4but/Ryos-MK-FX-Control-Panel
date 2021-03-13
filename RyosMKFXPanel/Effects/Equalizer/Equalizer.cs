@@ -50,13 +50,14 @@ namespace RyosMKFXPanel {
             sampleAggregator = new SampleAggregator(Convert.ToInt32(fftLengthDefault / Math.Pow(2, Lightning.delay)));
             sampleAggregator.FftCalculated += new EventHandler<FftEventArgs>(fft);
             sampleAggregator.PerformFFT = true;
-            waveIn = new WasapiLoopbackCapture(Volume.devicePlayCheck());
+            waveIn = new WasapiLoopbackCapture(Volume.getListenDevice());
             waveIn.DataAvailable += OnDataAvailable;
             waveIn.StartRecording();
         }
         private static void recordStop() {
             waveIn.StopRecording();
             sampleAggregator.FftCalculated -= fft;
+            waveIn.DataAvailable -= OnDataAvailable;
         }
         private static void OnDataAvailable(object sender, WaveInEventArgs e) {
             byte[] buffer = e.Buffer;

@@ -1,12 +1,12 @@
-﻿using RyosMKFXPanel.windowStyles;
+﻿using RyosMKFXPanel.Windows;
 using System.Windows;
 
 namespace RyosMKFXPanel {
     public partial class MainWindow :Window {
         public MainWindow() {
             //InitializeComponent();
-            styleNew styleNew = new styleNew();
-            styleNew.Show();
+            ModernMain modernMain = new ModernMain();
+            modernMain.Show();
             this.Close();
         }
     }

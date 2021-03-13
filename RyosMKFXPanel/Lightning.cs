@@ -194,10 +194,7 @@ namespace RyosMKFXPanel {
         /// <param name="mi">index of mode (0 - Effects, 1 - Animations, 2 - Custom, 3 - Games)</param>
         public static void changeMode(int mi) {
             offLightAlgs();
-            effects = false;
-            animations = false;
-            custom = false;
-            games = false;
+            effects = animations = custom = games = false;
             if (mi == 0)
                 effects = true;
             else if (mi == 1)

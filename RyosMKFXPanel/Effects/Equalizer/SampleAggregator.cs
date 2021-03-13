@@ -26,7 +26,6 @@ public class SampleAggregator
         this.fftBuffer = new Complex[fftLength];
         this.fftArgs = new FftEventArgs(fftBuffer);
     }
-
     bool IsPowerOfTwo(int x)
     {
         return (x & (x - 1)) == 0;

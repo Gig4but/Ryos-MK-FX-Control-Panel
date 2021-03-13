@@ -1,0 +1,97 @@
+﻿<Window x:Class="RyosMKFXPanel.Windows.ModernSettings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RyosMKFXPanel.Windows"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        mc:Ignorable="d"
+        Title="Settings" MinHeight="94" MinWidth="300" Height="94" Width="300" Background="#FF222222" BorderBrush="#FF444444" BorderThickness="2">
+    <Window.Resources>
+        <Style x:Key="ButtonClose" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Margin="0,0,-1,0">
+                            <Border Background="#00FFFFFF" Width="42" Height="29" x:Name="ButtonCloseBackground" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-32,-2,2,0"/>
+                            <Path Width="12" Height="12" x:Name="ButtonCloseSymbol" SnapsToDevicePixels="False" Stroke="#DDFFFFFF" StrokeThickness="2" Data="M 0 0 L 12 12 M 0 12 L 12 0" Margin="-32,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#AAFF0000" TargetName="ButtonCloseBackground"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#66FF0000" TargetName="ButtonCloseBackground"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ButtonReset" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#FF333333"/>
+            <Setter Property="BorderBrush" Value="#FF444444"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Margin="0">
+                            <Border x:Name="Top" Background="#FF555555" Margin="-2,-2,0,0"/>
+                            <Border x:Name="Bot" Background="#FF111111" Margin="0,0,-2,-2"/>
+                            <Border x:Name="Top2" Background="#FF555555" Margin="-2,-2,0,-2" HorizontalAlignment="Left" Padding="0,0,2,0"/>
+                            <Border x:Name="Bot2" Background="#FF111111" Margin="0,-2,-2,-2" HorizontalAlignment="Right" Padding="2,0,0,0"/>
+
+                            <Border Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,2"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Top" Property="Background" Value="#FF111111"/>
+                                <Setter TargetName="Top2" Property="Background" Value="#FF111111"/>
+                                <Setter TargetName="Bot" Property="Background" Value="#FF555555"/>
+                                <Setter TargetName="Bot2" Property="Background" Value="#FF555555"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <DockPanel VerticalAlignment="Top" Height="auto">
+            <DockPanel x:Name="TitleBar" DockPanel.Dock="Top" Background="#FF444444" Height="30" MouseLeftButtonDown="MoveWindowUnlock" MouseLeftButtonUp="MoveWindowLock">
+                <Grid VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="X" Text="Main Settings" FontSize="18" FontWeight="Bold" Foreground="#AA222222" Margin="0,15,0,0"/>
+                    <TextBlock x:Name="Y" Text="Main Settings" FontSize="18" FontWeight="Bold" Foreground="#AA222222" Margin="0,-10,0,0"/>
+                    <TextBlock Text="Main Settings" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource ActualColorBrushFF}" Margin="8,4,0,0"/>
+                    <WrapPanel Grid.Column="1" HorizontalAlignment="Right">
+                        <Button Name="ButtonClose" VerticalAlignment="Center" BorderThickness="1" Style="{StaticResource ButtonClose}" Click="ButtonClose_Click"/>
+                    </WrapPanel>
+                </Grid>
+            </DockPanel>
+            <Grid Margin="4,8,4,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Listen device:" FontSize="16" Foreground="#88FFFFFF" Margin="0,0,0,8" />
+                <ComboBox x:Name="comboBoxDevices" Grid.Column="1" VerticalAlignment="Center" SelectedIndex="0" Background="#FF333333" BorderBrush="#FF444444" FontSize="16" SelectionChanged="comboBoxDevices_SelectionChanged" Margin="0,-3,0,5">
+                    <ComboBoxItem Content="Auto" Background="#FF444444"/>
+                </ComboBox>
+                <Button Content="reset settings" HorizontalAlignment="Left" Style="{StaticResource ButtonReset}" Grid.Row="1" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2"  Click="ButtonSettingsReset_Click" FontSize="14" Foreground="{DynamicResource ActualColorBrushFF}"/>
+                <!--<TextBlock Text="Auto connection restore:" FontSize="16" Foreground="#88FFFFFF" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,100,0" /> -->
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>

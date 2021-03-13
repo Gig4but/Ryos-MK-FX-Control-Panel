@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\App.xaml
-3-1121164519
+4-714555076
 2-885423706
-571916333691
+591824098420
 151430021998
-MainWindow.xaml;windowStyles\styleLegacy.xaml;windowStyles\styleNew.xaml;
+MainWindow.xaml;Windows\LegacyMain.xaml;Windows\ModernMain.xaml;Windows\ModernSettings.xaml;
 
 True
 
