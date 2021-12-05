@@ -7,6 +7,9 @@ namespace RyosMKFXPanel {
             //InitializeComponent();
             ModernMain modernMain = new ModernMain();
             modernMain.Show();
+
+            Settings.Initialize();
+
             this.Close();
         }
     }

@@ -5,10 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RyosMKFXPanel.windowStyles"
         mc:Ignorable="d"
-        Closing="Window_Close"
         Title="RyosMKFXPanel" MinHeight="300" MinWidth="460" MaxHeight="300" MaxWidth="460">
     <Grid Height="270" VerticalAlignment="Top" HorizontalAlignment="Left" Width="450">
-        <Grid.ColumnDefinitions>
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -172,5 +171,6 @@
                 </GroupBox>
             </Grid>
         </Canvas>
+        -->
     </Grid>
 </Window>

@@ -1,60 +1,77 @@
-﻿using System.Threading;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace RyosMKFXPanel.Animations {
-    class Waterfall :Lightning {
-        private static bool run = false;
-        public static bool getState() {
-            return run;
+    class Waterfall :LightningModule {
+        public override string GetUid() {
+            return "DefaultWaterfall";
         }
-        private static bool changeState() {
-            run = ((run) ? false : true);
-            return true;
+        public override string GetName() {
+            return "Waterfall";
         }
-
-        private static Thread thread;
-        public static void start() {
-            thread = new Thread(animationWaterfallColor);
-            thread.Start();
-            changeState();
+        public override string GetCategory() {
+            return "Animations";
         }
-        public static void stop() {
-            thread.Abort();
-            changeState();
+        public override string GetIcon() {
+            return "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";
         }
-
-        private static bool tail = false;
-        public static void turnTail() {
-            tail = ((tail) ? false : true);
+        public override SliderType GetSliderType() {
+            return SliderType.speed;
         }
-        public static float tailLength = 5;
-
-        private static bool invert = false;
-        public static void turnInvert() {
-            invert = ((invert) ? false : true);
+        public override double GetSliderMax() {
+            return 100.0d;
         }
-
-        private static bool horizontal = false;
-        public static void turnHorizontal() {
-            horizontal = ((horizontal) ? false : true);
+        public override double GetSliderMin() {
+            return 1.0d;
         }
-
-        private static bool diagonal = false;
-        public static void turnDiagonal() {
-            diagonal = ((diagonal) ? false : true);
+        public override double GetSliderTick() {
+            return 5.0d;
+        }
+        public override double GetSliderTickFrequency() {
+            return 5.0d;
+        }
+        public override LightningModuleControls[] GetControls() {
+            return new LightningModuleControls[] {
+                new CSpoiler(
+                        new CCheckBox("Tail", new RoutedEventHandler(OnTail), new RoutedEventHandler(OffTail), true), null,
+                        new CInputBox("Tail length", new TextChangedEventHandler(ChangeTailLength), 2, "5")
+                    ),
+                new CCheckBox("Reverse", new RoutedEventHandler(OnInvert), new RoutedEventHandler(OffInvert), false)
+            };
         }
 
-        private static void animationWaterfallColor() {
-            keysLightAllOn();
-            float[][] Matrix = new float[kbh][];
-            for (int i = 0; i < kbh; i++) {
-                Matrix[i] = new float[kbw];
+
+        public bool tail = false;
+        public float tailLength = 5;
+        public bool invert = false;
+        public bool horizontal = false;
+        public bool diagonal = false;
+
+        //public override Param[] GetParameters() {
+        //    return new Param[] {
+        //        new Param(tail.GetType(), nameof(tail), "Tail"),
+        //        new Param(tailLength.GetType(), nameof(tailLength), "TailLength"),
+        //        new Param(invert.GetType(), nameof(invert), "Invert"),
+        //        new Param(horizontal.GetType(), nameof(horizontal), "HorizontalMode"),
+        //        new Param(diagonal.GetType(), nameof(diagonal), "DiagonalMode")
+        //    };
+        //}
+        public Waterfall() { }
+
+        
+
+        public override void Work() {
+            Lightning.devices[0].KeysLightAllOn();
+            float[][] Matrix = new float[Lightning.devices[0].GetHeight()][];
+            for (int i = 0; i < Lightning.devices[0].GetHeight(); i++) {
+                Matrix[i] = new float[Lightning.devices[0].GetWidth()];
             }
             float x = 1f;
             int line = 0;
             while (true) {
                 float p = (1 / tailLength);
-                for (int i = 0; i < kbh; i++) {
-                    for (int ii = 0; ii < kbw; ii++) {
+                for (int i = 0; i < Lightning.devices[0].GetHeight(); i++) {
+                    for (int ii = 0; ii < Lightning.devices[0].GetWidth(); ii++) {
                         Matrix[i][ii] = 0;
                     }
                 }
@@ -65,16 +82,16 @@ namespace RyosMKFXPanel.Animations {
                         if (invert) {
 
                         } else {
-                            for (int i = line; i < kbh; i++) {
-                                for (int ii = 0; ii < kbw; ii++) {
+                            for (int i = line; i < Lightning.devices[0].GetHeight(); i++) {
+                                for (int ii = 0; ii < Lightning.devices[0].GetWidth(); ii++) {
                                     Matrix[i][ii] = x;
                                 }
                                 if (tail) {
                                     x = (x >= 1f) ? 1 / tailLength : x + 1 / tailLength;
                                     line = 0;
                                 } else {
-                                    line = (line >= 1) ? line - 1 : kbh - 1;
-                                    i = kbh;
+                                    line = (line >= 1) ? line - 1 : Lightning.devices[0].GetHeight() - 1;
+                                    i = Lightning.devices[0].GetHeight();
                                 }
                             }
                         }
@@ -85,198 +102,60 @@ namespace RyosMKFXPanel.Animations {
                     } else {
                         if (invert) {
                             for (int i = line; i >= 0; i--) {
-                                for (int ii = 0; ii < kbw; ii++) {
+                                for (int ii = 0; ii < Lightning.devices[0].GetWidth(); ii++) {
                                     Matrix[i][ii] = x;
                                 }
                                 if (tail) {
                                     x = (x - p < p) ? 1f : x - p;
-                                    line = kbh-1;
+                                    line = Lightning.devices[0].GetHeight() -1;
                                 } else {
-                                    line = (line < kbh-1) ? line + 1 : 0;
+                                    line = (line < Lightning.devices[0].GetHeight() -1) ? line + 1 : 0;
                                     i = -1;
                                     x = 1f;
                                 }
                             }
                         } else {
-                            for (int i = line; i < kbh; i++) {
-                                for (int ii = 0; ii < kbw; ii++) {
+                            for (int i = line; i < Lightning.devices[0].GetHeight(); i++) {
+                                for (int ii = 0; ii < Lightning.devices[0].GetWidth(); ii++) {
                                     Matrix[i][ii] = x;
                                 }
                                 if (tail) {
                                     x = (x-p < p) ? 1f : x - p;
                                     line = 0;
                                 } else {
-                                    line = (line >= 1) ? line - 1 : kbh - 1;
-                                    i = kbh;
+                                    line = (line >= 1) ? line - 1 : Lightning.devices[0].GetHeight() - 1;
+                                    i = Lightning.devices[0].GetHeight();
                                     x = 1f;
                                 }
                             }
                         }
                     }
                 }
-                int kbi = 0;
-                for (int row = kbh - 1; row >= 0; row--) { // matrixToColor
-                    for (int i = 0; i < kbw; i++) {
-                        //non exist, skip / before & after ESC, above numpad, LED indicators, left & rigth button UP, bottom of numPLUS & numENTER
-                        if ((row == 5 && i == 0) || (row == 5 && i == 2)
-                            || (row == 5 && i == 19) || (row == 5 && i == 20) || (row == 5 && i == 21) || (row == 5 && i == 22)
-                            || (row == 2 && i == 16) || (row == 2 && i == 17) || (row == 2 && i == 18)
-                            || (row == 1 && i == 16) || (row == 1 && i == 18)
-                            || (row == 2 && i == 22) || (row == 0 && i == 22)) {/*do nothing*/}
-
-                        //in center horizontal / F5, F6, F7, Q, W, E, R, T, Y, U, I, O, P, [, ], Windows, FN, AppendMenu
-                        else if ((row == 5 && i == 7) || (row == 5 && i == 8) || (row == 5 && i == 9)
-                            || (row == 3 && i == 2) || (row == 3 && i == 3) || (row == 3 && i == 4) || (row == 3 && i == 5)
-                            || (row == 3 && i == 6) || (row == 3 && i == 7) || (row == 3 && i == 8) || (row == 3 && i == 9)
-                            || (row == 3 && i == 10) || (row == 3 && i == 11) || (row == 3 && i == 12) || (row == 3 && i == 13)
-                            || (row == 0 && i == 2) || (row == 0 && i == 12) || (row == 0 && i == 13)) {
-                            keysColor[kbi] = (byte)(((red * Matrix[row][i] * 0.5) + (red * Matrix[row][i + 1] * 0.5)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((green * Matrix[row][i] * 0.5) + (green * Matrix[row][i + 1] * 0.5)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((blue * Matrix[row][i] * 0.5) + (blue * Matrix[row][i + 1] * 0.5)) * maxBright);
-                            kbi++;
-                        }
-
-                        //more right /  A, S, D, F, G, H, J, K, L, ;, ', leftALT
-                        else if ((row == 2 && i == 2) || (row == 2 && i == 3) || (row == 2 && i == 4) || (row == 2 && i == 5)
-                            || (row == 2 && i == 6) || (row == 2 && i == 7) || (row == 2 && i == 8) || (row == 2 && i == 9)
-                            || (row == 2 && i == 10) || (row == 2 && i == 11) || (row == 2 && i == 12)
-                            || (row == 0 && i == 3)) {
-                            keysColor[kbi] = (byte)(((red * Matrix[row][i] * 0.25) + (red * Matrix[row][i + 1] * 0.75)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((green * Matrix[row][i] * 0.25) + (green * Matrix[row][i + 1] * 0.75)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((blue * Matrix[row][i] * 0.25) + (blue * Matrix[row][i + 1] * 0.75)) * maxBright);
-                            kbi++;
-                        }
-                        //more left / Z, X, C, V, B, N, M, ,, ., /, ALTGR
-                        else if ((row == 1 && i == 3) || (row == 1 && i == 4) || (row == 1 && i == 5) || (row == 1 && i == 6)
-                            || (row == 1 && i == 7) || (row == 1 && i == 8) || (row == 1 && i == 9) || (row == 1 && i == 10)
-                            || (row == 1 && i == 11) || (row == 1 && i == 12) || (row == 0 && i == 11)) {
-                            keysColor[kbi] = (byte)(((red * Matrix[row][i] * 0.8) + (red * Matrix[row][i + 1] * 0.2)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((green * Matrix[row][i] * 0.8) + (green * Matrix[row][i + 1] * 0.2)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((blue * Matrix[row][i] * 0.8) + (blue * Matrix[row][i + 1] * 0.2)) * maxBright);
-                            kbi++;
-                        }
-
-                        //in center horizontal without next center & 2 column sized / F8, Backspace, num0
-                        else if ((row == 5 && i == 10) || (row == 4 && i == 14) || (row == 0 && i == 19)) {
-                            keysColor[kbi] = (byte)(((red * Matrix[row][i] * 0.5) + (red * Matrix[row][i + 1] * 0.5)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((green * Matrix[row][i] * 0.5) + (green * Matrix[row][i + 1] * 0.5)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((blue * Matrix[row][i] * 0.5) + (blue * Matrix[row][i + 1] * 0.5)) * maxBright);
-                            kbi++;
-                            i++;
-                        }
-
-                        //1.25 left sized / TAB, leftCTRL
-                        else if ((row == 3 && i == 1) || (row == 0 && i == 1)) {
-                            keysColor[kbi] = (byte)(((red * Matrix[row][i] * 0.75) + (red * Matrix[row][i + 1] * 0.25)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((green * Matrix[row][i] * 0.75) + (green * Matrix[row][i + 1] * 0.25)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((blue * Matrix[row][i] * 0.75) + (blue * Matrix[row][i + 1] * 0.25)) * maxBright);
-                            kbi++;
-                        }
-
-                        //1.25 right sized / \(above ENTER(US loadout)), rightCTRL
-                        else if ((row == 3 && i == 14) || (row == 0 && i == 14)) {
-                            keysColor[kbi] = (byte)(((red * Matrix[row][i] * 0.25) + (red * Matrix[row][i + 1] * 0.75)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((green * Matrix[row][i] * 0.25) + (green * Matrix[row][i + 1] * 0.75)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((blue * Matrix[row][i] * 0.25) + (blue * Matrix[row][i + 1] * 0.75)) * maxBright);
-                            kbi++;
-                            i++;
-                        }
-
-                        //2 row sized / numPLUS, numENTER
-                        else if ((row == 3 && i == 22) || (row == 1 && i == 22)) {
-                            keysColor[kbi] = (byte)(((red * Matrix[row][i] * 0.5) + (red * Matrix[row - 1][i] * 0.5)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((green * Matrix[row][i] * 0.5) + (green * Matrix[row - 1][i] * 0.5)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((blue * Matrix[row][i] * 0.5) + (blue * Matrix[row - 1][i] * 0.5)) * maxBright);
-                            kbi++;
-                        }
-
-                        //1,75 sized / CapsLock
-                        else if ((row == 2 && i == 1)) {
-                            keysColor[kbi] = (byte)(((red * Matrix[row][i] * 0.825) + (red * Matrix[row][i + 1] * 0.125)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((green * Matrix[row][i] * 0.825) + (green * Matrix[row][i + 1] * 0.125)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((blue * Matrix[row][i] * 0.825) + (blue * Matrix[row][i + 1] * 0.125)) * maxBright);
-                            kbi++;
-                        }
-
-                        //2,15 sized left / leftSHIFT
-                        else if ((row == 1 && i == 1)) {
-                            keysColor[kbi] = (byte)(((red * Matrix[row][i] * 0.45) + (red * Matrix[row][i + 1] * 0.45) + (red * Matrix[row][i + 2] * 0.10)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((green * Matrix[row][i] * 0.45) + (green * Matrix[row][i + 1] * 0.45) + (green * Matrix[row][i + 2] * 0.10)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((blue * Matrix[row][i] * 0.45) + (blue * Matrix[row][i + 1] * 0.45) + (blue * Matrix[row][i + 2] * 0.10)) * maxBright);
-                            kbi++;
-                            kbi += 3;
-                            i++;
-                        }
-
-                        //2,15 sized right / ENTER
-                        else if ((row == 2 && i == 13)) {
-                            keysColor[kbi] = (byte)(((red * Matrix[row][i] * 0.10) + (red * Matrix[row][i + 1] * 0.45) + (red * Matrix[row][i + 2] * 0.45)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((green * Matrix[row][i] * 0.10) + (green * Matrix[row][i + 1] * 0.45) + (green * Matrix[row][i + 2] * 0.45)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((blue * Matrix[row][i] * 0.10) + (blue * Matrix[row][i + 1] * 0.45) + (blue * Matrix[row][i + 2] * 0.45)) * maxBright);
-                            kbi++;
-                            i++;
-                            i++;
-                        }
-
-                        //2,50 sized right / rightSHIFT
-                        else if ((row == 1 && i == 13)) {
-                            keysColor[kbi] = (byte)(((red * Matrix[row][i] * 0.2) + (red * Matrix[row][i + 1] * 0.4) + (red * Matrix[row][i + 2] * 0.4)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((green * Matrix[row][i] * 0.2) + (green * Matrix[row][i + 1] * 0.4) + (green * Matrix[row][i + 2] * 0.4)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((blue * Matrix[row][i] * 0.2) + (blue * Matrix[row][i + 1] * 0.4) + (blue * Matrix[row][i + 2] * 0.4)) * maxBright);
-                            kbi++;
-                            i++;
-                            i++;
-                        }
-
-                        //6,50 sized / SPACE
-                        else if ((row == 0 && i == 4)) {
-                            keysColor[kbi] = (byte)(((red * Matrix[row][i] * 0.1) + (red * Matrix[row][i + 1] * 0.15) + (red * Matrix[row][i + 2] * 0.15) + (red * Matrix[row][i + 3] * 0.15) + (red * Matrix[row][i + 4] * 0.15) + (red * Matrix[row][i + 5] * 0.15) + (red * Matrix[row][i + 6] * 0.15) + (red * Matrix[row][i + 7] * 0.05)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((green * Matrix[row][i] * 0.1) + (green * Matrix[row][i + 1] * 0.15) + (green * Matrix[row][i + 2] * 0.15) + (green * Matrix[row][i + 3] * 0.15) + (green * Matrix[row][i + 4] * 0.15) + (green * Matrix[row][i + 5] * 0.15) + (green * Matrix[row][i + 6] * 0.15) + (green * Matrix[row][i + 7] * 0.05)) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)(((blue * Matrix[row][i] * 0.1) + (blue * Matrix[row][i + 1] * 0.15) + (blue * Matrix[row][i + 2] * 0.15) + (blue * Matrix[row][i + 3] * 0.15) + (blue * Matrix[row][i + 4] * 0.15) + (blue * Matrix[row][i + 5] * 0.15) + (blue * Matrix[row][i + 6] * 0.15) + (blue * Matrix[row][i + 7] * 0.05)) * maxBright);
-                            kbi++;
-                            i += 6;
-                        }
-
-                        //normal
-                        else {
-                            keysColor[kbi] = (byte)((red * Matrix[row][i]) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)((green * Matrix[row][i]) * maxBright);
-                            kbi++;
-                            keysColor[kbi] = (byte)((blue * Matrix[row][i]) * maxBright);
-                            kbi++;
-                        }
-
-                    }
-                }
-                sendPacket();
-                Thread.Sleep((int)(1000 / speed));
+                Lightning.devices[0].KeysColorChangeByMatrix(Matrix);
+                Lightning.devices[0].SendPacket();
+                Lightning.devices[0].SpeedSleep();
             }
         }
+
+
+
+        private void OnInvert(object sender, RoutedEventArgs e) {
+            invert = true;
+        }
+        private void OffInvert(object sender, RoutedEventArgs e) {
+            invert = false;
+        }
+        private void OnTail(object sender, RoutedEventArgs e) {
+            tail = true;
+        }
+        private void OffTail(object sender, RoutedEventArgs e) {
+            tail = false;
+        }
+        private void ChangeTailLength(object sender, TextChangedEventArgs e) {
+            tailLength = TextBoxLibrary.InputIntParse((TextBox)sender, 2);
+        }
+
+
     }
 }
 /*

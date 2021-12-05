@@ -1,132 +1,75 @@
-﻿using NAudio.CoreAudioApi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Windows;
+﻿using System.Windows;
 
 namespace RyosMKFXPanel.Effects {
-    class Volume :Lightning {
-        private static bool run = false;
-        public static bool getState() {
-            return run;
-        }
-        private static bool changeState() {
-            run = ((run) ? false : true);
-            return true;
-        }
+	class Volume :LightningModule {
+		public override string GetUid() {
+			return "DefaultVolume";
+		}
+		public override string GetName() {
+			return "Volume";
+		}
+		public override string GetCategory() {
+			return "Effects";
+		}
+		public override string GetIcon() {
+			return "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAFhAAABYQHynvE+AAABWklEQVRYhe2WwXHCMBREXzK54w7iDnAHUTogHaSElEAJSQekg3SAO8B0QDoQFWwOkgchrGBhm5N3RmOQbe2bFeh/JDHhMJJqSVZS2fXMI9OoBDbA1n9f+LkLTQGwBhrAAG/+mtaIca8kHXzca0lFcE9+Oy7eSy1WSGqUr01ir5MAT4lgKmAJvGZEb330WUoBtKpzF8zVVP+CGWAGmAFmgN5KnYTWX+uMtSynSjgYoMGV0ipjrRWwA748iP336VYjlmMkvftybCV9DCnHQ0Yh1w9Irj8w9wZoRynpJ+gVOgEeJGVs800yuN/SZ9fNewCkVAL2WkMypipcGsZ/fgb2UyZgODdcAEfc2dKO3VgARWT24ud/I8ND9J5uBSgjw6Wf30eG1w6j3gDh/hlOcTaRYa6SAKFZGGdomN2CpwDC/TOcxxkaHkYw7ASwuEhb09awXzEZpm0McG99/wEc9bh7SWk85AAAAABJRU5ErkJggg==";
+		}
+		public override SliderType GetSliderType() {
+			return SliderType.delay;
+		}
+		public override double GetSliderMax() {
+			return 30.0d;
+		}
+		public override double GetSliderMin() {
+			return 15.0d;
+		}
+		public override double GetSliderTick() {
+			return 1.0d;
+		}
+		public override double GetSliderTickFrequency() {
+			return 1.0d;
+		}
+		public override LightningModuleControls[] GetControls() {
+			return new LightningModuleControls[] {
+				new CCheckBox("Simple volume", new RoutedEventHandler(OnSimple), new RoutedEventHandler(OffSimple))
+			};
+		}
 
-        private static Thread thread;
-        public static void start() {
-            thread = new Thread(effectVolume);
-            thread.Start();
-            changeState();
-        }
-        public static void stop() {
-            thread.Abort();
-            changeState();
-        }
 
-        private static bool simple = false;
-        public static void simpleVolume() {
-            simple = ((simple) ? false : true);
-        }
-        private static double v = 0;
+		public bool simple = false;
 
-        private static void effectVolume() {
-            while (true) {
-                Thread.Sleep(delay);
-                keysLightReset();
-                keysColorUpdate();
+		//public override Param[] GetParameters() {
+		//	return new Param[] {
+		//		new Param(simple.GetType(), nameof(simple), "Simple")
+		//	};
+		//}
 
-                //v = Math.Round(enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active)[deviceID].AudioMeterInformation.MasterPeakValue * kbc);
-                v = Math.Round(volumeIs() * kbc);
-                if (simple) {
-                    v /= 11;
-                    for (int i = 18; i < v + 18; i++) {
-                        keysLight[i] = 1;
-                    }
-                } else {
-                    for (int i = 0; i < v; i++) {
-                        keysLight[i] = 1;
-                    }
-                }
-                sendPacket();
-            }
-        }
+		public Volume() { }
 
-        private static bool autoDevice = true;
-        private static MMDeviceEnumerator enumerator = new MMDeviceEnumerator();
-        private static int deviceID = 0;
-        
-        public static MMDeviceCollection getAudioDevices() {
-            return enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
-        }
-        public static void changeListenDeviceByIndex(int index) {
-            deviceID = index;
-        }
-        public static bool changeListenDeviceById(string id) {
-            MMDeviceCollection devices = getAudioDevices();
-            for (int i = 0; i < devices.Count; i++) {
-                if (devices[i].ID == id) {
-                    deviceID = i;
-                    return true;
-                }
-            }
-            return false;
-        }
-        public static MMDevice getListenDevice() {
-            MMDeviceCollection devices = getAudioDevices();
-            if (deviceID < devices.Count && devices.Count > 0) {
-                if (autoDevice) {
-                    if (!devicePlayCheck()) {
-                        deviceID = 0;
-                    }
-                }
-                //return device;
-                return enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active)[deviceID];
-            }
-            Environment.Exit(1);
-            return null;
-        }
-        public static void deviceAutoChange(bool auto) {
-            autoDevice = auto;
-        }
-        public static bool deviceAutoChange() {
-            return autoDevice;
-        }
-        public static bool devicePlayCheck() {
-            MMDeviceCollection devices = getAudioDevices();
-            for (int i = 0; i < devices.Count; i++) {
-                if (devices[i].AudioMeterInformation.MasterPeakValue != 0) {
-                    deviceID = i;
-                    return true;
-                }
-            }
-            return false;
-        }
-        public static double volumeIs() {
-            return getListenDevice().AudioMeterInformation.MasterPeakValue;
-            //return enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active)[deviceID].AudioMeterInformation.MasterPeakValue;
-        }
-        public static List<string> getAudioDevicesNames() {
-            List<string> names = new List<string>();
-            foreach (MMDevice i in getAudioDevices()) {
-                names.Add(i.FriendlyName);
-            }
-            return names;
-        }
-        public static int getAudioDeviceIndex() {
-            return deviceID;
-        }
-        public static int getAudioDeviceIndexByID(string id) {
-            MMDeviceCollection devices = getAudioDevices();
-            for (int i = 0; i < devices.Count; i++) {
-                if (devices[i].ID == id) {
-                    return i;
-                }
-            }
-            return 0;
-        }
-    }
+
+
+		public override void Work() {
+			int volume = 0;
+			while (true) {
+				Lightning.devices[0].KeysLightAllOff();
+				Lightning.devices[0].KeysColorUpdate();
+
+				volume = (int)(Audio.VolumeIs() * Lightning.devices[0].GetKeysCount()) - 1;
+				if (simple) {
+					volume /= 11;
+					Lightning.devices[0].KeysLightOn(18, volume +18);
+				} else {
+					Lightning.devices[0].KeysLightOn(0, volume);
+				}
+				Lightning.devices[0].SendPacket();
+			}
+		}
+
+		private void OnSimple(object sender, RoutedEventArgs e) {
+			simple = true;
+		}
+		private void OffSimple(object sender, RoutedEventArgs e) {
+			simple = false;
+		}
+	}
 }

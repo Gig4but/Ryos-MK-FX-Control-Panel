@@ -42,4 +42,5 @@ E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Debug\RyosMK
 E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Debug\RyosMKFXPanel.csproj.CopyComplete
 E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Debug\RyosMKFXPanel.exe
 E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Debug\RyosMKFXPanel.pdb
-E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Debug\RyosMKFXPanel.csprojAssemblyReference.cache
+E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Debug\RyosMKFXPanel.csproj.AssemblyReference.cache
+E:\Work\VS\RyosMKFXPanel\Ryos-MK-FX-Control-Panel\RyosMKFXPanel\obj\Debug\RyosMKFXPanel.csproj.SuggestedBindingRedirects.cache

@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,12 +34,14 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NAudio, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NAudio.1.10.0\lib\net35\NAudio.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -50,6 +53,7 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -63,6 +67,9 @@
     <Compile Include="Animations\NyanCat.cs" />
     <Compile Include="Animations\Waterfall.cs" />
     <Compile Include="Animations\Timer.cs" />
+    <Compile Include="Audio.cs" />
+    <Compile Include="ErrorProcessor.cs" />
+    <Compile Include="LightningModuleControls.cs" />
     <Compile Include="Corsair\LightningC.cs" />
     <Compile Include="Corsair\SDK\CorsairAccessMode.cs" />
     <Compile Include="Corsair\SDK\CorsairChannelDeviceInfo.cs" />
@@ -93,19 +100,21 @@
     <Compile Include="Corsair\SDK\CorsairProtocolDetailsNative.cs" />
     <Compile Include="Corsair\SDK\CUESDK.cs" />
     <Compile Include="Corsair\SDK\CUESDKNative.cs" />
+    <Compile Include="Devices\Roccat\RyosMKFX.cs" />
     <Compile Include="Effects\Random.cs" />
     <Compile Include="Effects\Volume.cs" />
-    <Compile Include="RyosTalkFX\BasicTalkFxConnection.cs" />
-    <Compile Include="RyosTalkFX\Key.cs" />
-    <Compile Include="RyosTalkFX\KeyboardState.cs" />
-    <Compile Include="RyosTalkFX\RyosTalkFXConnection.cs" />
-    <Compile Include="RyosTalkFX\TalkFxBindings.cs" />
-    <Compile Include="RyosTalkFX\TalkFX\Color.cs" />
-    <Compile Include="RyosTalkFX\TalkFX\KeyEffect.cs" />
-    <Compile Include="RyosTalkFX\TalkFX\Speed.cs" />
-    <Compile Include="RyosTalkFX\TalkFX\TalkFxConnection.cs" />
-    <Compile Include="RyosTalkFX\TalkFX\Zone.cs" />
+    <Compile Include="Devices\Roccat\RyosTalkFX\BasicTalkFxConnection.cs" />
+    <Compile Include="Devices\Roccat\RyosTalkFX\Key.cs" />
+    <Compile Include="Devices\Roccat\RyosTalkFX\KeyboardState.cs" />
+    <Compile Include="Devices\Roccat\RyosTalkFX\RyosTalkFXConnection.cs" />
+    <Compile Include="Devices\Roccat\RyosTalkFX\TalkFxBindings.cs" />
+    <Compile Include="Devices\Roccat\RyosTalkFX\TalkFX\Color.cs" />
+    <Compile Include="Devices\Roccat\RyosTalkFX\TalkFX\KeyEffect.cs" />
+    <Compile Include="Devices\Roccat\RyosTalkFX\TalkFX\Speed.cs" />
+    <Compile Include="Devices\Roccat\RyosTalkFX\TalkFX\TalkFxConnection.cs" />
+    <Compile Include="Devices\Roccat\RyosTalkFX\TalkFX\Zone.cs" />
     <Compile Include="Effects\Equalizer\SampleAggregator.cs" />
+    <Compile Include="LightningModule.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Windows\LegacyMain.xaml.cs">
       <DependentUpon>LegacyMain.xaml</DependentUpon>
@@ -152,63 +161,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icons\animations32.png" />
-    <Resource Include="icons\animations48.png" />
-    <Resource Include="icons\animations64.png" />
     <Resource Include="icons\custom32.png" />
-    <Resource Include="icons\custom48.png" />
-    <Resource Include="icons\custom64.png" />
     <Resource Include="icons\effects32.png" />
-    <Resource Include="icons\effects48.png" />
-    <Resource Include="icons\effects64.png" />
     <Resource Include="icons\equalizer32.png" />
-    <Resource Include="icons\equalizer48.png" />
-    <Resource Include="icons\equalizer64.png" />
     <Resource Include="icons\games32.png" />
-    <Resource Include="icons\games48.png" />
-    <Resource Include="icons\games64.png" />
     <Resource Include="icons\random32.png" />
-    <Resource Include="icons\random48.png" />
-    <Resource Include="icons\random64.png" />
     <Resource Include="icons\settings32.png" />
-    <Resource Include="icons\settings48.png" />
-    <Resource Include="icons\settings64.png" />
     <Resource Include="icons\timer32.png" />
-    <Resource Include="icons\timer48.png" />
-    <Resource Include="icons\timer64.png" />
     <Resource Include="icons\volume32.png" />
-    <Resource Include="icons\volume48.png" />
-    <Resource Include="icons\volume64.png" />
     <Resource Include="icons\nyancat32.png" />
-    <Resource Include="icons\nyancat48.png" />
-    <Resource Include="icons\nyancat64.png" />
     <Resource Include="icons\smile32.png" />
-    <Resource Include="icons\smile48.png" />
-    <Resource Include="icons\smile64.png" />
     <Resource Include="icons\waterfall32.png" />
-    <Resource Include="icons\waterfall48.png" />
-    <Resource Include="icons\waterfall64.png" />
-    <Content Include="RyosTalkFX\CroccatTalkWrapper\win32-x86-64\talkfx-c.dll" />
-    <Content Include="RyosTalkFX\CroccatTalkWrapper\win32-x86\talkfx-c.dll" />
+    <Content Include="Devices\Roccat\RyosTalkFX\CroccatTalkWrapper\win32-x86-64\talkfx-c.dll" />
+    <Content Include="Devices\Roccat\RyosTalkFX\CroccatTalkWrapper\win32-x86\talkfx-c.dll" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

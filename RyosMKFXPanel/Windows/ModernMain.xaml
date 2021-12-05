@@ -8,8 +8,12 @@
         Closing="Window_Close"
         WindowStyle="None"
         AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen"
-        Title="RyosMKFXPanel" MinHeight="394" MinWidth="634" MaxHeight="394" MaxWidth="634" Background="#FF222222" BorderBrush="#FF444444" BorderThickness="2">
+        Title="RyosMKFXPanel" MinHeight="394" MinWidth="634" Height="394" Width="634" Background="#FF222222" BorderBrush="#FF444444" BorderThickness="2">
+    <!--<Window.Effect>
+        <DropShadowEffect Color="#4400FFFF"/>
+    </Window.Effect>-->
     <Window.Resources>
         <Style TargetType="Button" x:Key="ModeButton">
             <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -265,20 +269,24 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style TargetType="ScrollViewer" x:Key="CustomScrollViewer">
+        <Style x:Key="{x:Type ScrollViewer}" TargetType="{x:Type ScrollViewer}">
             <Setter Property="OverridesDefaultStyle" Value="True" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ScrollViewer}">
-                        <WrapPanel>
-                            <ScrollContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Grid Background="{TemplateBinding Background}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ScrollContentPresenter Grid.Column="0"/>
                             <ScrollBar x:Name="PART_VerticalScrollBar"
                                 Value="{TemplateBinding VerticalOffset}"
                                 Maximum="{TemplateBinding ScrollableHeight}"
                                 ViewportSize="{TemplateBinding ViewportHeight}"
                                 Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" 
-                                HorizontalAlignment="Right"/>
-                        </WrapPanel>
+                                HorizontalAlignment="Right" Grid.Column="1"/>
+                        </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -354,11 +362,12 @@
         </Style>
 
         <Style x:Key="{x:Type TextBox}" TargetType="{x:Type TextBox}">
+            <Setter Property="FontSize" Value="16"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TextBox}">
                         <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="0,-2,0,0"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsEnabled" Value="false">
@@ -381,7 +390,16 @@
             <Setter Property="Padding" Value="0,-0,0,0" />
         </Style>
 
-        <Style x:Key="{x:Type CheckBox}" TargetType="{x:Type CheckBox}">
+        <Style TargetType="{x:Type TextBlock}" >
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="#88FFFFFF"/>
+        </Style>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="#88FFFFFF"/>
+        </Style>
+
+        <Style TargetType="{x:Type CheckBox}">
             <Setter Property="SnapsToDevicePixels" Value="true"/>
             <Setter Property="OverridesDefaultStyle" Value="true"/>
             <Setter Property="Template">
@@ -460,15 +478,14 @@
     </Window.Resources>
 
 
-    
-    
-    
-    
-    
-    
+
+
+
+
+
 
     <Grid>
-        <DockPanel VerticalAlignment="Top" Height="auto">
+        <DockPanel Height="auto">
             <DockPanel x:Name="TitleBar" DockPanel.Dock="Top" Background="#FF444444" Height="30" MouseLeftButtonDown="MoveWindowUnlock" MouseLeftButtonUp="MoveWindowLock">
                 <Grid VerticalAlignment="Center">
                     <Grid.ColumnDefinitions>
@@ -476,7 +493,7 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock x:Name="X" Text="RyosMKFXPanel" FontSize="18" FontWeight="Bold" Foreground="#AA222222" Margin="0,15,0,0"/>
-                    <TextBlock x:Name="Y" Text="RyosMKFXPanel" FontSize="18" FontWeight="Bold" Foreground="#AA222222" Margin="0,-10,0,0"/>
+                    <TextBlock x:Name="Y" Text="RyosMKFXPanel" FontSize="18" FontWeight="Bold" Foreground="#AA222222" Margin="0,-10,0,0" ClipToBounds="True"/>
                     <TextBlock Text="RyosMKFXPanel" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource ActualColorBrushFF}" Margin="8,4,0,0"/>
                     <WrapPanel Grid.Column="1" HorizontalAlignment="Right">
                         <Button Name="ButtonMinimize" VerticalAlignment="Center" BorderThickness="1"  Style="{StaticResource ButtonMinimize}" Click="ButtonMinimize_Click"/>
@@ -489,24 +506,23 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="80"/>
                     <RowDefinition Height="126"/>
-                    <RowDefinition Height="130"/>
-                    <!--><RowDefinition Height="*"/><-->
-                    <RowDefinition Height="16"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" >
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="128"/>
-                        <ColumnDefinition Width="128"/>
-                        <ColumnDefinition Width="128"/>
-                        <ColumnDefinition Width="128"/>
-                        <ColumnDefinition Width="74"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="64"/>
                         <ColumnDefinition Width="64"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="68"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Button x:Name="ButtonEffects" Grid.Column="0" Style="{StaticResource ModeButton}" Click="ButtonEffects_Click">
+                    <Button x:Name="CategoryEffects" Grid.Column="0" Style="{StaticResource ModeButton}" Click="ButtonEffects_Click">
                         <StackPanel>
                             <Rectangle Width="32" Height="32" x:Name="ButtonEffectsImageBrush" Fill="{DynamicResource ActualColorBrushFF}">
                                 <Rectangle.OpacityMask>
@@ -516,7 +532,7 @@
                             <TextBlock x:Name="ButtonEffectsText" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource ActualColorBrushAA}" Text="Effects"/>
                         </StackPanel>
                     </Button>
-                    <Button x:Name="ButtonAnimations" Grid.Column="1" Style="{StaticResource ModeButton}" Click="ButtonAnimations_Click">
+                    <Button x:Name="CategoryAnimations" Grid.Column="1" Style="{StaticResource ModeButton}" Click="ButtonAnimations_Click">
                         <StackPanel>
                             <Rectangle Width="32" Height="32" x:Name="ButtonAnimationsImageBrush" Fill="{DynamicResource DefaultColorBrushFF}">
                                 <Rectangle.OpacityMask>
@@ -546,7 +562,7 @@
                             <TextBlock x:Name="ButtonGamesText" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource DefaultColorBrushAA}">Games</TextBlock>
                         </StackPanel>
                     </Button>
-                    <Button Grid.Column="5" Style="{StaticResource SettingsButton}" Margin="0,18,32,18" Click="ButtonSettings_Click">
+                    <Button Grid.Column="5" Style="{StaticResource SettingsButton}" Click="ButtonSettings_Click" Margin="0,6,12,0">
                         <StackPanel>
                             <Rectangle Width="28" Height="28">
                                 <Rectangle.Fill>
@@ -567,183 +583,135 @@
                         </Rectangle.Fill>
                     </Rectangle>
                 </Grid>
-                <Rectangle Grid.Row="1" VerticalAlignment="Top" Height="4" Fill="#FF333333"/>
-                <WrapPanel Grid.Row="1" Orientation="Horizontal" Margin="0,8,0,0">
-                    <!--effect choose-->
-                    <WrapPanel Orientation="Horizontal">
-                        <WrapPanel Orientation="Vertical" Margin="4,0,0,0">
-                            <Label x:Name="LabelMode" Grid.Row="0" Grid.Column="0" Content="Effect:" FontSize="20" Background="{x:Null}" Foreground="#FFDDDDDD" HorizontalAlignment="Center"/>
-                            <StackPanel Margin="0,17,0,0" Height="49">
-                                <Button x:Name="ButtonLever" Grid.Row="1" Grid.Column="0" Style="{StaticResource NormalButton}" Click="ButtonLever_Click" Width="96">
-                                    <Label x:Name="ButtonLeverText" Content="Start" FontSize="20" Foreground="{DynamicResource BlackColorBrushAA}" FontWeight="Bold" Margin="0,0,0,2"/>
-                                </Button>
-                                <Rectangle x:Name="RectangleStatus" OpacityMask="#BF000000" Height="4" Margin="-2,-20,0,0" Width="96">
-                                    <Rectangle.Fill>
-                                        <LinearGradientBrush EndPoint="0.5,1.2" StartPoint="0.5,0">
-                                            <GradientStop Color="#FF222222" Offset="1"/>
-                                            <GradientStop x:Name="RectangleStatusColor" Color="Red"/>
-                                        </LinearGradientBrush>
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                            </StackPanel>
-                        </WrapPanel>
-                        <Border Width="162" Height="98"  Margin="4" Background="#FF333333">
-                            <Grid>
-                                <ScrollViewer x:Name="ScrollEffects" HorizontalAlignment="Left" Style="{StaticResource CustomScrollViewer}" Width="162" Height="98">
-                                    <WrapPanel>
-                                        <Button x:Name="ButtonEffectsEqualizer" Click="ButtonEffectsEqualizer_Click" Style="{StaticResource EffectButtonSelected}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4">
-                                            <Border x:Name="ButtonEffectsEqualizerBorder" BorderThickness="2" BorderBrush="{DynamicResource ActualColorBrushAA}" Width="64" Height="64">
-                                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                    <Rectangle Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="ButtonEffectsEqualizerImageBrush" Fill="{DynamicResource ActualColorBrushFF}">
-                                                        <Rectangle.OpacityMask>
-                                                            <ImageBrush ImageSource="/icons/equalizer32.png"/>
-                                                        </Rectangle.OpacityMask>
-                                                    </Rectangle>
-                                                    <TextBlock x:Name="ButtonEffectsEqualizerText" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource ActualColorBrushAA}" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Equalizer"/>
-                                                </StackPanel>
-                                            </Border>
-                                        </Button>
-
-                                        <Button x:Name="ButtonEffectsVolume" Click="ButtonEffectsVolume_Click" Style="{StaticResource EffectButton}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4">
-                                            <Border x:Name="ButtonEffectsVolumeBorder" BorderThickness="2" BorderBrush="{DynamicResource DefaultColorBrushAA}" Width="64" Height="64">
-                                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                    <Rectangle Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="ButtonEffectsVolumeImageBrush" Fill="{DynamicResource DefaultColorBrushFF}">
-                                                        <Rectangle.OpacityMask>
-                                                            <ImageBrush ImageSource="/icons/volume32.png"/>
-                                                        </Rectangle.OpacityMask>
-                                                    </Rectangle>
-                                                    <TextBlock x:Name="ButtonEffectsVolumeText" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource DefaultColorBrushAA}" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Volume"/>
-                                                </StackPanel>
-                                            </Border>
-                                        </Button>
-
-                                        <Button x:Name="ButtonEffectsRandom" Click="ButtonEffectsRandom_Click" Style="{StaticResource EffectButton}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4">
-                                            <Border x:Name="ButtonEffectsRandomBorder" BorderThickness="2" BorderBrush="{DynamicResource DefaultColorBrushAA}" Width="64" Height="64">
-                                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                    <Rectangle Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="ButtonEffectsRandomImageBrush" Fill="{DynamicResource DefaultColorBrushFF}">
-                                                        <Rectangle.OpacityMask>
-                                                            <ImageBrush ImageSource="/icons/random32.png"/>
-                                                        </Rectangle.OpacityMask>
-                                                    </Rectangle>
-                                                    <TextBlock x:Name="ButtonEffectsRandomText" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource DefaultColorBrushAA}" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Random"/>
-                                                </StackPanel>
-                                            </Border>
-                                        </Button>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Rectangle Grid.Row="0" VerticalAlignment="Top" Height="4" Fill="#FF333333"/>
+                    <!--<Rectangle Grid.Row="0" VerticalAlignment="Top" Height="6" Margin="0,-2,0,0">
+                        <Rectangle.Fill>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF222222" Offset="0"/>
+                                <GradientStop Color="#FF333333" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>-->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="118"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label x:Name="LabelMode" Grid.Row="1" Content="Effect:" FontSize="20" Background="{x:Null}" Foreground="#FFDDDDDD" HorizontalAlignment="Center" Margin="0,-8,0,0"/>
+                                <StackPanel Height="49" Grid.Row="2" Margin="0,8,0,0">
+                                    <Button x:Name="ButtonLever" Grid.Row="1" Grid.Column="0" Style="{StaticResource NormalButton}" Click="ButtonLever_Click" Width="96">
+                                        <Label x:Name="ButtonLeverText" Content="Start" FontSize="20" Foreground="{DynamicResource BlackColorBrushAA}" FontWeight="Bold" Margin="0,0,0,2"/>
+                                    </Button>
+                                    <Rectangle x:Name="RectangleStatus" OpacityMask="#BF000000" Height="4" Margin="-2,-20,0,0" Width="96">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush EndPoint="0.5,1.2" StartPoint="0.5,0">
+                                                <GradientStop Color="#FF222222" Offset="1"/>
+                                                <GradientStop x:Name="RectangleStatusColor" Color="Red"/>
+                                            </LinearGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                </StackPanel>
+                            </Grid>
+                            <Grid MinWidth="162" Height="98"  Margin="0,4,10,4" Grid.Column="1">
+                                <ScrollViewer x:Name="ScrollEffects" MinWidth="162" Height="98" Background="#FF333333">
+                                    <WrapPanel x:Name="PanelEffects" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     </WrapPanel>
-                                </ScrollViewer >
-                                <ScrollViewer x:Name="ScrollAnimations" HorizontalAlignment="Left" Style="{StaticResource CustomScrollViewer}" Width="162" Height="98" Visibility="Hidden" >
-                                    <WrapPanel>
-                                        <Button x:Name="ButtonAnimationsTimer" Click="ButtonAnimationsTimer_Click" Style="{StaticResource EffectButtonSelected}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4">
-                                            <Border x:Name="ButtonAnimationsTimerBorder" BorderThickness="2" BorderBrush="{DynamicResource ActualColorBrushAA}" Width="64" Height="64">
-                                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                    <Rectangle Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="ButtonAnimationsTimerImageBrush" Fill="{DynamicResource ActualColorBrushFF}">
-                                                        <Rectangle.OpacityMask>
-                                                            <ImageBrush ImageSource="/icons/timer32.png"/>
-                                                        </Rectangle.OpacityMask>
-                                                    </Rectangle>
-                                                    <TextBlock x:Name="ButtonAnimationsTimerText" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource ActualColorBrushAA}" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Timer"/>
-                                                </StackPanel>
-                                            </Border>
-                                        </Button>
-
-                                        <Button x:Name="ButtonAnimationsSmiles" Click="ButtonAnimationsSmiles_Click" Style="{StaticResource EffectButton}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4">
-                                            <Border x:Name="ButtonAnimationsSmilesBorder" BorderThickness="2" BorderBrush="{DynamicResource DefaultColorBrushAA}" Width="64" Height="64">
-                                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                    <Rectangle Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="ButtonAnimationsSmilesImageBrush" Fill="{DynamicResource DefaultColorBrushFF}">
-                                                        <Rectangle.OpacityMask>
-                                                            <ImageBrush ImageSource="/icons/smile32.png"/>
-                                                        </Rectangle.OpacityMask>
-                                                    </Rectangle>
-                                                    <TextBlock x:Name="ButtonAnimationsSmilesText" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource DefaultColorBrushAA}" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Smiles"/>
-                                                </StackPanel>
-                                            </Border>
-                                        </Button>
-
-                                        <Button x:Name="ButtonAnimationsWaterfall" Click="ButtonAnimationsWaterfall_Click" Style="{StaticResource EffectButton}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4">
-                                            <Border x:Name="ButtonAnimationsWaterfallBorder" BorderThickness="2" BorderBrush="{DynamicResource DefaultColorBrushAA}" Width="64" Height="64">
-                                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                    <Rectangle Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="ButtonAnimationsWaterfallImageBrush" Fill="{DynamicResource DefaultColorBrushFF}">
-                                                        <Rectangle.OpacityMask>
-                                                            <ImageBrush ImageSource="/icons/waterfall32.png"/>
-                                                        </Rectangle.OpacityMask>
-                                                    </Rectangle>
-                                                    <TextBlock x:Name="ButtonAnimationsWaterfallText" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource DefaultColorBrushAA}" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Waterfall"/>
-                                                </StackPanel>
-                                            </Border>
-                                        </Button>
-
-                                        <Button x:Name="ButtonAnimationsNyanCat" Click="ButtonAnimationsNyanCat_Click" Style="{StaticResource EffectButton}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4">
-                                            <Border x:Name="ButtonAnimationsNyanCatBorder" BorderThickness="2" BorderBrush="{DynamicResource DefaultColorBrushAA}" Width="64" Height="64">
-                                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                    <Rectangle Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="ButtonAnimationsNyanCatImageBrush" Fill="{DynamicResource DefaultColorBrushFF}">
-                                                        <Rectangle.OpacityMask>
-                                                            <ImageBrush ImageSource="/icons/nyancat32.png"/>
-                                                        </Rectangle.OpacityMask>
-                                                    </Rectangle>
-                                                    <TextBlock x:Name="ButtonAnimationsNyanCatText" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource DefaultColorBrushAA}" VerticalAlignment="Center" HorizontalAlignment="Center" Text="NyanCat"/>
-                                                </StackPanel>
-                                            </Border>
-                                        </Button>
+                                </ScrollViewer>
+                                <ScrollViewer x:Name="ScrollAnimations" MinWidth="162" Height="98" Background="#FF333333" Visibility="Hidden">
+                                    <WrapPanel x:Name="PanelAnimations" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     </WrapPanel>
                                 </ScrollViewer>
                             </Grid>
-                        </Border>
-                    </WrapPanel>
-                    <Rectangle Fill="#FF333333" Width="4" Margin="3,-4,0,0"/>
-                    <WrapPanel Orientation="Vertical" Margin="8,-4,0,0">
-                        <Grid>
-                            <StackPanel x:Name="GroupBoxDelaySetting" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
-                                <Label x:Name="LabelDelay" HorizontalAlignment="Center" Content="Speed: 3x" FontSize="16" Foreground="#AAFFFFFF"/>
-                                <Slider x:Name="SliderDelay" Style="{StaticResource Horizontal_Slider}" Width="124" Margin="0,-4,0,4" SmallChange="1" Minimum="1" Maximum="3" Value="3" ValueChanged="SliderDelay_ValueChanged" IsSnapToTickEnabled="True" TickPlacement="BottomRight" LargeChange="1" TickFrequency="1"/>
-                            </StackPanel>
-                            <StackPanel x:Name="GroupBoxSpeedSetting" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" Visibility="Hidden">
-                                <Label x:Name="LabelSpeed" HorizontalAlignment="Center" Content="Speed: 1,0x" FontSize="16" Foreground="#AAFFFFFF"/>
-                                <Slider x:Name="SliderSpeed" Style="{StaticResource Horizontal_Slider}" Width="124" Margin="-4" SmallChange="0.5" Minimum="0.5" Maximum="5" Value="1" ValueChanged="SliderSpeed_ValueChanged" IsSnapToTickEnabled="True" TickPlacement="BottomRight" LargeChange="0.5" TickFrequency="0.5"/>
-                            </StackPanel>
                         </Grid>
-                        <Rectangle Fill="#FF333333" Width="158" Margin="-8,-4,-4,0"/>
-                        <StackPanel>
-                            <Label x:Name="LabelBright" HorizontalAlignment="Center" Content="Brightness:  75%" Foreground="#AAFFFFFF" FontSize="16"/>
-                            <Slider x:Name="SliderBright" Style="{StaticResource Horizontal_Slider}" Width="124" SmallChange="1" Minimum="0" Maximum="100" Margin="4,-4,4,4" Value="75"  ValueChanged="SliderBright_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="5" TickPlacement="BottomRight"/>
-                        </StackPanel>
-                    </WrapPanel>
-                    <Rectangle Fill="#FF333333" Width="4" Margin="3,-4,0,0"/>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Label HorizontalAlignment="Center" Grid.Row="0" Content="Color" FontSize="16" Foreground="#AAFFFFFF"/>
-                        <Grid Grid.Row="1" VerticalAlignment="Top">
+                        <Grid Grid.Column="1">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Label HorizontalAlignment="Right" Grid.Column="0" Content="R:" FontSize="16" Foreground="#66FF0000" Margin="0,-4,0,-1" FontWeight="Bold"/>
-                            <TextBox x:Name="TextBoxRed" Grid.Column="1" Width="34" Height="26" Text="0" TextChanged="TextBoxRed_TextChanged" PreviewTextInput="NumberValidationTextBox" MaxLength="3" FontSize="16" TextAlignment="Right"/>
-                            <Label HorizontalAlignment="Right" Grid.Column="2" Content="G:" FontSize="16" Foreground="#6600FF00" Margin="0,-4,0,0" FontWeight="Bold"/>
-                            <TextBox x:Name="TextBoxGreen" Grid.Column="3" Width="34" Height="26" Text="255" TextChanged="TextBoxGreen_TextChanged" PreviewTextInput="NumberValidationTextBox" MaxLength="3" FontSize="16" TextAlignment="Right"/>
-                            <Label HorizontalAlignment="Right" Grid.Column="4"  Content="B:" FontSize="16" Foreground="#660000FF" Margin="0,-4,0,0" FontWeight="Bold"/>
-                            <TextBox x:Name="TextBoxBlue"  Grid.Column="5" Width="34" Height="26" Text="255" TextChanged="TextBoxBlue_TextChanged" PreviewTextInput="NumberValidationTextBox" MaxLength="3" FontSize="16" TextAlignment="Right"/>
+                            <Rectangle Fill="#FF333333" Width="4" Grid.Column="0"/>
+                            <Grid Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="12"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <StackPanel x:Name="GroupBoxDelaySetting" Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom">
+                                    <Label x:Name="DSSliderLabel" HorizontalAlignment="Center" Content="Speed: 3x" FontSize="16" Foreground="#AAFFFFFF"/>
+                                    <Slider x:Name="DSSlider" Style="{StaticResource Horizontal_Slider}" Width="124" SmallChange="1" Minimum="1" Maximum="3" Value="3" ValueChanged="DSSlider_ValueChanged" IsSnapToTickEnabled="True" TickPlacement="BottomRight" LargeChange="1" TickFrequency="1"/>
+                                </StackPanel>
+                                <Rectangle Fill="#FF333333" Height="4" Grid.Row="1" Grid.ColumnSpan="3"/>
+                                <StackPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom">
+                                    <Label x:Name="LabelBright" HorizontalAlignment="Center" Content="Brightness:  75%" Foreground="#AAFFFFFF" FontSize="16"/>
+                                    <Slider x:Name="SliderBright" Style="{StaticResource Horizontal_Slider}" Width="124" SmallChange="1" Minimum="0" Maximum="100" Value="75"  ValueChanged="SliderBright_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="5" TickPlacement="BottomRight"/>
+                                </StackPanel>
+                            </Grid>
+                            <Rectangle Fill="#FF333333" Width="4" Grid.Column="2"/>
                         </Grid>
-                        <WrapPanel Grid.Row="2" HorizontalAlignment="Center">
-                            <Label HorizontalAlignment="Right" Content="Hex:" FontSize="16" Foreground="#88FFFFFF" Margin="0,-4,0,0" FontWeight="Bold"/>
-                            <TextBox x:Name="TextBoxHex" Width="74" Height="26" Text="00FFFF" TextChanged="TextBoxHex_TextChanged" PreviewTextInput="HexValidationTextBox" MaxLength="6" FontSize="16" TextAlignment="Center"/>
-                        </WrapPanel>
+                        <Grid Grid.Column="2" Margin="0,0,6,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label HorizontalAlignment="Center" Grid.Row="0" Content="Color" FontSize="16" Foreground="#AAFFFFFF"/>
+                            <Grid Grid.Row="1" VerticalAlignment="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label HorizontalAlignment="Right" Grid.Column="0" Content="R:" FontSize="16" Foreground="#B2FF4040" Margin="0,-4,0,-1" FontWeight="Bold"/>
+                                <TextBox x:Name="TextBoxRed" Grid.Column="1" Width="34" Height="26" Text="0" TextChanged="TextBoxRed_TextChanged" PreviewTextInput="NumberValidationTextBox" MaxLength="3" FontSize="16" TextAlignment="Right"/>
+                                <Label HorizontalAlignment="Right" Grid.Column="2" Content="G:" FontSize="16" Foreground="#B240FF40" Margin="0,-4,0,0" FontWeight="Bold"/>
+                                <TextBox x:Name="TextBoxGreen" Grid.Column="3" Width="34" Height="26" Text="255" TextChanged="TextBoxGreen_TextChanged" PreviewTextInput="NumberValidationTextBox" MaxLength="3" FontSize="16" TextAlignment="Right"/>
+                                <Label HorizontalAlignment="Right" Grid.Column="4"  Content="B:" FontSize="16" Foreground="#B24040FF" Margin="0,-4,0,0" FontWeight="Bold"/>
+                                <TextBox x:Name="TextBoxBlue"  Grid.Column="5" Width="34" Height="26" Text="255" TextChanged="TextBoxBlue_TextChanged" PreviewTextInput="NumberValidationTextBox" MaxLength="3" FontSize="16" TextAlignment="Right"/>
+                            </Grid>
+                            <WrapPanel Grid.Row="2" HorizontalAlignment="Center">
+                                <Label HorizontalAlignment="Right" Content="Hex:" FontSize="16" Foreground="#88FFFFFF" Margin="0,-4,0,0" FontWeight="Bold"/>
+                                <TextBox x:Name="TextBoxHex" Width="74" Height="26" Text="00FFFF" TextChanged="TextBoxHex_TextChanged" PreviewTextInput="HexValidationTextBox" MaxLength="6" FontSize="16" TextAlignment="Center"/>
+                            </WrapPanel>
+                        </Grid>
                     </Grid>
-                </WrapPanel>
-                <Rectangle Grid.Row="1" VerticalAlignment="Top" Height="4" Fill="#FF333333" Margin="0,116,0,0"/>
-                <Grid Grid.Row="2" Margin="8,0,0,0">
+                    <Rectangle Grid.Row="2" Height="4" Fill="#FF333333"/>
+                </Grid>
+
+
+
+                <Grid Grid.Row="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="32"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Grid Margin="-8,-6,0,0">
+                    <Grid Grid.Row="0">
                         <Rectangle Width="128" Height="32" HorizontalAlignment="Left" VerticalAlignment="Top">
                             <Rectangle.Fill>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -762,90 +730,65 @@
                         </Rectangle>
                         <Label Grid.Row="0" Content="Settings" FontSize="20" Foreground="{DynamicResource ActualColorBrushAA}" Margin="4,-6,4,0" HorizontalAlignment="Left"/>
                     </Grid>
-                    <Grid x:Name="GroupBoxEffectEqualizerSettings" Grid.Row="1" Visibility="Visible">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="32"/>
-                            <RowDefinition Height="32"/>
-                            <RowDefinition Height="32"/>
-                        </Grid.RowDefinitions>
-                        <WrapPanel Orientation="Horizontal" Grid.Row="0">
-                            <Label Content="Frequencies:" FontSize="16" Foreground="#88FFFFFF" Margin="0,-4,4,0"/>
-                            <TextBox x:Name="TextBoxMinFreq" Width="50" Height="26" Text="20" TextChanged="TextBoxMinFreq_TextChanged" PreviewTextInput="NumberValidationTextBox" MaxLength="5" FontSize="16" TextAlignment="Right"/>
-                            <Label Content=" - " FontSize="16" Foreground="#88FFFFFF" Margin="0,-4,0,0"/>
-                            <TextBox x:Name="TextBoxMaxFreq" Width="50" Height="26" Text="2800" TextChanged="TextBoxMaxFreq_TextChanged" PreviewTextInput="NumberValidationTextBox" MaxLength="5" FontSize="16" TextAlignment="Right"/>
-                            <CheckBox x:Name="CheckBoxEffectsEqualizerAntialiasingTurn" Margin="64,6,4,4" Checked="CheckBoxEffectsEqualizerAntialiasingTurn_Checked" Unchecked="CheckBoxEffectsEqualizerAntialiasingTurn_Checked" IsChecked="True">
-                                <TextBlock Text="antialiasing" FontSize="16" Foreground="#88FFFFFF" Margin="0,-4,0,0"/>
-                            </CheckBox>
-                        </WrapPanel>
-                        <WrapPanel Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,0">
-                            <CheckBox x:Name="CheckBoxEffectsEqualizerStaticVolumeTurn" Margin="4,10,4,4" Checked="CheckBoxEffectsEqualizerStaticVolumeTurn_Checked" Unchecked="CheckBoxEffectsEqualizerStaticVolumeTurn_UnChecked">
-                                <TextBlock Text="static volume border" FontSize="16" Foreground="#88FFFFFF" Margin="0,-4,0,0"/>
-                            </CheckBox>
-                            <WrapPanel x:Name="GroupBoxEffectsEqualizerStaticVolumeSettings" Orientation="Horizontal" Margin="64,4,0,0" Visibility="Hidden">
-                                <Label Content="Max. volume:" FontSize="16" Foreground="#88FFFFFF" Margin="0,-4,0,0"/>
-                                <TextBox x:Name="TextBoxEffectsEqualizerVolumeBorderSize" Width="50" Height="26" Text="20" TextChanged="TextBoxEffectsEqualizerVolumeBorderSize_TextChanged" PreviewTextInput="NumberValidationTextBox" MaxLength="5" FontSize="16" TextAlignment="Right"/>
-                            </WrapPanel>
-                        </WrapPanel>
-                        <WrapPanel x:Name="GroupBoxEffectsEqualizerColumnsSettings" Orientation="Horizontal" Grid.Row="2" Margin="0,0,0,0">
-                            <Label Content="Averarge intensity of columns (23 = max):" FontSize="16" Foreground="#88FFFFFF" Margin="0,-4,4,0"/>
-                            <TextBox x:Name="TextBoxEffectsEqualizerStartColumn" Width="24" Height="26" Text="2" TextChanged="TextBoxEffectsEqualizerStartColumn_TextChanged" PreviewTextInput="NumberValidationTextBox" MaxLength="2" FontSize="16" TextAlignment="Right"/>
-                            <Label Content=" - " FontSize="16" Foreground="#88FFFFFF" Margin="0,-4,0,0"/>
-                            <TextBox x:Name="TextBoxEffectsEqualizerEndColumn" Width="24" Height="26" Text="23" TextChanged="TextBoxEffectsEqualizerEndColumn_TextChanged" PreviewTextInput="NumberValidationTextBox" MaxLength="2" FontSize="16" TextAlignment="Right"/>
-                        </WrapPanel>
-                    </Grid>
 
-                    <Grid x:Name="GroupBoxEffectVolumeSettings" Grid.Row="1" Visibility="Hidden">
-                        <WrapPanel>
-                            <CheckBox x:Name="CheckBoxVolumeSimple" Margin="4" Checked="CheckBoxVolumeSimple_Checked" Unchecked="CheckBoxVolumeSimple_Checked">
-                                <TextBlock Text="simple volume" FontSize="16" Foreground="#88FFFFFF" Margin="0,-4,0,0"/>
-                            </CheckBox>
+
+                    <Rectangle Height="8" Grid.Row="1" VerticalAlignment="Top" Panel.ZIndex="1" Margin="8,0,25,0">
+                        <Rectangle.Fill>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF222222" Offset="0"/>
+                                <GradientStop Color="#00222222" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Rectangle Height="8" Grid.Row="1" VerticalAlignment="Bottom" Panel.ZIndex="1" Margin="8,0,25,0">
+                        <Rectangle.Fill>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF222222" Offset="1"/>
+                                <GradientStop Color="#00222222" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <ScrollViewer Grid.Row="1" Margin="8,0,8,0">
+                        <WrapPanel x:Name="SettingsGrid" Margin="0,8,0,0">
+                            <Grid Margin="0, 0, 32, 16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox VerticalAlignment="Center"/>
+                                <Label Content="Lorem Ipsum" Grid.Column="1" Margin="0,-4,0,-4"/>
+                            </Grid>
+
+                            <Grid Margin="0, 0, 32, 16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Width="54" Grid.Column="1" Text="FFF" TextAlignment="Right" />
+                                <Label Content="Lorem Ipsum: " Margin="0,-4,0,-4"/>
+                            </Grid>
+
+                            <Grid Margin="0, 0, 32, 16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox VerticalAlignment="Center" Width="54" Grid.Column="1" Text="564"/>
+                                <Label Content="Lorem Ipsum dolor sit amet, consectetur adipiscing elit " Margin="0,-4,0,0" />
+                            </Grid>
                         </WrapPanel>
-                    </Grid>
-                    <Grid x:Name="GroupBoxEffectRandomSettings" Grid.Row="1" Visibility="Hidden">
-                        <WrapPanel>
-                            <CheckBox x:Name="CheckBoxRandomTurn" Margin="4" Checked="CheckBoxRandomTurn_Checked" Unchecked="CheckBoxRandomTurn_Checked">
-                                <TextBlock Text="on/off leds" FontSize="16" Foreground="#88FFFFFF" Margin="0,-4,0,0"/>
-                            </CheckBox>
-                        </WrapPanel>
-                    </Grid>
-                    <Grid x:Name="GroupBoxAnimationTimerSettings" Grid.Row="1" Visibility="Hidden">
-                        <WrapPanel>
-                            <CheckBox x:Name="CheckBoxTimerSimple" Margin="4" Checked="CheckBoxTimerSimple_Checked" Unchecked="CheckBoxTimerSimple_Checked">
-                                <TextBlock Text="simple numbers" FontSize="16" Foreground="#88FFFFFF" Margin="0,-4,0,0"/>
-                            </CheckBox>
-                            <CheckBox x:Name="CheckBoxTimerInvert" Margin="4" Checked="CheckBoxTimerInvert_Checked" Unchecked="CheckBoxTimerInvert_Checked">
-                                <TextBlock Text="with invert colors" FontSize="16" Foreground="#88FFFFFF" Margin="0,-4,0,0"/>
-                            </CheckBox>
-                        </WrapPanel>
-                    </Grid>
-                    <Grid x:Name="GroupBoxAnimationWaterfallSettings" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Visibility="Hidden">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <CheckBox x:Name="CheckBoxWaterfallTail" Grid.Row="0" Grid.Column="0" Margin="4" Checked="CheckBoxWaterfallTail_Checked" Unchecked="CheckBoxWaterfallTail_Checked" IsChecked="True">
-                            <TextBlock Text="tail" FontSize="16" Foreground="#88FFFFFF" Margin="0,-4,0,0"/>
-                        </CheckBox>
-                        <GroupBox Grid.Row="0" Grid.Column="1" x:Name="GroupBoxWaterfallTailLengthSettings" BorderBrush="{x:Null}" Margin="4" Visibility="Hidden">
-                            <WrapPanel>
-                                <Label Content="Tail length:"/>
-                                <TextBox x:Name="TextBoxWaterfallTailLength" Width="30" Height="20" Text="5" TextChanged="TextBoxWaterfallTailLength_TextChanged" VerticalAlignment="Center"/>
-                            </WrapPanel>
-                        </GroupBox>
-                        <CheckBox x:Name="CheckBoxWaterfallInvert" Grid.Row="1" Grid.Column="0" Margin="4" Checked="CheckBoxWaterfallInvert_Checked" Unchecked="CheckBoxWaterfallInvert_Checked">
-                            <TextBlock Text="reverse" FontSize="16" Foreground="#88FFFFFF" Margin="0,-4,0,0"/>
-                        </CheckBox>
-                        <CheckBox x:Name="CheckBoxWaterfallHorizontal" Grid.Row="1" Grid.Column="1" Content="horizontal" Margin="4" Checked="CheckBoxWaterfallHorizontal_Checked" Unchecked="CheckBoxWaterfallHorizontal_Checked" Visibility="Hidden"/>
-                        <CheckBox x:Name="CheckBoxWaterfallDiagonal" Grid.Row="2" Grid.Column="0" Content="diagonal" Margin="4" Checked="CheckBoxWaterfallDiagonal_Checked" Unchecked="CheckBoxWaterfallDiagonal_Checked" Visibility="Hidden"/>
-                    </Grid>
+                    </ScrollViewer>
                 </Grid>
-                <Label Grid.Row="3" Content="Creator: Oleg Petruny" HorizontalAlignment="Left" Background="{x:Null}" Foreground="#AAFFFFFF" VerticalAlignment="Top" Height="30" Margin="0,0,0,-13"/>
-                <Label Grid.Row="3" Content="version: 3.0" HorizontalAlignment="Right" Background="{x:Null}" Foreground="#AAFFFFFF" Grid.Column="1" VerticalAlignment="Top" Margin="0,0,0,-13"/>
+
+
+
+                <Grid Grid.Row="3" VerticalAlignment="Bottom">
+                    <Label Content="Creator: Oleg Petruny" HorizontalAlignment="Left" Foreground="#22FFFFFF" FontSize="12" Background="{x:Null}"/>
+                    <Label Content="version: 3.4" HorizontalAlignment="Right" Foreground="#AAFFFFFF" FontSize="12" Margin="0,0,16,-2" VerticalAlignment="Center"/>
+                </Grid>
+
+
+
             </Grid>
         </DockPanel>
     </Grid>

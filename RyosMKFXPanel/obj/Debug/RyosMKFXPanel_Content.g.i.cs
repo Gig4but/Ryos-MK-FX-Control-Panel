@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("ryostalkfx/croccattalkwrapper/win32-x86-64/talkfx-c.dll")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("ryostalkfx/croccattalkwrapper/win32-x86/talkfx-c.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("devices/roccat/ryostalkfx/croccattalkwrapper/win32-x86-64/talkfx-c.dll")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("devices/roccat/ryostalkfx/croccattalkwrapper/win32-x86/talkfx-c.dll")]
 
 

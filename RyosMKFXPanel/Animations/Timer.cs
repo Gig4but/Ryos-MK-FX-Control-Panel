@@ -1,310 +1,193 @@
-﻿using System.Threading;
+﻿using System.Windows;
 
 namespace RyosMKFXPanel.Animations {
-    class Timer :Lightning {
-        private static bool run = false;
-        public static bool getState() {
-            return run;
+    class Timer :LightningModule {
+        public override string GetUid() {
+            return "DefaultTimer";
         }
-        private static bool changeState() {
-            run = ((run) ? false : true);
-            return true;
+        public override string GetName() {
+            return "Timer";
+        }
+        public override string GetCategory() {
+            return "Animations";
+        }
+        public override string GetIcon() {
+            return "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAGdAAABnQEox4btAAACBUlEQVRYhb1XMXaDMAz95XWv107hBuUG8RHYunIEjsAROAJrp3IEjkBuQKaumbqqg7+DcAkxSYje0zO2JX1ZyLYMEUEkVxJPVazdFxFBJBkAWTBWsy2D8R7AKcboGgfmqGNrbzXwulI+hYuCj4RvK7Y9eYg1GBMBA6Agf6jxA8Ywm5m5hrz8K1RCDCJSqr5hMp2YWB3ns4WkyijTUedEG0bJlMSCiEwc6KnUiIilkO+nK3aL55S6QltW9fs5B0CBXyW0tNpYztTifolxng+FCwq2QdjuZUObQoxZB3IV8kcBz0VYiDVxwIhLmP7BK5+LRE8sox3wnj3in8fkxDnSEJetW4f+0q9IIW5fity21W5lv+gyAZDz5BquH5wT+gQgbNfSQMw8AbAH0N5g5D1o11ILYJ8oj55NAzDehvc4sFff9UWpKw7cQzkZAH4AfK1R9g5YjMVFLH0H/bXgFnD1gC8g8iXpDagFkCZwK7dwRcWzyBCzS+jJG54bgZyYjT+ZOnFFw5YXkb6QBmKeLyPLo7F+ggM1sax2QE8UG4IX4UJDAV86beGEB+/1+Nz/8U5UDwSvFPgkzy4lSaMU7B3AVqbV9j+ZJeVcxtK8YwhjdomhbEfdQVQNGHLMy6iAe3rt2D/AHV7hi8cfLv6FdKRes2R8zeM0gztA/NtwF8wfMb4NW7ZX6Q+KkvrI/qV3qgAAAABJRU5ErkJggg==";
+        }
+        public override SliderType GetSliderType() {
+            return SliderType.speed;
+        }
+        public override double GetSliderMax() {
+            return 5.0d;
+        }
+        public override double GetSliderMin() {
+            return 0.5d;
+        }
+        public override double GetSliderTick() {
+            return 0.5d;
+        }
+        public override double GetSliderTickFrequency() {
+            return 0.5d;
+        }
+        public override LightningModuleControls[] GetControls() {
+            return new LightningModuleControls[] {
+                new CCheckBox("Simple numbers", new RoutedEventHandler(OnSimple), new RoutedEventHandler(OffSimple)),
+                new CCheckBox("Invert colors", new RoutedEventHandler(OnInvert), new RoutedEventHandler(OffInvert))
+            };
         }
 
-        private static Thread thread;
-        public static void start() {
-            thread = new Thread(animationTimerColor);
-            thread.Start();
-            changeState();
-        }
-        public static void stop() {
-            thread.Abort();
-            changeState();
-        }
 
-        private static bool invert = false;
-        private static bool simple = false;
-        public static void invertColor() {
-            invert = ((invert) ? false : true);
-        }
-        public static void simpleNumbers() {
-            simple = ((simple) ? false : true);
-        }
+        public bool invert = false;
+        public bool simple = false;
 
-        private static void animationTimerColor() {
+       // public override Param[] GetParameters() {
+            //return new Param[] {
+                //new Param(invert.GetType(), nameof(invert), "Invert"),
+                //new Param(simple.GetType(), nameof(simple), "Simple")
+            //};
+        //}
+
+        public Timer() { }
+
+
+
+        public override void Work() {
             int s = 0;
             int ss = 0;
-            keysLightReset();
-            for (int i = 18; i < kbc; i++) {
-                if ((i > 17 && i < 27)
-                    || i == 34 || i == 35 || i == 36
-                    || i == 56 || i == 57 || i == 58
-                    || i == 74 || i == 75 || i == 76
-                    || i == 92 || i == 93 || i == 94
-                    || i == 108 || i == 109) {
-                    keysLight[i] = 1;
-                }
-            }
             while (true) {
-                byte[] pattern = new byte[23];
-                s++;
-                if (invert) {
-                    for (int i = 0; i < pattern.Length; i++) {
-                        pattern[i] = 2;
+                Lightning.devices[0].KeysColorUpdate();
+                Lightning.devices[0].KeysLightAllOff();
+                if (simple) {
+                    switch (s) {
+                        case 0:
+                            break;
+                        case 1:
+                            Lightning.devices[0].KeyLightOn(92);
+                            break;
+                        case 2:
+                            Lightning.devices[0].KeyLightOn(93);
+                            break;
+                        case 3:
+                            Lightning.devices[0].KeyLightOn(94);
+                            break;
+                        case 4:
+                            Lightning.devices[0].KeyLightOn(74);
+                            break;
+                        case 5:
+                            Lightning.devices[0].KeyLightOn(75);
+                            break;
+                        case 6:
+                            Lightning.devices[0].KeyLightOn(76);
+                            break;
+                        case 7:
+                            Lightning.devices[0].KeyLightOn(56);
+                            break;
+                        case 8:
+                            Lightning.devices[0].KeyLightOn(57);
+                            break;
+                        case 9:
+                            Lightning.devices[0].KeyLightOn(58);
+                            break;
                     }
-                    if (simple) {
-                        pattern[9] = 0;
-                        pattern[10] = 0;
-                        pattern[11] = 0;
-                        pattern[21] = 0;
-                        pattern[22] = 0;
+                } else {
+                    switch (s) {
+                        case 0:
+                            break;
+                        case 1:
+                            Lightning.devices[0].KeysLightOn(new int[] { 74, 57, 36, 58, 76, 94 });
+                            break;
+                        case 2:
+                            Lightning.devices[0].KeysLightOn(new int[] { 34, 35, 36, 58, 76, 75, 74, 92, 108, 109 });
+                            break;
+                        case 3:
+                            Lightning.devices[0].KeysLightOn(new int[] { 34, 35, 36, 58, 76, 75, 74, 94, 109, 108 });
+                            break;
+                        case 4:
+                            Lightning.devices[0].KeysLightOn(new int[] { 34, 56, 75, 75, 75, 36, 58, 76, 94, 109 });
+                            break;
+                        case 5:
+                            Lightning.devices[0].KeysLightOn(new int[] { 36, 35, 34, 56, 74, 75, 76, 94, 109, 108 });
+                            break;
+                        case 6:
+                            Lightning.devices[0].KeysLightOn(new int[] { 36, 35, 34, 56, 74, 92, 108, 109, 94, 76, 75 });
+                            break;
+                        case 7:
+                            Lightning.devices[0].KeysLightOn(new int[] { 34, 35, 36, 58, 76, 94, 109 });
+                            break;
+                        case 8:
+                            Lightning.devices[0].KeysLightOn(new int[] { 58, 36, 35, 34, 56, 74, 75, 76, 94, 109, 108, 92 });
+                            break;
+                        case 9:
+                            Lightning.devices[0].KeysLightOn(new int[] { 58, 36, 35, 34, 56, 74, 75, 76, 94, 109, 108 });
+                            break;
                     }
                 }
-                if (s == 0) {
+                switch (ss) {
+                    case 0:
+                        break;
+                    case 1:
+                        Lightning.devices[0].KeyLightOn(18);
+                        break;
+                    case 2:
+                        Lightning.devices[0].KeyLightOn(19);
+                        break;
+                    case 3:
+                        Lightning.devices[0].KeyLightOn(20);
+                        break;
+                    case 4:
+                        Lightning.devices[0].KeyLightOn(21);
+                        break;
+                    case 5:
+                        Lightning.devices[0].KeyLightOn(22);
+                        break;
+                    case 6:
+                        Lightning.devices[0].KeyLightOn(23);
+                        break;
+                    case 7:
+                        Lightning.devices[0].KeyLightOn(24);
+                        break;
+                    case 8:
+                        Lightning.devices[0].KeyLightOn(25);
+                        break;
+                    case 9:
+                        Lightning.devices[0].KeyLightOn(26);
+                        break;
+                }
+                if (invert) {
                     if (simple) {
-                        pattern[21] = 1;
+                        Lightning.devices[0].KeysColorInvertIfOff(new int[] { 18, 19, 20, 21, 22, 23, 24, 25, 26, 56, 57, 58, 74, 75, 76, 92, 93, 94 });
                     } else {
-                        pattern[9] = 1;
-                        pattern[10] = 1;
-                        pattern[11] = 1;
-
-                        pattern[12] = 1;
-                        pattern[14] = 1;
-
-                        pattern[15] = 1;
-                        pattern[17] = 1;
-
-                        pattern[18] = 1;
-                        pattern[20] = 1;
-
-                        pattern[21] = 1;
-                        pattern[22] = 1;
+                        Lightning.devices[0].KeysColorInvertIfOff(new int[] { 18, 19, 20, 21, 22, 23, 24, 25, 26, 34, 35, 36, 56, 57, 58, 74, 75, 76, 92, 93, 94, 108, 109 });
                     }
-                } 
-                else if (s == 1) {
-                    if (simple) {
-                        pattern[18] = 1;
-                    } else {
-                        pattern[11] = 1;
-
-                        pattern[13] = 1;
-                        pattern[14] = 1;
-
-                        pattern[15] = 1;
-                        pattern[17] = 1;
-
-                        pattern[20] = 1;
-
-                        pattern[22] = 1;
-                    }
-                } 
-                else if (s == 2) {
-                    if (simple) {
-                        pattern[19] = 1;
-                    } else {
-                        pattern[9] = 1;
-                        pattern[10] = 1;
-                        pattern[11] = 1;
-
-                        pattern[14] = 1;
-
-                        pattern[15] = 1;
-                        pattern[16] = 1;
-                        pattern[17] = 1;
-
-                        pattern[18] = 1;
-
-                        pattern[21] = 1;
-                        pattern[22] = 1;
-                    }
-                } 
-                else if (s == 3) {
-                    if (simple) {
-                        pattern[20] = 1;
-                    } else {
-                        pattern[9] = 1;
-                        pattern[10] = 1;
-                        pattern[11] = 1;
-
-                        pattern[14] = 1;
-
-                        pattern[15] = 1;
-                        pattern[16] = 1;
-                        pattern[17] = 1;
-
-                        pattern[20] = 1;
-
-                        pattern[21] = 1;
-                        pattern[22] = 1;
-                    }
-                } 
-                else if (s == 4) {
-                    if (simple) {
-                        pattern[15] = 1;
-                    } else {
-                        pattern[9] = 1;
-                        pattern[11] = 1;
-
-                        pattern[12] = 1;
-                        pattern[14] = 1;
-
-                        pattern[15] = 1;
-                        pattern[16] = 1;
-                        pattern[17] = 1;
-
-                        pattern[20] = 1;
-
-                        pattern[22] = 1;
-                    }
-                } 
-                else if (s == 5) {
-                    if (simple) {
-                        pattern[16] = 1;
-                    } else {
-                        pattern[9] = 1;
-                        pattern[10] = 1;
-                        pattern[11] = 1;
-
-                        pattern[12] = 1;
-
-                        pattern[15] = 1;
-                        pattern[16] = 1;
-                        pattern[17] = 1;
-
-                        pattern[20] = 1;
-
-                        pattern[21] = 1;
-                        pattern[22] = 1;
-                    }
-                } 
-                else if (s == 6) {
-                    if (simple) {
-                        pattern[17] = 1;
-                    } else {
-                        pattern[9] = 1;
-                        pattern[10] = 1;
-                        pattern[11] = 1;
-
-                        pattern[12] = 1;
-
-                        pattern[15] = 1;
-                        pattern[16] = 1;
-                        pattern[17] = 1;
-
-                        pattern[18] = 1;
-                        pattern[20] = 1;
-
-                        pattern[21] = 1;
-                        pattern[22] = 1;
-                    }
-                } 
-                else if (s == 7) {
-                    if (simple) {
-                        pattern[12] = 1;
-                    } else {
-                        pattern[9] = 1;
-                        pattern[10] = 1;
-                        pattern[11] = 1;
-
-                        pattern[14] = 1;
-
-                        pattern[17] = 1;
-
-                        pattern[20] = 1;
-
-                        pattern[22] = 1;
-                    }
-                } 
-                else if (s == 8) {
-                    if (simple) {
-                        pattern[13] = 1;
-                    } else {
-                        pattern[9] = 1;
-                        pattern[10] = 1;
-                        pattern[11] = 1;
-
-                        pattern[12] = 1;
-                        pattern[14] = 1;
-
-                        pattern[15] = 1;
-                        pattern[16] = 1;
-                        pattern[17] = 1;
-
-                        pattern[18] = 1;
-                        pattern[20] = 1;
-
-                        pattern[21] = 1;
-                        pattern[22] = 1;
-                    }
-                } 
-                else if (s == 9) {
-                    if (simple) {
-                        pattern[14] = 1;
-                    } else {
-                        pattern[9] = 1;
-                        pattern[10] = 1;
-                        pattern[11] = 1;
-
-                        pattern[12] = 1;
-                        pattern[14] = 1;
-
-                        pattern[15] = 1;
-                        pattern[16] = 1;
-                        pattern[17] = 1;
-
-                        pattern[20] = 1;
-
-                        pattern[21] = 1;
-                        pattern[22] = 1;
-                    }
-                } 
-                else if (s == 10) {
-                    if (simple) {
-                        pattern[18] = 1;
-                    } else {
-                        pattern[11] = 1;
-
-                        pattern[13] = 1;
-                        pattern[14] = 1;
-
-                        pattern[15] = 1;
-                        pattern[17] = 1;
-
-                        pattern[20] = 1;
-
-                        pattern[22] = 1;
-                    }
-                    s = 1;
+                }
+                s++;
+                if (s >= 9) {
+                    s = 0;
                     ss++;
                 }
-                if (ss > 9) {
+                if (ss >= 9) {
                     ss = 0;
                 }
-                for (int i = 0; i < ss; i++) {
-                    pattern[i] = 1;
-                
-                }
-                colorer(pattern);
-                sendPacket();
-                Thread.Sleep((int)(1000 / speed));
+                Lightning.devices[0].SendPacket();
+                Lightning.devices[0].SpeedSleep();
             }
         }
 
-        private static void colorer(byte[] pattern) {
-            keysColorReset();
-            byte[] keyCodes = { 18, 19, 20, 21, 22, 23, 24, 25, 26, 34, 35, 36, 56, 57, 58, 74, 75, 76, 92, 93, 94, 108, 109 };
-            for (int i = 0; i < pattern.Length; i++) {
-                if (pattern[i] == 1) {
-                    keysColor[(keyCodes[i] * 3)] = (byte)(red * maxBright);
-                    keysColor[(keyCodes[i] * 3) + 1] = (byte)(green * maxBright);
-                    keysColor[(keyCodes[i] * 3) + 2] = (byte)(blue * maxBright);
-                } else if (pattern[i] == 2) {
-                    keysColor[(keyCodes[i] * 3)] = (byte)((255 - red) * maxBright);
-                    keysColor[(keyCodes[i] * 3) + 1] = (byte)((255 - green) * maxBright);
-                    keysColor[(keyCodes[i] * 3) + 2] = (byte)((255 - blue) * maxBright);
-                }
-            }
+
+        private void OnSimple(object sender, RoutedEventArgs e) {
+            simple = true;
         }
+        private void OffSimple(object sender, RoutedEventArgs e) {
+            simple = false;
+        }
+        private void OnInvert(object sender, RoutedEventArgs e) {
+            invert = true;
+        }
+        private void OffInvert(object sender, RoutedEventArgs e) {
+            invert = false;
+        }
+
+
     }
 }
 /*  xx  :  00  xx  01  02  03  04 :  05  06  07  08 :  09  10  11  12  :  13  14  15  :  xx xx  xx xx
