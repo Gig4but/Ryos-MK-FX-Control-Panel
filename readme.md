@@ -12,6 +12,7 @@
   
 ### About Equalizer:  
   In Visualizer_vXX.zip archive is compiled "Equalizer" effect. Just exec and have fun!  
+  Simply download https://github.com/Gig4but/Ryos-MK-FX-Control-Panel/raw/master/Visualizer_v3.zip  
   **DO NOT FORGET ABOUT DEPENDICIES**
   
   All files from archive must be in one folder with .exe file for success run.
