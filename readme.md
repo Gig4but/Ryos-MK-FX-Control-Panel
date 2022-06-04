@@ -11,7 +11,7 @@
   (select Keyboards -> select Ryos MK FX -> click the bottom one button with text "ROCCAT® Talk® FX" -> install and restart computer)
   
 ### About Equalizer:  
-  In Visualizer_vXX.zip archive is compiled "Equalizer" effect. Just exec and have fun!
+  In Visualizer_vXX.zip archive is compiled "Equalizer" effect. Just exec and have fun!  
   **DO NOT FORGET ABOUT DEPENDICIES**
   
   All files from archive must be in one folder with .exe file for success run.
@@ -40,8 +40,8 @@
   And for man what write SampleAggregator.cs (sorry, i forgot where i found that)
 
 ### WARNINGS:
-  Should doesn't work if Nahimic software is running -> because programmed really bad, like Roccat Swarm. Nahimic injure applications, especially windows and their styles.
-    *Solution: just shutdown the process and all be alright.
+  Should doesn't work if Nahimic software is running -> because programmed really bad, like Roccat Swarm. Nahimic injure applications, especially windows and their styles.  
+  *Solution: just shutdown the Nahimic and all be alright.
 
 ### If not working:
   
