@@ -6,9 +6,9 @@
   You can't use any piece of repository for commercial purposes.
 
 ### Dependicies: 
-  Roccat SWARM doesn't install **ROCCAT TalkFX** automatically now, which **is needed for program and keyboard comunication**.
-    Simply use installer from dependicies folder or download it from official site https://support.roccat.com/s/downloads.
-    (select Keyboards -> select Ryos MK FX -> click the bottom one button with text "ROCCAT® Talk® FX" -> install and restart computer)
+  Roccat SWARM doesn't install **ROCCAT TalkFX** automatically now, which **is needed for program and keyboard comunication**.  
+  Simply use installer from dependicies folder or download it from official site https://support.roccat.com/s/downloads.  
+  (select Keyboards -> select Ryos MK FX -> click the bottom one button with text "ROCCAT® Talk® FX" -> install and restart computer)
   
 ### About Equalizer:  
   In Visualizer_vXX.zip archive is compiled "Equalizer" effect. Just exec and have fun!
