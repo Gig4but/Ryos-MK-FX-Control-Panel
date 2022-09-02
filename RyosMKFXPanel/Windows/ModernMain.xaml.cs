@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -16,12 +15,13 @@ namespace RyosMKFXPanel.Windows {
 		private static bool initialized = false;
 		public ModernMain() {
 			InitializeComponent();
+			Settings.Initialize();
 			initialized = true;
 
 
-			if (Properties.Settings.Default.DeviceID != null || Properties.Settings.Default.DeviceID != "") {
+			if (Settings.General.ContainsKey("DeviceId")) {
 				Audio.DeviceAutoChange(false);
-				Audio.ChangeListenDeviceById(Properties.Settings.Default.DeviceID);
+                Audio.GetListeningDevice(Settings.General["DeviceId"]);
 			}
 
 			for (int i = 0; i < Lightning.modules.Count(); i++) {
@@ -101,7 +101,7 @@ namespace RyosMKFXPanel.Windows {
 				}
 			}
 
-			((IInvokeProvider)(new ButtonAutomationPeer((Button)this.FindName("Category" + Properties.Settings.Default.category)).GetPattern(PatternInterface.Invoke))).Invoke();
+			((IInvokeProvider)(new ButtonAutomationPeer((Button)this.FindName("Category" + Settings.General["Category"])).GetPattern(PatternInterface.Invoke))).Invoke();
 
 		}
 

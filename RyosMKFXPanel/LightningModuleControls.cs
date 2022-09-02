@@ -292,35 +292,5 @@ namespace RyosMKFXPanel {
 			}
 			return minValue;
 		}
-		public static unsafe void ChangeMaxValueUnsafe(int minValue, int* maxValue, TextBox input) {
-			int x = *maxValue;
-			if (int.TryParse(input.Text, out x)) {
-				if (x <= minValue) {
-					*maxValue = minValue + 1;
-				} else if (x > Lightning.devices[0].GetWidth() + 1) {
-					*maxValue = Lightning.devices[0].GetWidth() + 1;
-				} else {
-					*maxValue = x;
-				}
-			} else {
-				input.Text = x.ToString();
-			}
-		}
-		public static unsafe void ChangeMinValueUnsafe(int* minValue, int maxValue, TextBox input) {
-			int x = *minValue;
-			if (int.TryParse(input.Text, out x)) {
-				if (x < 1) {
-					*minValue = 1;
-				} else if (x >= maxValue) {
-					*minValue = maxValue - 1;
-				} else {
-					*minValue = x;
-				}
-			} else {
-				input.Text = x.ToString();
-			}
-		}
 	}
-
-
 }

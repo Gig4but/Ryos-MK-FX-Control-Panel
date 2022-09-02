@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
 using NAudio.Wave;
@@ -87,7 +86,7 @@ namespace RyosMKFXPanel {
 			_sampleAggregator = new SampleAggregator(Convert.ToInt32(_fftLengthDefault / Math.Pow(2, Lightning.devices[0].delay)));
 			_sampleAggregator.FftCalculated += new EventHandler<FftEventArgs>(FFT);
 			_sampleAggregator.PerformFFT = true;
-			_waveIn = new WasapiLoopbackCapture(Audio.GetListenDevice());
+			_waveIn = new WasapiLoopbackCapture(Audio.GetActiveDevice());
 			_waveIn.DataAvailable += OnDataAvailable;
 			_waveIn.StartRecording();
 		}
@@ -118,7 +117,7 @@ namespace RyosMKFXPanel {
 			int maxBin = (int)(maxHz / (binSize * Lightning.devices[0].delay * 4));
 			float[] intensity = new float[1 + maxBin - minBin];
 			float[] frequency = new float[1 + maxBin - minBin];
-			float v = (float)Audio.VolumeIs();
+			float v = (float)Audio.GetVolume();
 			for (int bin = minBin; bin <= maxBin; bin++) {
 				float real = e.Result[bin * 2].X;
 				float imaginary = e.Result[bin * 2 + 1].Y;
@@ -156,7 +155,7 @@ namespace RyosMKFXPanel {
 			}
 			float point = 0;
 			if (staticVolume) {
-				point = staticVolumeSize * (float)Audio.VolumeIs() * 1000;
+				point = staticVolumeSize * (float)Audio.GetVolume() * 1000;
 			} else {
 				for (int i = startColumn - 1; i < endColumn; i++) {
 					point += iA[i];
@@ -203,10 +202,7 @@ namespace RyosMKFXPanel {
 		private void ChangeStartColumn(object sender, TextChangedEventArgs e) {
 			startColumn = IntervalLibrary.ChangeMinValue(startColumn, endColumn, (TextBox)sender);
 		}
-		private unsafe void ChangeEndColumn(object sender, TextChangedEventArgs e) {
-			/*fixed (int* endColumn = &endColumn) {
-				IntervalLibrary.ChangeMaxValueUnsafe(startColumn, endColumn, (TextBox)sender);
-			}*/
+		private void ChangeEndColumn(object sender, TextChangedEventArgs e) {
 			endColumn = IntervalLibrary.ChangeMaxValue(startColumn, endColumn, (TextBox)sender);
 		}
 		private void ChangeStaticVolume(object sender, TextChangedEventArgs e) {

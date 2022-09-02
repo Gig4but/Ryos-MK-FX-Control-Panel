@@ -1,5 +1,4 @@
-﻿using RyosMKFXPanel.Effects;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -9,14 +8,14 @@ namespace RyosMKFXPanel.Windows {
 		private bool initialized = false;
 		public ModernSettings() {
 			InitializeComponent();
-			List<string> devices = Audio.GetAudioDevicesNames();
-			for (int i = 0; i < devices.Count; i++) {
+			string[] devices = Audio.GetAudioDevicesNames();
+			for (int i = 0; i < devices.Length; i++) {
 				comboBoxDevices.Items.Add((i+1)+" - "+devices[i]);
 			}
-			if (Properties.Settings.Default.DeviceID == null || Properties.Settings.Default.DeviceID == "" || Audio.DeviceAutoChange()) {
+			if (Settings.General.ContainsKey("DeviceId") || Settings.General["DeviceId"] == "" || Audio.DeviceAutoChange()) {
 				comboBoxDevices.SelectedIndex = 0;
 			} else {
-				comboBoxDevices.SelectedIndex = Audio.GetAudioDeviceIndexByID(Properties.Settings.Default.DeviceID) + 1;
+				comboBoxDevices.SelectedIndex = Audio.GetListeningDevice(Settings.General["DeviceId"]) + 1;
 			}
 			initialized = true;
 		}
@@ -48,20 +47,19 @@ namespace RyosMKFXPanel.Windows {
 				if (comboBoxDevices.SelectedIndex > 0) {
 					Lightning.ModuleOff();
 					Audio.DeviceAutoChange(false);
-					Audio.ChangeListenDeviceByIndex(comboBoxDevices.SelectedIndex-1);
+					Audio.ChangeListeningDevice(comboBoxDevices.SelectedIndex-1);
 					Lightning.ModuleOn();
 				} else {
 					Lightning.ModuleOff();
-					Properties.Settings.Default.DeviceID = "";
+					Settings.General["DeviceId"] = "";
 					Audio.DeviceAutoChange(true);
-					Audio.ChangeListenDeviceByIndex(0);
+					Audio.ChangeListeningDevice(0);
 					Lightning.ModuleOn();
 				}
 			}
 		}
 		private void ButtonSettingsReset_Click(object sender, RoutedEventArgs e) {
-			Properties.Settings.Default.Reset();
-			Properties.Settings.Default.reset = true;
+			//Settings.Reset();
 		}
 	}
 }

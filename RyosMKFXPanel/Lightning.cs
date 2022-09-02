@@ -6,9 +6,9 @@ using System.Linq;
 using System;
 
 namespace RyosMKFXPanel {
-	class Lightning {
+	class Lightning :ISettings {
 		/*
-		public enum deviceType {
+		public enum Device {
 			RyosMKFX,
 			CorsairK95
 		}
@@ -26,15 +26,32 @@ namespace RyosMKFXPanel {
 
 		public virtual bool connected { get; set; }
 
-		public float red = 0;
-		public float green = 255;
-		public float blue = 255;
+		public float red = 0f;
+		public float green = 255f;
+		public float blue = 255f;
 		public float bright = 0.75f;
 
 		public int delay = 3;
 		public float speed = 3f;
 
-		
+		public Dictionary<string, string> SettingsGet() {
+			return new Dictionary<string, string> {
+				{ "red", devices[0].red.ToString() },
+				{ "green", devices[0].green.ToString() },
+				{ "blue", devices[0].blue.ToString() },
+				{ "bright", devices[0].bright.ToString() },
+				{ "speed", devices[0].speed.ToString() }
+			};
+		}
+		public void SettingsLoad(in Dictionary<string, string> settings) {
+			red = float.Parse(settings["red"]);
+			green = float.Parse(settings["green"]);
+			blue = float.Parse(settings["blue"]);
+			bright = float.Parse(settings["bright"]);
+			speed = float.Parse(settings["speed"]);
+		}
+
+
 
 		public virtual int GetWidth() {
 			return 22;
@@ -80,18 +97,16 @@ namespace RyosMKFXPanel {
 		/// Turn off all device keys 
 		/// </summary>
 		public virtual void KeysLightAllOff() {
-			for (int i = 0; i < keysLight.Length; i++) {
+			for (int i = 0; i < keysLight.Length; i++)
 				keysLight[i] = 0;
-			}
 		}
 
 		/// <summary>
 		/// Turn on all device keys
 		/// </summary>
 		public virtual void KeysLightAllOn() {
-			for (int i = 0; i < keysLight.Length; i++) {
+			for (int i = 0; i < keysLight.Length; i++)
 				keysLight[i] = 1;
-			}
 		}
 		public virtual void KeyLightSetState(int key, byte state) {
 			keysLight[key] = state;
@@ -103,14 +118,12 @@ namespace RyosMKFXPanel {
 			keysLight[key] = 1;
 		}
 		public virtual void KeysLightOn(int[] keys) {
-			for (int i = 0; i < keys.Length; i++) {
+			for (int i = 0; i < keys.Length; i++)
 				keysLight[keys[i]] = 1;
-			}
 		}
 		public virtual void KeysLightOn(int fromkey, int tokey) {
-			for (int i = fromkey; i < tokey+1; i++) {
+			for (int i = fromkey; i < tokey+1; i++)
 				keysLight[i] = 1;
-			}
 		}
 		public virtual void KeysLightChangeByMatrix(float[][] Matrix) {}
 
@@ -150,9 +163,8 @@ namespace RyosMKFXPanel {
 		/// Can jump to next key by bigger rgb array. {r1, g1, b1, r2...}
 		/// </summary>
 		public virtual void KeyColorChange(int key, float[] rgb) {
-			for (int i = 0; i < rgb.Length; i++) {
+			for (int i = 0; i < rgb.Length; i++)
 				keysColor[key*3 + i] = ToByte(rgb[i] * bright);
-			}
 		}
 
 		/// <summary>
@@ -160,63 +172,51 @@ namespace RyosMKFXPanel {
 		/// Only selected keys.
 		/// </summary>
 		public virtual void KeysColorChange(int[] keys, float[] rgb) {
-			for (int i = 0; i < keys.Length; i++) {
-				for (int c = 0; c < 3; c++) {
+			for (int i = 0; i < keys.Length; i++)
+				for (int c = 0; c < 3; c++)
 					keysColor[keys[i] * 3 + c] = ToByte(rgb[c] * bright);
-				}
-			}
 		}
 		public virtual void KeysColorChange(int[] keys, float rgb) {
-			for (int i = 0; i < keys.Length; i++) {
-				for (int c = 0; c < 3; c++) {
+			for (int i = 0; i < keys.Length; i++)
+				for (int c = 0; c < 3; c++)
 					keysColor[keys[i] * 3 + c] = ToByte(rgb * bright);
-				}
-			}
 		}
 		public virtual void KeysColorChange(int fromkey, int tokey, float[] rgb) {
-			for (int i = fromkey; i < tokey+1; i++) {
-				for (int c = 0; c < 3; c++) {
+			for (int i = fromkey; i < tokey+1; i++)
+				for (int c = 0; c < 3; c++)
 					keysColor[i * 3 + c] = ToByte(rgb[c] * bright);
-				}
-			}
 		}
 		public virtual void KeysColorChange(int fromkey, int tokey, float rgb) {
-			for (int i = fromkey; i < tokey + 1; i++) {
-				for (int c = 0; c < 3; c++) {
+			for (int i = fromkey; i < tokey + 1; i++)
+				for (int c = 0; c < 3; c++)
 					keysColor[i * 3 + c] = ToByte(rgb * bright);
-				}
-			}
 		}
 		public virtual void KeysColorChangeR(int[] keys, float r) {
-			for (int i = 0; i < keys.Length; i++) {
+			for (int i = 0; i < keys.Length; i++)
 				keysColor[keys[i] * 3] = ToByte(r * bright);
-			}
 		}
 		public virtual void KeysColorChangeR(int fromkey, int tokey, float r) {
-			for (int i = fromkey; i < tokey + 1; i++) {
+			for (int i = fromkey; i < tokey + 1; i++)
 				keysColor[i * 3] = ToByte(r * bright);
-			}
 		}
 		public virtual void KeysColorChangeG(int[] keys, float g) {
-			for (int i = 0; i < keys.Length; i++) {
+			for (int i = 0; i < keys.Length; i++)
 				keysColor[keys[i] * 3 + 1] = ToByte(g * bright);
-			}
 		}
 		public virtual void KeysColorChangeG(int fromkey, int tokey, float g) {
-			for (int i = fromkey; i < tokey + 1; i++) {
+			for (int i = fromkey; i < tokey + 1; i++)
 				keysColor[i * 3 + 1] = ToByte(g * bright);
-			}
 		}
 		public virtual void KeysColorChangeB(int[] keys, float b) {
-			for (int i = 0; i < keys.Length; i++) {
+			for (int i = 0; i < keys.Length; i++)
 				keysColor[keys[i] * 3 + 2] = ToByte(b * bright);
-			}
 		}
 		public virtual void KeysColorChangeB(int fromkey, int tokey, float b) {
-			for (int i = fromkey; i < tokey + 1; i++) {
+			for (int i = fromkey; i < tokey + 1; i++)
 				keysColor[i * 3 + 1] = ToByte(b * bright);
-			}
 		}
+
+		//TODO
 		public virtual void KeysColorChangeByMatrix(float[][] Matrix) {}
 		public virtual void KeysColorInvert(int[] keys) {
 			KeysColorChange(keys, GetInvertedColor());
@@ -226,27 +226,21 @@ namespace RyosMKFXPanel {
 		}
 		public virtual void KeysColorInvertIfOff() {
 			float[] rgb = GetInvertedColor();
-			for (int i = 0; i < GetKeysCount(); i++) {
-				if (keysLight[i] == 0) {
+			for (int i = 0; i < GetKeysCount(); i++)
+				if (keysLight[i] == 0)
 					KeyColorChange(i, rgb);
-				}
-			}
 		}
 		public virtual void KeysColorInvertIfOff(int[] keys) {
 			float[] rgb = GetInvertedColor();
-			for (int i = 0; i < keys.Length; i++) {
-				if (keysLight[keys[i]] == 0) {
+			for (int i = 0; i < keys.Length; i++)
+				if (keysLight[keys[i]] == 0)
 					KeyColorChange(i, rgb);
-				}
-			}
 		}
 		public virtual void KeysColorInvertIfOff(int fromkey, int tokey) {
 			float[] rgb = GetInvertedColor();
-			for (int i = fromkey; i < tokey + 1; i++) {
-				if (keysLight[i] == 0) {
+			for (int i = fromkey; i < tokey + 1; i++)
+				if (keysLight[i] == 0)
 					KeyColorChange(i, rgb);
-				}
-			}
 		}
 
 
@@ -256,63 +250,27 @@ namespace RyosMKFXPanel {
 		/// Off LEDs with weak bright or black color.
 		/// </summary>
 		public virtual bool OptimizePacket() {
-			//DOESNT WORK -_-
-			/*if (keysLight.GetHashCode() == keysLightOld.GetHashCode() && keysColor.GetHashCode() == keysColorOld.GetHashCode()) {
-				return false;
-			}*/
-			//HIGH CPU COST
-			/*if (keysLight.SequenceEqual(keysLightOld) && keysColor.SequenceEqual(keysColorOld)) {
-				return false;
-			}*/
-			/*if (
-				((IStructuralEquatable)keysLight).GetHashCode(EqualityComparer<byte>.Default) == ((IStructuralEquatable)keysLightOld).GetHashCode(EqualityComparer<byte>.Default) &&
-				((IStructuralEquatable)keysColor).GetHashCode(EqualityComparer<byte>.Default) == ((IStructuralEquatable)keysColorOld).GetHashCode(EqualityComparer<byte>.Default)
-				) {
-				return false;
-			}*/
-			/*for (int i = 0; i < GetKeysCount(); i++) {
-				if (
-					keysLightOld[i] != keysLight[i] ||
-					keysColorOld[i * 3] != keysColor[i * 3] ||
-					keysColorOld[i * 3 + 1] != keysColor[i * 3 + 1] ||
-					keysColorOld[i * 3 + 2] != keysColor[i * 3 + 2]
-					) {
-					break;
-				}
-				if (i == GetKeysCount() - 1) {
-					return false;
-				}
-			}*/
-			if (colorGain > 0) {
-				for (int i = 0; i < GetKeysCount(); i++) {
-					if (keysColor[i * 3] < colorGain && keysColor[i * 3 + 1] < colorGain && keysColor[i * 3 + 2] < colorGain) {
+			if (colorGain > 0)
+				for (int i = 0; i < GetKeysCount(); i++)
+					if (keysColor[i * 3] < colorGain && keysColor[i * 3 + 1] < colorGain && keysColor[i * 3 + 2] < colorGain)
 						keysLight[i] = 0;
-					}
-				}
-			}
 			return true;
 		}
 
 		/// <summary>
 		/// Thread sleep by delay
 		/// </summary>
-		public void DelaySleep() {
-			Thread.Sleep(delay+2);
-		}
+		public void DelaySleep() { Thread.Sleep(delay+2); }
 
 		/// <summary>
 		/// Thread sleep by 1s / speed
 		/// </summary>
-		public void SpeedSleep() {
-			Thread.Sleep((int)(1000 / speed));
-		}
+		public void SpeedSleep() { Thread.Sleep((int)(1000 / speed)); }
 
 		/// <summary>
 		/// Send keys color/light to device
 		/// </summary>
-		public virtual bool SendPacket() {
-			return connected;
-		}
+		public virtual bool SendPacket() { return connected; }
 
 
 
@@ -335,23 +293,15 @@ namespace RyosMKFXPanel {
 
 
 
-		private static void ModuleSettingsSave() {
-			activeModule.ParameterSaveAll();
-		}
-		private static void ModuleSettingsLoad() {
-			activeModule.ParameterSaveAll();
-		}
 		/// <summary>
 		/// Change status of only one mode to true
 		/// </summary>
 		public static void ModuleChangeByClass(Type moduleClass) {
 			bool wasActive = false;
-			if (activeModule != null) {
-				if (activeModule.running) {
-					wasActive = true;
-					activeModule.Stop();
-					ModuleSettingsSave();
-				}
+			if (activeModule != null && activeModule.running) {
+				wasActive = true;
+				activeModule.Stop();
+				Settings.Save();
 			}
 			try {
 				activeModule = (LightningModule)Activator.CreateInstance(moduleClass);
@@ -360,18 +310,17 @@ namespace RyosMKFXPanel {
 				ErrorProcessor.Error(2);
 			}
 			if (wasActive) {
-				ModuleSettingsLoad();
+				Settings.Load();
 				activeModule.Start();
 			}
 		}
 		public static void ModuleChangeByUID(string uid) {
 			bool wasActive = false;
-			if (activeModule != null) {
-				if (activeModule.running) {
-					wasActive = true;
-					activeModule.Stop();
-					ModuleSettingsSave();
-				}
+			if (activeModule != null && activeModule.running) {
+				wasActive = true;
+				activeModule.Stop();
+				Settings.Save();
+
 			}
 			for (int i = 0; i < modules.Count(); i++) {
 				try {
@@ -389,7 +338,7 @@ namespace RyosMKFXPanel {
 				}
 			}
 			if (wasActive) {
-				ModuleSettingsLoad();
+				Settings.Load();
 				activeModule.Start();
 			}
 		}
@@ -399,7 +348,7 @@ namespace RyosMKFXPanel {
 				if (activeModule.running) {
 					wasActive = true;
 					activeModule.Stop();
-					ModuleSettingsSave();
+					Settings.Save();
 				}
 			}
 			for (int i = 0; i < modules.Count(); i++) {
@@ -409,16 +358,15 @@ namespace RyosMKFXPanel {
 				catch {
 					ErrorProcessor.Error(2);
 				}
-				if (activeModule.GetName() == name) {
+				if (activeModule.GetName() == name)
 					break;
-				}
 				if (i >= modules.Count() - 1) {
 					activeModule = null;
 					ErrorProcessor.Error(3);
 				}
 			}
 			if (wasActive) {
-				ModuleSettingsLoad();
+				Settings.Load();
 				activeModule.Start();
 			}
 		}
@@ -489,13 +437,12 @@ namespace RyosMKFXPanel {
 		/// Prevent small byte from big input
 		/// </summary>
 		public static byte ToByte(float value) {
-			if (value < 0) {
+			if (value < 0)
 				return 0;
-			} else if (value > 255) {
+			else if (value > 255)
 				return 255;
-			} else {
+			else
 				return (byte)value;
-			}
 		}
 
 		/// <summary>
@@ -525,8 +472,5 @@ namespace RyosMKFXPanel {
 		public float[] GetInvertedColor(byte[] rgb) {
 			return new float[] { 255-rgb[0], 255 - rgb[1], 255 - rgb[2] };
 		}
-
-
-
-	}
+    }
 }

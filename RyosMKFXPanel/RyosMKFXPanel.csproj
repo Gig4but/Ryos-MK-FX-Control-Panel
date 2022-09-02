@@ -1,191 +1,46 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8C8E8D97-20FA-4FB1-88E7-B15BB5162B75}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>RyosMKFXPanel</RootNamespace>
-    <AssemblyName>RyosMKFXPanel</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>False</UseWindowsForms>
+    <StartupObject></StartupObject>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="NAudio, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NAudio.1.10.0\lib\net35\NAudio.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="UIAutomationProvider" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
+    <None Remove="icons\animations32.png" />
+    <None Remove="icons\custom32.png" />
+    <None Remove="icons\effects32.png" />
+    <None Remove="icons\equalizer32.png" />
+    <None Remove="icons\games32.png" />
+    <None Remove="icons\nyancat32.png" />
+    <None Remove="icons\random32.png" />
+    <None Remove="icons\settings32.png" />
+    <None Remove="icons\smile32.png" />
+    <None Remove="icons\timer32.png" />
+    <None Remove="icons\volume32.png" />
+    <None Remove="icons\waterfall32.png" />
   </ItemGroup>
-  <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="Animations\Smiles.cs" />
-    <Compile Include="Animations\NyanCat.cs" />
-    <Compile Include="Animations\Waterfall.cs" />
-    <Compile Include="Animations\Timer.cs" />
-    <Compile Include="Audio.cs" />
-    <Compile Include="ErrorProcessor.cs" />
-    <Compile Include="LightningModuleControls.cs" />
-    <Compile Include="Corsair\LightningC.cs" />
-    <Compile Include="Corsair\SDK\CorsairAccessMode.cs" />
-    <Compile Include="Corsair\SDK\CorsairChannelDeviceInfo.cs" />
-    <Compile Include="Corsair\SDK\CorsairChannelDeviceInfoNative.cs" />
-    <Compile Include="Corsair\SDK\CorsairChannelDeviceType.cs" />
-    <Compile Include="Corsair\SDK\CorsairChannelInfo.cs" />
-    <Compile Include="Corsair\SDK\CorsairChannelInfoNative.cs" />
-    <Compile Include="Corsair\SDK\CorsairChannelsInfo.cs" />
-    <Compile Include="Corsair\SDK\CorsairChannelsInfoNative.cs" />
-    <Compile Include="Corsair\SDK\CorsairDeviceCaps.cs" />
-    <Compile Include="Corsair\SDK\CorsairDeviceInfo.cs" />
-    <Compile Include="Corsair\SDK\CorsairDeviceInfoNative.cs" />
-    <Compile Include="Corsair\SDK\CorsairDevicePropertyId.cs" />
-    <Compile Include="Corsair\SDK\CorsairDevicePropertyType.cs" />
-    <Compile Include="Corsair\SDK\CorsairDeviceType.cs" />
-    <Compile Include="Corsair\SDK\CorsairError.cs" />
-    <Compile Include="Corsair\SDK\CorsairKeyId.cs" />
-    <Compile Include="Corsair\SDK\CorsairLedColor.cs" />
-    <Compile Include="Corsair\SDK\CorsairLedColorNative.cs" />
-    <Compile Include="Corsair\SDK\CorsairLedId.cs" />
-    <Compile Include="Corsair\SDK\CorsairLedPosition.cs" />
-    <Compile Include="Corsair\SDK\CorsairLedPositionNative.cs" />
-    <Compile Include="Corsair\SDK\CorsairLedPositions.cs" />
-    <Compile Include="Corsair\SDK\CorsairLedPositionsNative.cs" />
-    <Compile Include="Corsair\SDK\CorsairLogicalLayout.cs" />
-    <Compile Include="Corsair\SDK\CorsairPhysicalLayout.cs" />
-    <Compile Include="Corsair\SDK\CorsairProtocolDetails.cs" />
-    <Compile Include="Corsair\SDK\CorsairProtocolDetailsNative.cs" />
-    <Compile Include="Corsair\SDK\CUESDK.cs" />
-    <Compile Include="Corsair\SDK\CUESDKNative.cs" />
-    <Compile Include="Devices\Roccat\RyosMKFX.cs" />
-    <Compile Include="Effects\Random.cs" />
-    <Compile Include="Effects\Volume.cs" />
-    <Compile Include="Devices\Roccat\RyosTalkFX\BasicTalkFxConnection.cs" />
-    <Compile Include="Devices\Roccat\RyosTalkFX\Key.cs" />
-    <Compile Include="Devices\Roccat\RyosTalkFX\KeyboardState.cs" />
-    <Compile Include="Devices\Roccat\RyosTalkFX\RyosTalkFXConnection.cs" />
-    <Compile Include="Devices\Roccat\RyosTalkFX\TalkFxBindings.cs" />
-    <Compile Include="Devices\Roccat\RyosTalkFX\TalkFX\Color.cs" />
-    <Compile Include="Devices\Roccat\RyosTalkFX\TalkFX\KeyEffect.cs" />
-    <Compile Include="Devices\Roccat\RyosTalkFX\TalkFX\Speed.cs" />
-    <Compile Include="Devices\Roccat\RyosTalkFX\TalkFX\TalkFxConnection.cs" />
-    <Compile Include="Devices\Roccat\RyosTalkFX\TalkFX\Zone.cs" />
-    <Compile Include="Effects\Equalizer\SampleAggregator.cs" />
-    <Compile Include="LightningModule.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="Windows\LegacyMain.xaml.cs">
-      <DependentUpon>LegacyMain.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\ModernMain.xaml.cs">
-      <DependentUpon>ModernMain.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\ModernSettings.xaml.cs">
-      <DependentUpon>ModernSettings.xaml</DependentUpon>
-    </Compile>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Lightning.cs" />
-    <Compile Include="Effects\Equalizer\Equalizer.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Windows\LegacyMain.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\ModernMain.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\ModernSettings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
+
   <ItemGroup>
     <Resource Include="icons\animations32.png" />
     <Resource Include="icons\custom32.png" />
     <Resource Include="icons\effects32.png" />
     <Resource Include="icons\equalizer32.png" />
     <Resource Include="icons\games32.png" />
+    <Resource Include="icons\nyancat32.png" />
     <Resource Include="icons\random32.png" />
     <Resource Include="icons\settings32.png" />
+    <Resource Include="icons\smile32.png" />
     <Resource Include="icons\timer32.png" />
     <Resource Include="icons\volume32.png" />
-    <Resource Include="icons\nyancat32.png" />
-    <Resource Include="icons\smile32.png" />
     <Resource Include="icons\waterfall32.png" />
-    <Content Include="Devices\Roccat\RyosTalkFX\CroccatTalkWrapper\win32-x86-64\talkfx-c.dll" />
-    <Content Include="Devices\Roccat\RyosTalkFX\CroccatTalkWrapper\win32-x86\talkfx-c.dll" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
+  <ItemGroup>
+    <PackageReference Include="NAudio" Version="2.1.0" />
+  </ItemGroup>
+
 </Project>

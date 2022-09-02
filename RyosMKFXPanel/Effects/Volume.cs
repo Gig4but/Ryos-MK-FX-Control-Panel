@@ -54,7 +54,7 @@ namespace RyosMKFXPanel.Effects {
 				Lightning.devices[0].KeysLightAllOff();
 				Lightning.devices[0].KeysColorUpdate();
 
-				volume = (int)(Audio.VolumeIs() * Lightning.devices[0].GetKeysCount()) - 1;
+				volume = (int)(Audio.GetVolume() * Lightning.devices[0].GetKeysCount()) - 1;
 				if (simple) {
 					volume /= 11;
 					Lightning.devices[0].KeysLightOn(18, volume +18);

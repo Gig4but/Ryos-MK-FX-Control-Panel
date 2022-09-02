@@ -1,11 +1,23 @@
 ﻿using System.Windows;
 
 namespace RyosMKFXPanel {
-	class ErrorProcessor {
+	/// <summary>
+	/// Represents simple error processing.
+	/// </summary>
+	static class ErrorProcessor {
+		/// <summary>
+		/// Shows message error box with text.
+		/// </summary>
+		/// <param name="message">the message to show.</param>
 		public static void MakeErrorWindow(string message) {
 			MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 
+		/// <summary>
+		/// Processes error codes.
+		/// </summary>
+		/// <param name="code">the error code.</param>
+		/// <param name="customMessage">the addition to error message.</param>
 		public static void Error(byte code, string customMessage = "") {
 			switch (code) {
 				case 0x00:
