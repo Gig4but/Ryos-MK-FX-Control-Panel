@@ -34,7 +34,7 @@ namespace RyosMKFXPanel {
 		public int delay = 3;
 		public float speed = 3f;
 
-		public Dictionary<string, string> SettingsGet() {
+		public Dictionary<string, string> GetSettings() {
 			return new Dictionary<string, string> {
 				{ "red", devices[0].red.ToString() },
 				{ "green", devices[0].green.ToString() },
@@ -43,7 +43,7 @@ namespace RyosMKFXPanel {
 				{ "speed", devices[0].speed.ToString() }
 			};
 		}
-		public void SettingsLoad(in Dictionary<string, string> settings) {
+		public void LoadSettings(in Dictionary<string, string> settings) {
 			red = float.Parse(settings["red"]);
 			green = float.Parse(settings["green"]);
 			blue = float.Parse(settings["blue"]);
@@ -301,7 +301,7 @@ namespace RyosMKFXPanel {
 			if (activeModule != null && activeModule.running) {
 				wasActive = true;
 				activeModule.Stop();
-				Settings.Save();
+				Settings.SaveModule();
 			}
 			try {
 				activeModule = (LightningModule)Activator.CreateInstance(moduleClass);
@@ -319,8 +319,7 @@ namespace RyosMKFXPanel {
 			if (activeModule != null && activeModule.running) {
 				wasActive = true;
 				activeModule.Stop();
-				Settings.Save();
-
+				Settings.SaveModule();
 			}
 			for (int i = 0; i < modules.Count(); i++) {
 				try {
@@ -348,7 +347,7 @@ namespace RyosMKFXPanel {
 				if (activeModule.running) {
 					wasActive = true;
 					activeModule.Stop();
-					Settings.Save();
+					Settings.SaveModule();
 				}
 			}
 			for (int i = 0; i < modules.Count(); i++) {

@@ -18,8 +18,8 @@ namespace RyosMKFXPanel {
 		public virtual double GetSliderTick() => 1.0d;
 		public virtual double GetSliderTickFrequency() => 1.0d;
 		public virtual LightningModuleControls[] GetControls() => new LightningModuleControls[] { };
-		public virtual Dictionary<string, string> SettingsGet() => new Dictionary<string, string> {};
-		public virtual void SettingsLoad(in Dictionary<string, string> settings) {}
+		public virtual Dictionary<string, string> GetSettings() => new Dictionary<string, string> {};
+		public virtual void LoadSettings(in Dictionary<string, string> settings) {}
 		public LightningModule() { }
 
 		public bool running;

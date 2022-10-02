@@ -7,6 +7,7 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>False</UseWindowsForms>
     <StartupObject></StartupObject>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -42,5 +43,9 @@
   <ItemGroup>
     <PackageReference Include="NAudio" Version="2.1.0" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(ProjectDir)Devices\Roccat\RyosTalkFX\CroccatTalkWrapper\win32-x86-64\talkfx-c.dll&quot; &quot;$(OutDir)&quot; /y /d&#xD;&#xA;xcopy &quot;$(SolutionDir)packages\NAudio.1.10.0\lib\net35\NAudio.dll&quot; &quot;$(OutDir)&quot; /y /d" />
+  </Target>
 
 </Project>

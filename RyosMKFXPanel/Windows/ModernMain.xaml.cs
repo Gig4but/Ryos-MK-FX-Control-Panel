@@ -19,16 +19,20 @@ namespace RyosMKFXPanel.Windows {
 			initialized = true;
 
 
-			if (Settings.General.ContainsKey("DeviceId")) {
+			if (Settings.GeneralSettingsContain(Settings.GeneralSettings.DeviceID)) {
 				Audio.DeviceAutoChange(false);
-                Audio.GetListeningDevice(Settings.General["DeviceId"]);
-			}
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+                Audio.GetListeningDevice(Settings.General[Settings.GeneralSettings.DeviceID.ToString()]);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            }
 
 			for (int i = 0; i < Lightning.modules.Count(); i++) {
 				LightningModule instance;
 				try {
-					instance = (LightningModule)Activator.CreateInstance(Lightning.modules.ElementAt(i));
-				}
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+                    instance = (LightningModule)Activator.CreateInstance(Lightning.modules.ElementAt(i));
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+                }
 				catch {
 					ErrorProcessor.Error(2);
 					continue;
@@ -100,10 +104,13 @@ namespace RyosMKFXPanel.Windows {
 					continue;
 				}
 			}
+			
+			if (Settings.GeneralSettingsContain(Settings.GeneralSettings.Category))
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+                ((IInvokeProvider)(new ButtonAutomationPeer((Button)this.FindName("Category" + Settings.General[Settings.GeneralSettings.Category.ToString()])).GetPattern(PatternInterface.Invoke))).Invoke();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
-			((IInvokeProvider)(new ButtonAutomationPeer((Button)this.FindName("Category" + Settings.General["Category"])).GetPattern(PatternInterface.Invoke))).Invoke();
-
-		}
+        }
 
 		private void Window_Close(object sender, System.ComponentModel.CancelEventArgs e) {
 			Lightning.ModuleOff();
@@ -114,9 +121,11 @@ namespace RyosMKFXPanel.Windows {
 		}
 
 		private void ButtonClose_Click(object sender, RoutedEventArgs e) {
-			//this.ButtonClose.  Property = "Background" Value = "#AAFF0000" TargetName = "ButtonCloseBackground"
-			Window_Close(null, null);
-		}
+            //this.ButtonClose.  Property = "Background" Value = "#AAFF0000" TargetName = "ButtonCloseBackground"
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            Window_Close(null, null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
 		private void ButtonMinimize_Click(object sender, RoutedEventArgs e) {
 			this.WindowState = WindowState.Minimized;
 		}
@@ -166,8 +175,10 @@ namespace RyosMKFXPanel.Windows {
 			SettingsGrid.Children.Clear();
 			for (int i = 0; i < Lightning.activeModule.GetControls().Length; i++) {
 				SettingsGrid.Children.Add(Lightning.activeModule.GetControls()[i].stack);
-				Lightning.activeModule.GetControls()[i].Show(null, null);
-			}
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+                Lightning.activeModule.GetControls()[i].Show(null, null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            }
 
 			Lightning.ModuleOn();
 		}

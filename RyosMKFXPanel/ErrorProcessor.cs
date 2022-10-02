@@ -55,6 +55,9 @@ namespace RyosMKFXPanel {
 				case 0x90:
 					MakeErrorWindow("Can't " + customMessage);
 					break;
+				case 0x91:
+					MakeErrorWindow("File " + customMessage);
+					break;
 				default: {
 					MakeErrorWindow("Unknown error.\n" + customMessage);
 					/*foreach (Lightning i in Lightning.devices) {
